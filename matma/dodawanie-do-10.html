@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matma: Trening Mózgu</title>
+    <style>
+        /* STYL GŁÓWNY - CZYSTA MATEMATYKA */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e3f2fd; /* Spokojny błękit */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+            color: #0d47a1;
+        }
+
+        #container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            width: 95%;
+            max-width: 600px; /* Węższy dla skupienia */
+            border: 4px solid #1976d2;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 { margin: 0 0 20px 0; font-size: 28px; color: #1565c0; }
+        
+        /* WIZUALIZACJA LICZB */
+        .dots-container {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+            align-items: center;
+        }
+        .number-box {
+            border: 2px solid #bbdefb;
+            border-radius: 10px;
+            padding: 10px;
+            min-width: 80px;
+        }
+        .dots {
+            font-size: 24px;
+            letter-spacing: 2px;
+            line-height: 1.2;
+            color: #1976d2;
+        }
+        .dots.secondary { color: #d32f2f; } /* Drugi składnik czerwony */
+        
+        .equation {
+            font-size: 60px;
+            font-weight: bold;
+            margin: 10px 0;
+            font-family: monospace; /* Stała szerokość cyfr */
+        }
+
+        /* PRZYCISKI */
+        .btn-big {
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            padding: 25px 30px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #0d47a1;
+            transition: 0.1s;
+            margin: 15px 0;
+            width: 100%;
+        }
+        .btn-big:active { transform: translateY(4px); box-shadow: none; }
+        .btn-explain { background-color: #ffca28; color: #333; box-shadow: 0 6px 0 #ff6f00; }
+
+        .explanation-text {
+            font-size: 22px;
+            color: #333;
+            margin-top: 20px;
+            font-weight: 500;
+            min-height: 60px;
+        }
+
+        .hidden { display: none !important; }
+
+    </style>
+</head>
+<body>
+
+<div id="container">
+    
+    <div id="step-start">
+        <h1>Matematyczny Siłacz 💪</h1>
+        <p>Julia, koniec z palcami. Uczymy się sprytnego liczenia w głowie.</p>
+        <p>Zasada: <strong>Dopełniamy do dychy!</strong></p>
+        
+        <button class="btn-big" onclick="playAudio('intro')">📢 Posłuchaj zasad</button>
+        <br>
+        <button class="btn-big" style="background-color: #4caf50;" onclick="startTraining()">START TRENINGU 🚀</button>
+    </div>
+
+    <div id="step-train" class="hidden">
+        <div id="progress" style="color:#888;">Przykład 1</div>
+        
+        <div class="equation" id="math-eq">8 + 5</div>
+
+        <div class="dots-container">
+            <div class="number-box">
+                <div class="dots" id="dots-1">●●●●<br>●●●●</div>
+            </div>
+            <div style="font-size:30px;">+</div>
+            <div class="number-box">
+                <div class="dots secondary" id="dots-2">●●<br>●●●</div>
+            </div>
+        </div>
+
+        <button id="btn-reveal" class="btn-big btn-explain" onclick="revealAnswer()">🤔 Jak to policzyć?</button>
+        
+        <div id="answer-section" class="hidden">
+            <div class="equation" style="color: #2e7d32;" id="math-result">= 13</div>
+            <div class="explanation-text" id="math-explain">...</div>
+            <button class="btn-big" onclick="nextEquation()">Następny Przykład ➡</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // --- BAZA PRZYKŁADÓW (Dodawanie z przekroczeniem progu 10) ---
+    // a = pierwszy składnik, b = drugi składnik
+    // strategy: tekst, który przeczyta Hania
+    const mathData = [
+        { 
+            a: 8, b: 5, 
+            res: 13, 
+            dots1: "●●●●<br>●●●●", 
+            dots2: "●●<br>●●●",
+            txt: "Osiem potrzebuje dwóch, żeby być dziesiątką. Te dwa zabieramy z piątki. Zostało trzy. Więc mamy trzynaście."
+        },
+        { 
+            a: 9, b: 6, 
+            res: 15, 
+            dots1: "●●●●●<br>●●●●", 
+            dots2: "●●●<br>●●●",
+            txt: "Dziewięć potrzebuje tylko jednego. Zabierasz jeden z szóstki. Zostaje pięć. Razem piętnaście."
+        },
+        { 
+            a: 7, b: 4, 
+            res: 11, 
+            dots1: "●●●●<br>●●●", 
+            dots2: "●●<br>●●",
+            txt: "Siódemka lubi się z trójką. Zabierz trzy od czwórki. Zostanie jeden. Wynik to jedenaście."
+        },
+        { 
+            a: 6, b: 6, 
+            res: 12, 
+            dots1: "●●●<br>●●●", 
+            dots2: "●●●<br>●●●",
+            txt: "Sześć i sześć. Sześć potrzebuje czterech do dychy. Z drugiej szóstki zabieramy cztery, zostają dwa. Razem dwanaście."
+        },
+        { 
+            a: 8, b: 7, 
+            res: 15, 
+            dots1: "●●●●<br>●●●●", 
+            dots2: "●●●●<br>●●●",
+            txt: "Osiem chce dwa. Zabieramy dwa z siódemki, zostaje pięć. Wynik piętnaście."
+        },
+        { 
+            a: 5, b: 9, 
+            res: 14, 
+            dots1: "●●●<br>●●", 
+            dots2: "●●●●●<br>●●●●",
+            txt: "Tu jest łatwiej odwrócić. Dziewięć plus pięć. Dziewięć bierze jeden. Z piątki zostaje cztery. Czternaście."
+        }
+    ];
+
+    let currentIndex = 0;
+    let shuffledData = [];
+
+    // AUDIO
+    function speak(text) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'pl-PL';
+        u.rate = 1.0;
+        
+        // Próba znalezienia Google PL
+        const voices = window.speechSynthesis.getVoices();
+        const plVoice = voices.find(v => v.lang === 'pl-PL' && v.name.includes('Google'));
+        if (plVoice) u.voice = plVoice;
+        
+        window.speechSynthesis.speak(u);
+    }
+
+    function playAudio(type) {
+        if(type === 'intro') {
+            speak("Cześć Julia. Dzisiaj trenujemy mózg. Nie używaj palców. Spróbuj sobie wyobrazić, ile brakuje do dziesięciu. Zaczynamy.");
+        }
+    }
+
+    // LOGIKA
+    function startTraining() {
+        // Mieszamy
+        shuffledData = [...mathData].sort(() => 0.5 - Math.random());
+        currentIndex = 0;
+        document.getElementById('step-start').classList.add('hidden');
+        document.getElementById('step-train').classList.remove('hidden');
+        loadExample();
+    }
+
+    function loadExample() {
+        if(currentIndex >= shuffledData.length) {
+            // Restart lub koniec
+            speak("Brawo! Wszystkie przykłady zrobione. Odpocznij chwilę.");
+            alert("Koniec treningu na dziś!");
+            location.reload();
+            return;
+        }
+
+        const item = shuffledData[currentIndex];
+        
+        // Reset widoku
+        document.getElementById('answer-section').classList.add('hidden');
+        document.getElementById('btn-reveal').classList.remove('hidden');
+        document.getElementById('progress').innerText = `Przykład ${currentIndex+1}`;
+        
+        // Dane
+        document.getElementById('math-eq').innerText = `${item.a} + ${item.b}`;
+        document.getElementById('dots-1').innerHTML = item.dots1;
+        document.getElementById('dots-2').innerHTML = item.dots2;
+
+        // Lektor czyta równanie
+        speak(`${item.a} dodać ${item.b}`);
+    }
+
+    function revealAnswer() {
+        const item = shuffledData[currentIndex];
+        
+        document.getElementById('btn-reveal').classList.add('hidden');
+        document.getElementById('answer-section').classList.remove('hidden');
+        
+        document.getElementById('math-result').innerText = `= ${item.res}`;
+        document.getElementById('math-explain').innerText = item.txt;
+        
+        // Lektor tłumaczy strategię
+        speak(item.txt);
+    }
+
+    function nextEquation() {
+        currentIndex++;
+        loadExample();
+    }
+
+</script>
+
+</body>
+</html>
