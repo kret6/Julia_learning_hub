@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hiszpański: Wygląd i Charakter</title>
+    <title>Historia: Protokół 3.0 (Głosy)</title>
     <style>
-        /* STYL GŁÓWNY - HISZPAŃSKA FIESTA */
+        /* STYL GŁÓWNY - MOTYW HISTORYCZNY */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #fff3e0; /* Ciepły pomarańcz */
+            background-color: #fdf5e6;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -20,12 +20,12 @@
 
         #container {
             background-color: white;
-            padding: 20px;
+            padding: 30px;
             border-radius: 30px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
             width: 95%;
             max-width: 800px;
-            border: 4px solid #ff6f00; /* Mocny pomarańcz */
+            border: 4px solid #8d6e63;
             min-height: 600px;
             display: flex;
             flex-direction: column;
@@ -33,63 +33,66 @@
             align-items: center;
         }
 
-        h1 { margin: 0 0 15px 0; font-size: 28px; color: #e65100; }
-        h2 { color: #ef6c00; margin-top: 0; }
-        p { font-size: 18px; margin-bottom: 20px; line-height: 1.4; }
+        h1 { margin: 0 0 20px 0; font-size: 32px; color: #5d4037; }
+        p { font-size: 20px; margin-bottom: 30px; line-height: 1.5; }
 
         /* PRZYCISKI */
         .btn-big {
-            background-color: #ff9800;
+            background-color: #8d6e63;
             color: white;
             border: none;
-            padding: 18px 25px;
-            font-size: 20px;
+            padding: 20px 30px;
+            font-size: 22px;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 5px 0 #e65100;
+            box-shadow: 0 6px 0 #5d4037;
             transition: 0.2s;
-            margin: 8px;
-            width: 95%;
+            margin: 10px;
+            width: 90%;
             white-space: normal;
         }
         .btn-big:active { transform: translateY(4px); box-shadow: none; }
-        .btn-audio { background-color: #0277bd; box-shadow: 0 5px 0 #01579b; } /* Niebieski dla Audio */
-        .btn-next { background-color: #43a047; box-shadow: 0 5px 0 #2e7d32; } /* Zielony dla Dalej */
+        .btn-big:hover { background-color: #6d4c41; }
+        
+        .btn-action { background-color: #ffb74d; box-shadow: 0 6px 0 #f57c00; color: #3e2723; }
+        .btn-action:hover { background-color: #ffa726; }
+
+        .btn-voice { background-color: #5d4037; font-size: 16px; padding: 15px 25px; width: auto; display: inline-block; }
 
         /* FISZKI */
-        .flashcard-scene { width: 100%; height: 350px; perspective: 1000px; margin-bottom: 20px; cursor: pointer;}
+        .flashcard-scene { width: 100%; height: 320px; perspective: 1000px; margin-bottom: 20px; cursor: pointer;}
         .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s; }
         .flashcard.flipped { transform: rotateY(180deg); }
         .card-face {
             position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            border-radius: 20px; padding: 15px; box-sizing: border-box;
+            border-radius: 20px; padding: 20px; box-sizing: border-box;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            border: 3px solid #ff9800;
+            border: 2px solid #8d6e63;
         }
-        .front { background-color: #fff8e1; color: #bf360c; }
-        .back { background-color: #e8f5e9; color: #1b5e20; transform: rotateY(180deg); }
-        .emoji { font-size: 60px; margin-bottom: 10px; }
-        .term { font-size: 38px; font-weight: bold; margin-bottom: 10px; }
-        .def { font-size: 26px; font-weight: bold; }
-        .context { font-size: 18px; color: #555; margin-top: 10px; font-style: italic; }
+        .front { background-color: #a1887f; color: white; }
+        .back { background-color: #efebe9; color: #3e2723; transform: rotateY(180deg); }
+        .term { font-size: 32px; font-weight: bold; }
+        .def { font-size: 22px; line-height: 1.4; }
 
         /* QUIZ */
-        .quiz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+        .quiz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
         .quiz-btn {
-            background-color: #ffe0b2; border: none; padding: 15px;
-            font-size: 18px; border-radius: 15px; cursor: pointer; color: #bf360c; font-weight: 600;
-            box-shadow: 0 4px 0 #ffcc80;
-            min-height: 80px; display: flex; align-items: center; justify-content: center;
+            background-color: #d7ccc8; border: none; padding: 15px;
+            font-size: 18px; border-radius: 15px; cursor: pointer; color: #3e2723; font-weight: 600;
+            box-shadow: 0 4px 0 #a1887f;
         }
-        .quiz-btn:hover { background-color: #ffcc80; }
-        .correct { background-color: #66bb6a !important; color: white !important; box-shadow: 0 4px 0 #2e7d32 !important;}
-        .wrong { background-color: #ef5350 !important; color: white !important; opacity: 0.5; }
+        .quiz-btn:hover { background-color: #bcaaa4; }
+        .correct { background-color: #66bb6a !important; color: white; box-shadow: 0 4px 0 #2e7d32 !important;}
+        .wrong { background-color: #ef5350 !important; color: white; opacity: 0.5; }
 
         .hidden { display: none !important; }
-        .small-text { font-size: 14px; color: #888; margin-top: 5px; }
+        .small-btn { padding: 10px 20px; font-size: 16px; border-radius: 20px; background: #8d6e63; color: white; border: none; cursor: pointer; margin-top: 10px;}
 
+        @media (max-width: 768px) {
+            .quiz-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -97,256 +100,252 @@
 <div id="container">
     
     <div id="step-start">
-        <h1>¡Hola Julia! 🇪🇸</h1>
-        <p>Przed Tobą kartkówka z hiszpańskiego: wygląd i charakter. Nauczymy się tego w trybie "Full Immersion".</p>
-        <p class="small-text">Protokół 4.0: Lekcja + Fiszki + Pełny Test</p>
+        <h1>Historia: Po Powstaniu 📜</h1>
+        <p>Polacy kontra zaborcy. Walka bez broni, czyli praca organiczna i spryt.</p>
         
-        <button class="btn-big btn-audio" onclick="playLessonPart(1)">🎧 Lekcja 1: Wygląd (Włosy)</button>
-        <button class="btn-big btn-audio" onclick="playLessonPart(2)">🎧 Lekcja 2: Twarz i Inne</button>
-        <button class="btn-big btn-audio" onclick="playLessonPart(3)">🎧 Lekcja 3: Charakter</button>
-        
+        <button class="btn-big" onclick="playAudio('intro')">📢 Posłuchaj Wstępu</button>
         <br>
-        <button class="btn-big btn-next" onclick="goToFlashcards()">Idź do Fiszek (Trening) ➡</button>
+        <button class="btn-big btn-voice" onclick="toggleVoice()">🗣️ Zmień Głos (Klikaj aż trafisz)</button>
+        <div id="voice-info" style="font-size: 14px; margin-top: 5px; color: #8d6e63;"></div>
+        <br><br>
+        <button class="btn-big btn-action" onclick="goToFlashcards()">Przejdź do Nauki (Fiszki) ➡</button>
     </div>
 
     <div id="step-flashcards" class="hidden">
-        <h2>Trening Słówek</h2>
+        <h2>Trening Pojęć</h2>
+        <p style="font-size: 16px; margin-bottom: 5px;">Kliknij kartę, aby obrócić i usłyszeć definicję.</p>
+        
         <div class="flashcard-scene" onclick="flipCard()">
             <div class="flashcard" id="card">
                 <div class="card-face front">
-                    <div class="emoji" id="fc-emoji"></div>
-                    <div class="term" id="fc-es">...</div>
-                    <div class="small-text">Kliknij, by usłyszeć i obrócić</div>
+                    <div class="term" id="fc-term">...</div>
+                    <div style="margin-top:20px; font-size: 30px;">🔄</div>
                 </div>
                 <div class="card-face back">
-                    <div class="def" id="fc-pl">...</div>
-                    <div class="context" id="fc-ctx"></div>
+                    <div class="def" id="fc-def">...</div>
                 </div>
             </div>
         </div>
 
-        <button class="btn-big btn-next" onclick="nextCard()">Następne Słowo ➡</button>
-        <br>
-        <button class="btn-big" style="background-color: #ff5722;" onclick="startQuiz()">Umiem! Testuj mnie 📝</button>
+        <button class="small-btn" onclick="nextCard()">Następne Pojęcie ➡</button>
+        <br><br>
+        <button class="btn-big btn-action" onclick="goToSummary()">Już umiem! Idę do Testu 📝</button>
+    </div>
+
+    <div id="step-summary" class="hidden">
+        <h1>Ostatnia prosta!</h1>
+        <p>Hania (lub Lektor) podsumuje teraz 3 zabory w pigułce.</p>
+        <button class="btn-big" onclick="playAudio('summary')">📢 Posłuchaj Podsumowania</button>
+        <br><br>
+        <button class="btn-big btn-action" onclick="startQuiz()">ROZPOCZNIJ QUIZ 🚀</button>
     </div>
 
     <div id="step-quiz" class="hidden">
-        <div id="progress">Pytanie 1</div>
-        <div class="emoji" id="q-emoji" style="font-size: 50px;"></div>
-        <h2 id="q-text" style="font-size: 32px; margin: 10px 0;">...</h2>
-        
+        <div id="progress" style="font-weight:bold; color:#8d6e63;">Pytanie 1</div>
+        <h2 id="q-text" style="margin: 15px 0; min-height: 70px;">...</h2>
         <div class="quiz-grid" id="q-options"></div>
-        <h3 id="feedback" style="min-height: 30px;"></h3>
-        <button id="next-q-btn" class="btn-big btn-next hidden" onclick="nextQuestion()">Dalej ➡</button>
+        <h3 id="feedback" style="min-height: 30px; margin-top:10px;"></h3>
+        <button id="next-q-btn" class="btn-big btn-action hidden" onclick="nextQuestion()">Dalej ➡</button>
     </div>
 
     <div id="step-end" class="hidden">
-        <h1>¡Felicidades! 🎉</h1>
-        <p>Przeszłaś przez cały materiał. Wszystkie słówka zaliczone.</p>
-        <button class="btn-big btn-audio" onclick="speak('¡Muy bien Julia! Jestem z ciebie dumna. Jesteś gotowa na kartkówkę.', 'pl-PL')">📢 Posłuchaj Hani</button>
-        <br>
-        <button class="btn-big" onclick="location.reload()">Powtórz od początku ↺</button>
+        <h1>Zwycięstwo! 🏆</h1>
+        <p>Przeszłaś przez rusyfikację i germanizację zwycięsko!</p>
+        <button class="btn-big" onclick="playAudio('outro')">📢 Posłuchaj na koniec</button>
+        <br><br>
+        <button class="small-btn" onclick="location.reload()">Powtórz od początku ↺</button>
     </div>
 
 </div>
 
 <script>
-    // --- BAZA SŁÓWEK (Zgodna z PDF) ---
-    // Format: [Hiszpański, Polski, Emoji, Kategoria (do lekcji)]
-    const vocab = [
-        // Wygląd - Włosy
-        { es: "Moreno", pl: "Brunet / Ciemnowłosy", em: "👦🏽", cat: 1 },
-        { es: "Rubio", pl: "Blondyn", em: "👱‍♂️", cat: 1 },
-        { es: "Pelirrojo", pl: "Rudy", em: "👨‍🦰", cat: 1 },
-        { es: "Calvo", pl: "Łysy", em: "👨‍🦲", cat: 1 },
-        { es: "Pelo liso", pl: "Proste włosy", em: "👩‍🦰", cat: 1 }, // używam ogólnego emoji
-        { es: "Pelo rizado", pl: "Kręcone włosy", em: "👩‍🦱", cat: 1 },
-        { es: "Pelo corto", pl: "Krótkie włosy", em: "🧒", cat: 1 },
-        { es: "Pelo largo", pl: "Długie włosy", em: "👩", cat: 1 },
-        
-        // Wygląd - Twarz i Inne
-        { es: "Barba", pl: "Broda", em: "🧔", cat: 2 },
-        { es: "Bigote", pl: "Wąsy", em: "👨", cat: 2 }, // emoji z wąsami
-        
-        // Charakter - Pozytywne
-        { es: "Amable", pl: "Miły / Uprzejmy", em: "😊", cat: 3 },
-        { es: "Optimista", pl: "Optymista", em: "🌞", cat: 3 },
-        { es: "Gracioso", pl: "Zabawny", em: "😂", cat: 3 },
-        
-        // Charakter - Negatywne/Inne
-        { es: "Impaciente", pl: "Niecierpliwy", em: "😤", cat: 3 },
-        { es: "Serio", pl: "Poważny", em: "😐", cat: 3 },
-        { es: "Antipático", pl: "Niesympatyczny", em: "😒", cat: 3 },
-        { es: "Tímido", pl: "Nieśmiały", em: "🫣", cat: 3 },
-        { es: "Introvertido", pl: "Introwertyk", em: "😶", cat: 3 },
-        { es: "Pesimista", pl: "Pesymista", em: "🌧️", cat: 3 }
+    // --- DANE: FISZKI ---
+    const flashcards = [
+        { t: "RUSYFIKACJA", d: "Zmuszanie Polaków do mówienia po rosyjsku i przejmowania rosyjskiej kultury. Symbol: kurator Apuchtin." },
+        { t: "KULTURKAMPF", d: "Walka o kulturę w zaborze pruskim. Niemcy walczyli z Kościołem katolickim i polskością." },
+        { t: "AUTONOMIA GALICYJSKA", d: "Swoboda w zaborze austriackim. Polacy mieli swoje szkoły, urzędy i mogli mówić po polsku." },
+        { t: "KRAJ PRZYWIŚLAŃSKI", d: "Tak Rosjanie nazwali Polskę po powstaniu, żeby wymazać jej nazwę z mapy." },
+        { t: "PRACA ORGANICZNA", d: "Działanie dla dobra kraju poprzez rozwój gospodarki i rolnictwa, a nie przez walkę zbrojną." },
+        { t: "PRACA U PODSTAW", d: "Edukacja najbiedniejszych ludzi (chłopów), żeby naród był silniejszy." },
+        { t: "RUGI PRUSKIE", d: "Masowe wyrzucanie Polaków z ziemi przez Niemców, jeśli nie mieli obywatelstwa." },
+        { t: "STAŃCZYCY", d: "Politycy w Galicji, którzy byli lojalni wobec cesarza Austrii. Chcieli zgody, a nie powstań." },
+        { t: "KATORGA", d: "Ciężka praca fizyczna na zesłaniu (Syberia), kara dla powstańców." }
     ];
 
-    // --- LEKTOR ---
-    function speak(text, lang) {
-        window.speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(text);
-        u.lang = lang;
-        u.rate = 0.9;
-        window.speechSynthesis.speak(u);
-    }
+    // --- DANE: TEST ---
+    const questions = [
+        { q: "Jak Rosjanie nazwali Polskę po upadku powstania?", a: ["Kraj Przywiślański", "Nowa Rosja", "Królestwo Polskie", "Polonia"], c: 0 },
+        { q: "Kto był symbolem rusyfikacji w szkołach (zły kurator)?", a: ["Apuchtin", "Bismarck", "Traugutt", "Car Mikołaj"], c: 0 },
+        { q: "Co to jest KATORGA?", a: ["Ciężkie roboty na Syberii", "Wakacje w Rosji", "Rodzaj tańca", "Nazwa statku"], c: 0 },
+        { q: "Kim był Aleksander Sochaczewski?", a: ["Malarzem zesłańców syberyjskich", "Generałem", "Pisarzem", "Rolnikiem"], c: 0 },
+        { q: "Co to była 'Najdłuższa wojna nowoczesnej Europy'?", a: ["Walka gospodarcza Polaków z Niemcami", "Powstanie zbrojne", "I Wojna Światowa", "Wojna stuletnia"], c: 0 },
+        { q: "Kim był Hipolit Cegielski?", a: ["Przemysłowcem (fabryka maszyn w Poznaniu)", "Generałem", "Poetą", "Urzędnikiem"], c: 0 },
+        { q: "Co robiła Komisja Kolonizacyjna?", a: ["Wykupowała ziemię dla Niemców", "Budowała polskie szkoły", "Pomagała rolnikom", "Sadziła lasy"], c: 0 },
+        { q: "Kto ogłosił KULTURKAMPF?", a: ["Otto von Bismarck", "Cesarz Franciszek Józef", "Michał Drzymała", "Hipolit Cegielski"], c: 0 },
+        { q: "O co strajkowały dzieci we Wrześni (1901)?", a: ["O religię po polsku", "O dłuższe przerwy", "O darmowe obiady", "O nowe mundurki"], c: 0 },
+        { q: "Jak protestował Michał Drzymała?", a: ["Mieszkał w wozie cyrkowym", "Zorganizował powstanie", "Napisał wiersz", "Wyjechał do USA"], c: 0 },
+        { q: "Gdzie Polacy mieli AUTONOMIĘ (swobodę)?", a: ["W Galicji (Austrii)", "W Prusach", "W Rosji", "W Berlinie"], c: 0 },
+        { q: "Co to była 'Nędza Galicyjska'?", a: ["Wielka bieda na wsi w zaborze austriackim", "Bogactwo", "Nazwa potrawy", "Choroba"], c: 0 }
+    ];
 
-    // Funkcja do lekcji ciągłej (Hania czyta listę)
-    function playLessonPart(catIndex) {
-        window.speechSynthesis.cancel();
+    // --- AUDIO SKRYPTY ---
+    const scripts = {
+        intro: "Cześć Juleczko! Dzisiaj lekcja historii, ale bez nudy. Cofniemy się do czasów, gdy Polski nie było na mapie. Zaborcy robili wszystko, żeby nas zniszczyć, ale Polacy mieli swoje sposoby. Najpierw nauczymy się pojęć, żebyś wiedziała, o co chodzi z tą pracą organiczną i kulturkampfem. Gotowa? Startujemy z fiszkami!",
         
-        const words = vocab.filter(v => v.cat === catIndex);
-        let intro = "";
-        if(catIndex === 1) intro = "Lekcja pierwsza. Opisujemy włosy.";
-        if(catIndex === 2) intro = "Lekcja druga. Twarz i zarost.";
-        if(catIndex === 3) intro = "Lekcja trzecia. Cechy charakteru.";
-
-        // Kolejka wypowiedzi
-        const q = [];
-        q.push({t: intro, l: 'pl-PL'});
+        summary: "Świetnie Ci idzie! Zanim wejdziesz na ring testowy, zróbmy szybki przegląd mapy. W zaborze ROSYJSKIM był terror, rusyfikacja i zsyłki na Sybir (Katorga). W zaborze PRUSKIM (Niemcy) był Kulturkampf, czyli walka z Kościołem i wyrzucanie z ziemi (Rugi Pruskie), ale Polacy świetnie radzili sobie gospodarczo. W GALICJI (Austria) była bieda, ale za to wolność – polskie szkoły i urzędy. Pamiętaj: Pozytywiści budowali fabryki i uczyli biednych, zamiast walczyć karabinem.",
         
-        words.forEach(w => {
-            q.push({t: w.es, l: 'es-ES'}); // Hiszpański
-            q.push({t: w.pl, l: 'pl-PL'}); // Polski
-        });
+        outro: "Brawo Julia! Egzamin zdany celująco. Wiesz już, jak Polacy przetrwali najtrudniejsze czasy. Twoja wiedza historyczna jest teraz Twoją tarczą. Jestem z Ciebie dumna. Odpocznij!"
+    };
 
-        // Odtwarzanie sekwencyjne
-        let i = 0;
-        function playNext() {
-            if (i >= q.length) return;
-            const item = q[i];
-            const u = new SpeechSynthesisUtterance(item.t);
-            u.lang = item.l;
-            u.rate = 0.9;
-            u.onend = () => { i++; playNext(); };
-            window.speechSynthesis.speak(u);
+    // --- LOGIKA GŁOSU ---
+    let voices = [];
+    let currentVoiceIndex = 0;
+
+    function initVoices() {
+        const allVoices = window.speechSynthesis.getVoices();
+        // Filtrujemy tylko polskie głosy
+        voices = allVoices.filter(v => v.lang.includes('pl') || v.lang.includes('PL'));
+        
+        if (voices.length === 0) {
+            document.getElementById('voice-info').innerText = "Wczytuję głosy... (lub brak polskich)";
+        } else {
+            // Próba znalezienia domyślnego Google
+            const googleIndex = voices.findIndex(v => v.name.includes('Google'));
+            if (googleIndex !== -1) currentVoiceIndex = googleIndex;
+            document.getElementById('voice-info').innerText = `Dostępnych głosów PL: ${voices.length}`;
         }
-        playNext();
     }
 
-    // --- LOGIKA FISZEK ---
+    // Ładowanie głosów (Android ładuje je asynchronicznie)
+    window.speechSynthesis.onvoiceschanged = initVoices;
+    // Wywołanie też od razu, na wypadek gdyby już były
+    initVoices();
+
+    function toggleVoice() {
+        if (voices.length <= 1) {
+            alert("Twój telefon ma tylko jeden polski głos. Sprawdź ustawienia Androida (Zamiana tekstu na mowę).");
+            return;
+        }
+        stopAudio();
+        currentVoiceIndex = (currentVoiceIndex + 1) % voices.length;
+        
+        const utterance = new SpeechSynthesisUtterance("Próba mikrofonu, raz, dwa, trzy.");
+        utterance.voice = voices[currentVoiceIndex];
+        utterance.lang = 'pl-PL';
+        window.speechSynthesis.speak(utterance);
+        
+        document.getElementById('voice-info').innerText = `Wybrano: ${voices[currentVoiceIndex].name}`;
+    }
+
+    // --- LOGIKA NAUKI ---
     let fcIndex = 0;
-    
+    let qIndex = 0;
+    let shuffledQ = [];
+
+    // Nawigacja
     function goToFlashcards() {
-        window.speechSynthesis.cancel();
+        stopAudio();
         document.getElementById('step-start').classList.add('hidden');
         document.getElementById('step-flashcards').classList.remove('hidden');
         loadFlashcard();
     }
+    function goToSummary() {
+        stopAudio();
+        document.getElementById('step-flashcards').classList.add('hidden');
+        document.getElementById('step-summary').classList.remove('hidden');
+    }
+    function startQuiz() {
+        stopAudio();
+        document.getElementById('step-summary').classList.add('hidden');
+        document.getElementById('step-quiz').classList.remove('hidden');
+        shuffledQ = questions.sort(() => Math.random() - 0.5);
+        loadQuestion();
+    }
+    function goToEnd() {
+        document.getElementById('step-quiz').classList.add('hidden');
+        document.getElementById('step-end').classList.remove('hidden');
+    }
 
+    // Audio Engine
+    function playAudio(type) {
+        stopAudio();
+        const text = scripts[type];
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'pl-PL';
+        utterance.rate = 1.0; 
+        
+        // Użyj wybranego głosu
+        if (voices.length > 0) {
+            utterance.voice = voices[currentVoiceIndex];
+        }
+        
+        window.speechSynthesis.speak(utterance);
+    }
+    function stopAudio() { window.speechSynthesis.cancel(); }
+
+    // Fiszki
     function loadFlashcard() {
         const c = document.getElementById('card');
         c.classList.remove('flipped');
-        const item = vocab[fcIndex];
-        
         setTimeout(() => {
-            document.getElementById('fc-emoji').innerText = item.em;
-            document.getElementById('fc-es').innerText = item.es;
-            document.getElementById('fc-pl').innerText = item.pl;
-            document.getElementById('fc-ctx').innerText = ""; 
+            document.getElementById('fc-term').innerText = flashcards[fcIndex].t;
+            document.getElementById('fc-def').innerText = flashcards[fcIndex].d;
         }, 300);
     }
-
     function flipCard() {
-        const c = document.getElementById('card');
-        const item = vocab[fcIndex];
-        
-        if(!c.classList.contains('flipped')) {
-            c.classList.add('flipped');
-            // Najpierw hiszpański, potem polski
-            const u1 = new SpeechSynthesisUtterance(item.es);
-            u1.lang = 'es-ES';
-            u1.onend = () => {
-                const u2 = new SpeechSynthesisUtterance(item.pl);
-                u2.lang = 'pl-PL';
-                window.speechSynthesis.speak(u2);
-            };
-            window.speechSynthesis.speak(u1);
-        }
+        document.getElementById('card').classList.toggle('flipped');
+        if(document.getElementById('card').classList.contains('flipped')) {
+            const u = new SpeechSynthesisUtterance(flashcards[fcIndex].d);
+            u.lang = 'pl-PL';
+            if (voices.length > 0) u.voice = voices[currentVoiceIndex];
+            window.speechSynthesis.speak(u);
+        } else { stopAudio(); }
     }
-
     function nextCard() {
-        window.speechSynthesis.cancel();
-        fcIndex = (fcIndex + 1) % vocab.length;
+        stopAudio();
+        fcIndex = (fcIndex + 1) % flashcards.length;
         loadFlashcard();
     }
 
-    // --- LOGIKA QUIZU (PROTOKÓŁ 4.0 - WSZYSTKIE PYTANIA) ---
-    let qIndex = 0;
-    let quizData = [];
-
-    function startQuiz() {
-        window.speechSynthesis.cancel();
-        document.getElementById('step-flashcards').classList.add('hidden');
-        document.getElementById('step-quiz').classList.remove('hidden');
-        
-        // Generowanie pytań: DLA KAŻDEGO SŁOWA Z BAZY
-        // Nie losujemy puli, bierzemy wszystko.
-        // Mieszamy tylko kolejność pytań.
-        quizData = vocab.map(item => {
-            // Generuj 3 dystraktory (błędne odpowiedzi)
-            const distractors = vocab
-                .filter(v => v.es !== item.es) // inne słowa
-                .sort(() => 0.5 - Math.random()) // wymieszaj
-                .slice(0, 3) // weź 3
-                .map(v => v.pl);
-            
-            return {
-                q: item.es, // Pytanie: Słowo hiszpańskie
-                emoji: item.em,
-                correct: item.pl, // Odpowiedź: Polskie znaczenie
-                options: [item.pl, ...distractors].sort(() => 0.5 - Math.random()) // Wymieszane opcje
-            };
-        }).sort(() => 0.5 - Math.random()); // Mieszamy kolejność pytań
-
-        loadQuestion();
-    }
-
+    // Quiz
     function loadQuestion() {
-        if(qIndex >= quizData.length) {
-            document.getElementById('step-quiz').classList.add('hidden');
-            document.getElementById('step-end').classList.remove('hidden');
-            return;
-        }
-
-        const q = quizData[qIndex];
-        document.getElementById('progress').innerText = `Pytanie ${qIndex+1} z ${quizData.length}`;
+        if(qIndex >= shuffledQ.length) { goToEnd(); return; }
+        
+        const q = shuffledQ[qIndex];
+        document.getElementById('progress').innerText = `Pytanie ${qIndex+1} z ${shuffledQ.length}`;
         document.getElementById('q-text').innerText = q.q;
-        document.getElementById('q-emoji').innerText = q.emoji;
         document.getElementById('feedback').innerText = "";
         document.getElementById('next-q-btn').classList.add('hidden');
 
-        // Czytaj pytanie po hiszpańsku
-        speak(q.q, 'es-ES');
-
         const grid = document.getElementById('q-options');
         grid.innerHTML = "";
-
-        q.options.forEach(opt => {
+        
+        const answers = q.a.map((txt, i) => ({txt, ok: i === q.c})).sort(() => Math.random() - 0.5);
+        
+        answers.forEach(ans => {
             const btn = document.createElement('button');
             btn.className = 'quiz-btn';
-            btn.innerText = opt;
-            btn.onclick = () => checkAnswer(opt === q.correct, btn, q.correct);
+            btn.innerText = ans.txt;
+            btn.onclick = () => checkAnswer(ans.ok, btn, answers);
             grid.appendChild(btn);
         });
     }
 
-    function checkAnswer(isCorrect, btn, correctTxt) {
+    function checkAnswer(isOk, btn, allAnswers) {
         const btns = document.querySelectorAll('.quiz-btn');
         btns.forEach(b => b.onclick = null);
 
-        if(isCorrect) {
+        if(isOk) {
             btn.classList.add('correct');
-            document.getElementById('feedback').innerText = "¡Muy bien! 👍";
+            document.getElementById('feedback').innerText = "Tak jest! Prawda historyczna! ✅";
             document.getElementById('feedback').style.color = "green";
-            speak("Dobrze", 'pl-PL');
         } else {
             btn.classList.add('wrong');
             btns.forEach(b => {
-                if(b.innerText === correctTxt) b.classList.add('correct');
+                if(allAnswers.find(a => a.txt === b.innerText).ok) b.classList.add('correct');
             });
-            document.getElementById('feedback').innerText = "Pomyłka. Zobacz zielone.";
-            document.getElementById('feedback').style.color = "red";
+            document.getElementById('feedback').innerText = "Niestety nie. Spójrz na zielone.";
+            document.getElementById('feedback').style.color = "#c62828";
         }
         document.getElementById('next-q-btn').classList.remove('hidden');
     }
