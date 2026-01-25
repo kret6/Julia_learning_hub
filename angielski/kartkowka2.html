@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angielski: Shopping & Money</title>
+    <style>
+        /* STYL GŁÓWNY - SHOPPING & MONEY */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e8f5e9; /* Jasna zieleń (pieniądze) */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+            color: #1b5e20;
+        }
+
+        #container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            width: 95%;
+            max-width: 800px;
+            border: 4px solid #43a047; /* Soczysta zieleń */
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 { margin: 0 0 15px 0; font-size: 28px; color: #2e7d32; }
+        h2 { color: #388e3c; margin-top: 0; }
+        p { font-size: 18px; margin-bottom: 20px; line-height: 1.4; }
+
+        /* PRZYCISKI */
+        .btn-big {
+            background-color: #66bb6a;
+            color: white;
+            border: none;
+            padding: 18px 25px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #2e7d32;
+            transition: 0.2s;
+            margin: 8px;
+            width: 95%;
+            white-space: normal;
+        }
+        .btn-big:active { transform: translateY(4px); box-shadow: none; }
+        .btn-audio { background-color: #0288d1; box-shadow: 0 5px 0 #01579b; } /* Niebieski dla Audio */
+        .btn-next { background-color: #fbc02d; color: #333; box-shadow: 0 5px 0 #f57f17; } /* Złoty dla Dalej */
+
+        /* FISZKI */
+        .flashcard-scene { width: 100%; height: 350px; perspective: 1000px; margin-bottom: 20px; cursor: pointer;}
+        .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s; }
+        .flashcard.flipped { transform: rotateY(180deg); }
+        .card-face {
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            border-radius: 20px; padding: 15px; box-sizing: border-box;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 3px solid #43a047;
+        }
+        .front { background-color: #f1f8e9; color: #1b5e20; }
+        .back { background-color: #fffde7; color: #333; transform: rotateY(180deg); border-color: #fbc02d; }
+        .emoji { font-size: 60px; margin-bottom: 10px; }
+        .term { font-size: 34px; font-weight: bold; margin-bottom: 10px; }
+        .def { font-size: 26px; font-weight: bold; }
+        .phonetic { font-size: 18px; color: #555; font-style: italic; margin-top: 5px; }
+
+        /* QUIZ */
+        .quiz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+        .quiz-btn {
+            background-color: #c8e6c9; border: none; padding: 15px;
+            font-size: 18px; border-radius: 15px; cursor: pointer; color: #1b5e20; font-weight: 600;
+            box-shadow: 0 4px 0 #81c784;
+            min-height: 80px; display: flex; align-items: center; justify-content: center;
+        }
+        .quiz-btn:hover { background-color: #a5d6a7; }
+        .correct { background-color: #66bb6a !important; color: white !important; box-shadow: 0 4px 0 #2e7d32 !important;}
+        .wrong { background-color: #ef5350 !important; color: white !important; opacity: 0.5; }
+
+        .hidden { display: none !important; }
+        .small-text { font-size: 14px; color: #888; margin-top: 5px; }
+
+    </style>
+</head>
+<body>
+
+<div id="container">
+    
+    <div id="step-start">
+        <h1>Angielski: Zakupy 🇬🇧</h1>
+        <p>Nauczymy się słówek o zakupach i pieniądzach. System przeczyta Ci je z brytyjskim akcentem!</p>
+        <p class="small-text">Protokół 4.0: Pełna Baza</p>
+        
+        <button class="btn-big btn-audio" onclick="playLessonPart(1)">🎧 Lekcja 1: Promocje</button>
+        <button class="btn-big btn-audio" onclick="playLessonPart(2)">🎧 Lekcja 2: Pieniądze</button>
+        <button class="btn-big btn-audio" onclick="playLessonPart(3)">🎧 Lekcja 3: Zwroty</button>
+        
+        <br>
+        <button class="btn-big btn-next" onclick="goToFlashcards()">Idź do Fiszek ➡</button>
+    </div>
+
+    <div id="step-flashcards" class="hidden">
+        <h2>Trening Słówek</h2>
+        <div class="flashcard-scene" onclick="flipCard()">
+            <div class="flashcard" id="card">
+                <div class="card-face front">
+                    <div class="emoji" id="fc-emoji"></div>
+                    <div class="term" id="fc-en">...</div>
+                    <div class="small-text">Kliknij, by usłyszeć (EN) i zobaczyć (PL)</div>
+                </div>
+                <div class="card-face back">
+                    <div class="def" id="fc-pl">...</div>
+                    <div class="phonetic" id="fc-ph"></div>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-big btn-next" onclick="nextCard()">Następne Słowo ➡</button>
+        <br>
+        <button class="btn-big" style="background-color: #ff5722;" onclick="startQuiz()">Umiem! Testuj mnie 📝</button>
+    </div>
+
+    <div id="step-quiz" class="hidden">
+        <div id="progress">Pytanie 1</div>
+        <div class="emoji" id="q-emoji" style="font-size: 50px;"></div>
+        <h2 id="q-text" style="font-size: 32px; margin: 10px 0;">...</h2>
+        
+        <div class="quiz-grid" id="q-options"></div>
+        <h3 id="feedback" style="min-height: 30px;"></h3>
+        <button id="next-q-btn" class="btn-big btn-next hidden" onclick="nextQuestion()">Dalej ➡</button>
+    </div>
+
+    <div id="step-end" class="hidden">
+        <h1>Great Job! 🎉</h1>
+        <p>Opanowałaś cały materiał na kartkówkę.</p>
+        <button class="btn-big btn-audio" onclick="speak('Good job Julia! You are ready.', 'en-GB')">📢 Posłuchaj Hani (EN)</button>
+        <br>
+        <button class="btn-big" onclick="location.reload()">Powtórz od początku ↺</button>
+    </div>
+
+</div>
+
+<script>
+    // --- BAZA SŁÓWEK ---
+    // en: Angielski, pl: Polski, em: Emoji, cat: Kategoria
+    const vocab = [
+        // CAT 1: Shopping & Promotions
+        { en: "50% off", pl: "Za połowę ceny", em: "🏷️", cat: 1 },
+        { en: "Bargain", pl: "Okazja", em: "🤩", cat: 1 },
+        { en: "Buy one, get one free", pl: "Dwa w cenie jednego", em: "🎁", cat: 1 },
+        { en: "Customer", pl: "Klient", em: "👤", cat: 1 },
+        { en: "Discount", pl: "Zniżka", em: "📉", cat: 1 },
+        { en: "Gift card", pl: "Karta podarunkowa", em: "💳", cat: 1 },
+        { en: "On special offer", pl: "W promocji", em: "✨", cat: 1 },
+        { en: "Pocket money", pl: "Kieszonkowe", em: "💰", cat: 1 },
+        { en: "Shop assistant", pl: "Ekspedient / Ekspedientka", em: "💁‍♀️", cat: 1 },
+        { en: "Shopping mall", pl: "Centrum handlowe", em: "🏬", cat: 1 },
+        { en: "Street market", pl: "Bazar uliczny", em: "⛺", cat: 1 },
+        { en: "The sales", pl: "Wyprzedaż", em: "🛍️", cat: 1 },
+
+        // CAT 2: Money & Payments
+        { en: "Cash machine", pl: "Bankomat", em: "🏧", cat: 2 },
+        { en: "Change", pl: "Reszta (pieniądze)", em: "🪙", cat: 2 },
+        { en: "Pay by card", pl: "Płacić kartą", em: "💳", cat: 2 },
+        { en: "Pay in cash", pl: "Płacić gotówką", em: "💵", cat: 2 },
+        { en: "Pay contactless", pl: "Płacić zbliżeniowo", em: "📡", cat: 2 },
+        { en: "Receipt", pl: "Paragon", em: "🧾", cat: 2 },
+
+        // CAT 3: Phrases
+        { en: "Can I pay contactless?", pl: "Czy mogę zapłacić zbliżeniowo?", em: "🗣️", cat: 3 },
+        { en: "Here's your change and receipt", pl: "Proszę, to reszta i paragon", em: "🤲", cat: 3 }
+    ];
+
+    // --- AUDIO ENGINE ---
+    function speak(text, lang) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = lang; // 'en-GB' lub 'pl-PL'
+        u.rate = 0.9;
+        window.speechSynthesis.speak(u);
+    }
+
+    // Lekcja Hani (ciągła)
+    function playLessonPart(catIndex) {
+        window.speechSynthesis.cancel();
+        
+        const words = vocab.filter(v => v.cat === catIndex);
+        let intro = "";
+        if(catIndex === 1) intro = "Lekcja pierwsza. Zakupy i promocje. Słuchaj i powtarzaj.";
+        if(catIndex === 2) intro = "Lekcja druga. Pieniądze i rodzaje płatności.";
+        if(catIndex === 3) intro = "Lekcja trzecia. Przydatne zwroty przy kasie.";
+
+        const q = [];
+        q.push({t: intro, l: 'pl-PL'});
+        
+        words.forEach(w => {
+            q.push({t: w.en, l: 'en-GB'}); // Angielski
+            q.push({t: w.pl, l: 'pl-PL'}); // Polski
+        });
+
+        let i = 0;
+        function playNext() {
+            if (i >= q.length) return;
+            const item = q[i];
+            const u = new SpeechSynthesisUtterance(item.t);
+            u.lang = item.l;
+            u.rate = 0.85; // Wolniej dla nauki
+            u.onend = () => { i++; playNext(); };
+            window.speechSynthesis.speak(u);
+        }
+        playNext();
+    }
+
+    // --- FISZKI ---
+    let fcIndex = 0;
+    
+    function goToFlashcards() {
+        window.speechSynthesis.cancel();
+        document.getElementById('step-start').classList.add('hidden');
+        document.getElementById('step-flashcards').classList.remove('hidden');
+        loadFlashcard();
+    }
+
+    function loadFlashcard() {
+        const c = document.getElementById('card');
+        c.classList.remove('flipped');
+        const item = vocab[fcIndex];
+        
+        setTimeout(() => {
+            document.getElementById('fc-emoji').innerText = item.em;
+            document.getElementById('fc-en').innerText = item.en;
+            document.getElementById('fc-pl').innerText = item.pl;
+        }, 300);
+    }
+
+    function flipCard() {
+        const c = document.getElementById('card');
+        const item = vocab[fcIndex];
+        
+        if(!c.classList.contains('flipped')) {
+            c.classList.add('flipped');
+            // Najpierw EN, potem PL
+            const u1 = new SpeechSynthesisUtterance(item.en);
+            u1.lang = 'en-GB';
+            u1.rate = 0.8;
+            u1.onend = () => {
+                const u2 = new SpeechSynthesisUtterance(item.pl);
+                u2.lang = 'pl-PL';
+                window.speechSynthesis.speak(u2);
+            };
+            window.speechSynthesis.speak(u1);
+        }
+    }
+
+    function nextCard() {
+        window.speechSynthesis.cancel();
+        fcIndex = (fcIndex + 1) % vocab.length;
+        loadFlashcard();
+    }
+
+    // --- QUIZ TOTALNY (PROTOKÓŁ 4.0) ---
+    let qIndex = 0;
+    let quizData = [];
+
+    function startQuiz() {
+        window.speechSynthesis.cancel();
+        document.getElementById('step-flashcards').classList.add('hidden');
+        document.getElementById('step-quiz').classList.remove('hidden');
+        
+        // Generujemy pytania dla WSZYSTKICH słów
+        quizData = vocab.map(item => {
+            // Dystraktory (3 błędne odpowiedzi polskie)
+            const distractors = vocab
+                .filter(v => v.en !== item.en)
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 3)
+                .map(v => v.pl);
+            
+            return {
+                q: item.en,
+                emoji: item.em,
+                correct: item.pl,
+                options: [item.pl, ...distractors].sort(() => 0.5 - Math.random())
+            };
+        }).sort(() => 0.5 - Math.random()); // Mieszamy kolejność pytań
+
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        if(qIndex >= quizData.length) {
+            document.getElementById('step-quiz').classList.add('hidden');
+            document.getElementById('step-end').classList.remove('hidden');
+            return;
+        }
+
+        const q = quizData[qIndex];
+        document.getElementById('progress').innerText = `Pytanie ${qIndex+1} z ${quizData.length}`;
+        document.getElementById('q-text').innerText = q.q;
+        document.getElementById('q-emoji').innerText = q.emoji;
+        document.getElementById('feedback').innerText = "";
+        document.getElementById('next-q-btn').classList.add('hidden');
+
+        // Lektor czyta pytanie po angielsku
+        speak(q.q, 'en-GB');
+
+        const grid = document.getElementById('q-options');
+        grid.innerHTML = "";
+
+        q.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-btn';
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(opt === q.correct, btn, q.correct);
+            grid.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(isCorrect, btn, correctTxt) {
+        const btns = document.querySelectorAll('.quiz-btn');
+        btns.forEach(b => b.onclick = null);
+
+        if(isCorrect) {
+            btn.classList.add('correct');
+            document.getElementById('feedback').innerText = "Good! 👍";
+            document.getElementById('feedback').style.color = "green";
+            speak("Good job", 'en-GB');
+        } else {
+            btn.classList.add('wrong');
+            btns.forEach(b => {
+                if(b.innerText === correctTxt) b.classList.add('correct');
+            });
+            document.getElementById('feedback').innerText = "Wrong. Look at green.";
+            document.getElementById('feedback').style.color = "red";
+        }
+        document.getElementById('next-q-btn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+        qIndex++;
+        loadQuestion();
+    }
+
+    // Init
+    loadFlashcard();
+
+</script>
+
+</body>
+</html>
