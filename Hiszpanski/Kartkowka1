@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiszpański: Wygląd i Charakter</title>
+    <style>
+        /* STYL GŁÓWNY - HISZPAŃSKA FIESTA */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff3e0; /* Ciepły pomarańcz */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+            color: #3e2723;
+        }
+
+        #container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            width: 95%;
+            max-width: 800px;
+            border: 4px solid #ff6f00; /* Mocny pomarańcz */
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 { margin: 0 0 15px 0; font-size: 28px; color: #e65100; }
+        h2 { color: #ef6c00; margin-top: 0; }
+        p { font-size: 18px; margin-bottom: 20px; line-height: 1.4; }
+
+        /* PRZYCISKI */
+        .btn-big {
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            padding: 18px 25px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #e65100;
+            transition: 0.2s;
+            margin: 8px;
+            width: 95%;
+            white-space: normal;
+        }
+        .btn-big:active { transform: translateY(4px); box-shadow: none; }
+        .btn-audio { background-color: #0277bd; box-shadow: 0 5px 0 #01579b; } /* Niebieski dla Audio */
+        .btn-next { background-color: #43a047; box-shadow: 0 5px 0 #2e7d32; } /* Zielony dla Dalej */
+
+        /* FISZKI */
+        .flashcard-scene { width: 100%; height: 350px; perspective: 1000px; margin-bottom: 20px; cursor: pointer;}
+        .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s; }
+        .flashcard.flipped { transform: rotateY(180deg); }
+        .card-face {
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            border-radius: 20px; padding: 15px; box-sizing: border-box;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 3px solid #ff9800;
+        }
+        .front { background-color: #fff8e1; color: #bf360c; }
+        .back { background-color: #e8f5e9; color: #1b5e20; transform: rotateY(180deg); }
+        .emoji { font-size: 60px; margin-bottom: 10px; }
+        .term { font-size: 38px; font-weight: bold; margin-bottom: 10px; }
+        .def { font-size: 26px; font-weight: bold; }
+        .context { font-size: 18px; color: #555; margin-top: 10px; font-style: italic; }
+
+        /* QUIZ */
+        .quiz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+        .quiz-btn {
+            background-color: #ffe0b2; border: none; padding: 15px;
+            font-size: 18px; border-radius: 15px; cursor: pointer; color: #bf360c; font-weight: 600;
+            box-shadow: 0 4px 0 #ffcc80;
+            min-height: 80px; display: flex; align-items: center; justify-content: center;
+        }
+        .quiz-btn:hover { background-color: #ffcc80; }
+        .correct { background-color: #66bb6a !important; color: white !important; box-shadow: 0 4px 0 #2e7d32 !important;}
+        .wrong { background-color: #ef5350 !important; color: white !important; opacity: 0.5; }
+
+        .hidden { display: none !important; }
+        .small-text { font-size: 14px; color: #888; margin-top: 5px; }
+
+    </style>
+</head>
+<body>
+
+<div id="container">
+    
+    <div id="step-start">
+        <h1>¡Hola Julia! 🇪🇸</h1>
+        <p>Przed Tobą kartkówka z hiszpańskiego: wygląd i charakter. Nauczymy się tego w trybie "Full Immersion".</p>
+        <p class="small-text">Protokół 4.0: Lekcja + Fiszki + Pełny Test</p>
+        
+        <button class="btn-big btn-audio" onclick="playLessonPart(1)">🎧 Lekcja 1: Wygląd (Włosy)</button>
+        <button class="btn-big btn-audio" onclick="playLessonPart(2)">🎧 Lekcja 2: Twarz i Inne</button>
+        <button class="btn-big btn-audio" onclick="playLessonPart(3)">🎧 Lekcja 3: Charakter</button>
+        
+        <br>
+        <button class="btn-big btn-next" onclick="goToFlashcards()">Idź do Fiszek (Trening) ➡</button>
+    </div>
+
+    <div id="step-flashcards" class="hidden">
+        <h2>Trening Słówek</h2>
+        <div class="flashcard-scene" onclick="flipCard()">
+            <div class="flashcard" id="card">
+                <div class="card-face front">
+                    <div class="emoji" id="fc-emoji"></div>
+                    <div class="term" id="fc-es">...</div>
+                    <div class="small-text">Kliknij, by usłyszeć i obrócić</div>
+                </div>
+                <div class="card-face back">
+                    <div class="def" id="fc-pl">...</div>
+                    <div class="context" id="fc-ctx"></div>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-big btn-next" onclick="nextCard()">Następne Słowo ➡</button>
+        <br>
+        <button class="btn-big" style="background-color: #ff5722;" onclick="startQuiz()">Umiem! Testuj mnie 📝</button>
+    </div>
+
+    <div id="step-quiz" class="hidden">
+        <div id="progress">Pytanie 1</div>
+        <div class="emoji" id="q-emoji" style="font-size: 50px;"></div>
+        <h2 id="q-text" style="font-size: 32px; margin: 10px 0;">...</h2>
+        
+        <div class="quiz-grid" id="q-options"></div>
+        <h3 id="feedback" style="min-height: 30px;"></h3>
+        <button id="next-q-btn" class="btn-big btn-next hidden" onclick="nextQuestion()">Dalej ➡</button>
+    </div>
+
+    <div id="step-end" class="hidden">
+        <h1>¡Felicidades! 🎉</h1>
+        <p>Przeszłaś przez cały materiał. Wszystkie słówka zaliczone.</p>
+        <button class="btn-big btn-audio" onclick="speak('¡Muy bien Julia! Jestem z ciebie dumna. Jesteś gotowa na kartkówkę.', 'pl-PL')">📢 Posłuchaj Hani</button>
+        <br>
+        <button class="btn-big" onclick="location.reload()">Powtórz od początku ↺</button>
+    </div>
+
+</div>
+
+<script>
+    // --- BAZA SŁÓWEK (Zgodna z PDF) ---
+    // Format: [Hiszpański, Polski, Emoji, Kategoria (do lekcji)]
+    const vocab = [
+        // Wygląd - Włosy
+        { es: "Moreno", pl: "Brunet / Ciemnowłosy", em: "👦🏽", cat: 1 },
+        { es: "Rubio", pl: "Blondyn", em: "👱‍♂️", cat: 1 },
+        { es: "Pelirrojo", pl: "Rudy", em: "👨‍🦰", cat: 1 },
+        { es: "Calvo", pl: "Łysy", em: "👨‍🦲", cat: 1 },
+        { es: "Pelo liso", pl: "Proste włosy", em: "👩‍🦰", cat: 1 }, // używam ogólnego emoji
+        { es: "Pelo rizado", pl: "Kręcone włosy", em: "👩‍🦱", cat: 1 },
+        { es: "Pelo corto", pl: "Krótkie włosy", em: "🧒", cat: 1 },
+        { es: "Pelo largo", pl: "Długie włosy", em: "👩", cat: 1 },
+        
+        // Wygląd - Twarz i Inne
+        { es: "Barba", pl: "Broda", em: "🧔", cat: 2 },
+        { es: "Bigote", pl: "Wąsy", em: "👨", cat: 2 }, // emoji z wąsami
+        
+        // Charakter - Pozytywne
+        { es: "Amable", pl: "Miły / Uprzejmy", em: "😊", cat: 3 },
+        { es: "Optimista", pl: "Optymista", em: "🌞", cat: 3 },
+        { es: "Gracioso", pl: "Zabawny", em: "😂", cat: 3 },
+        
+        // Charakter - Negatywne/Inne
+        { es: "Impaciente", pl: "Niecierpliwy", em: "😤", cat: 3 },
+        { es: "Serio", pl: "Poważny", em: "😐", cat: 3 },
+        { es: "Antipático", pl: "Niesympatyczny", em: "😒", cat: 3 },
+        { es: "Tímido", pl: "Nieśmiały", em: "🫣", cat: 3 },
+        { es: "Introvertido", pl: "Introwertyk", em: "😶", cat: 3 },
+        { es: "Pesimista", pl: "Pesymista", em: "🌧️", cat: 3 }
+    ];
+
+    // --- LEKTOR ---
+    function speak(text, lang) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = lang;
+        u.rate = 0.9;
+        window.speechSynthesis.speak(u);
+    }
+
+    // Funkcja do lekcji ciągłej (Hania czyta listę)
+    function playLessonPart(catIndex) {
+        window.speechSynthesis.cancel();
+        
+        const words = vocab.filter(v => v.cat === catIndex);
+        let intro = "";
+        if(catIndex === 1) intro = "Lekcja pierwsza. Opisujemy włosy.";
+        if(catIndex === 2) intro = "Lekcja druga. Twarz i zarost.";
+        if(catIndex === 3) intro = "Lekcja trzecia. Cechy charakteru.";
+
+        // Kolejka wypowiedzi
+        const q = [];
+        q.push({t: intro, l: 'pl-PL'});
+        
+        words.forEach(w => {
+            q.push({t: w.es, l: 'es-ES'}); // Hiszpański
+            q.push({t: w.pl, l: 'pl-PL'}); // Polski
+        });
+
+        // Odtwarzanie sekwencyjne
+        let i = 0;
+        function playNext() {
+            if (i >= q.length) return;
+            const item = q[i];
+            const u = new SpeechSynthesisUtterance(item.t);
+            u.lang = item.l;
+            u.rate = 0.9;
+            u.onend = () => { i++; playNext(); };
+            window.speechSynthesis.speak(u);
+        }
+        playNext();
+    }
+
+    // --- LOGIKA FISZEK ---
+    let fcIndex = 0;
+    
+    function goToFlashcards() {
+        window.speechSynthesis.cancel();
+        document.getElementById('step-start').classList.add('hidden');
+        document.getElementById('step-flashcards').classList.remove('hidden');
+        loadFlashcard();
+    }
+
+    function loadFlashcard() {
+        const c = document.getElementById('card');
+        c.classList.remove('flipped');
+        const item = vocab[fcIndex];
+        
+        setTimeout(() => {
+            document.getElementById('fc-emoji').innerText = item.em;
+            document.getElementById('fc-es').innerText = item.es;
+            document.getElementById('fc-pl').innerText = item.pl;
+            document.getElementById('fc-ctx').innerText = ""; 
+        }, 300);
+    }
+
+    function flipCard() {
+        const c = document.getElementById('card');
+        const item = vocab[fcIndex];
+        
+        if(!c.classList.contains('flipped')) {
+            c.classList.add('flipped');
+            // Najpierw hiszpański, potem polski
+            const u1 = new SpeechSynthesisUtterance(item.es);
+            u1.lang = 'es-ES';
+            u1.onend = () => {
+                const u2 = new SpeechSynthesisUtterance(item.pl);
+                u2.lang = 'pl-PL';
+                window.speechSynthesis.speak(u2);
+            };
+            window.speechSynthesis.speak(u1);
+        }
+    }
+
+    function nextCard() {
+        window.speechSynthesis.cancel();
+        fcIndex = (fcIndex + 1) % vocab.length;
+        loadFlashcard();
+    }
+
+    // --- LOGIKA QUIZU (PROTOKÓŁ 4.0 - WSZYSTKIE PYTANIA) ---
+    let qIndex = 0;
+    let quizData = [];
+
+    function startQuiz() {
+        window.speechSynthesis.cancel();
+        document.getElementById('step-flashcards').classList.add('hidden');
+        document.getElementById('step-quiz').classList.remove('hidden');
+        
+        // Generowanie pytań: DLA KAŻDEGO SŁOWA Z BAZY
+        // Nie losujemy puli, bierzemy wszystko.
+        // Mieszamy tylko kolejność pytań.
+        quizData = vocab.map(item => {
+            // Generuj 3 dystraktory (błędne odpowiedzi)
+            const distractors = vocab
+                .filter(v => v.es !== item.es) // inne słowa
+                .sort(() => 0.5 - Math.random()) // wymieszaj
+                .slice(0, 3) // weź 3
+                .map(v => v.pl);
+            
+            return {
+                q: item.es, // Pytanie: Słowo hiszpańskie
+                emoji: item.em,
+                correct: item.pl, // Odpowiedź: Polskie znaczenie
+                options: [item.pl, ...distractors].sort(() => 0.5 - Math.random()) // Wymieszane opcje
+            };
+        }).sort(() => 0.5 - Math.random()); // Mieszamy kolejność pytań
+
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        if(qIndex >= quizData.length) {
+            document.getElementById('step-quiz').classList.add('hidden');
+            document.getElementById('step-end').classList.remove('hidden');
+            return;
+        }
+
+        const q = quizData[qIndex];
+        document.getElementById('progress').innerText = `Pytanie ${qIndex+1} z ${quizData.length}`;
+        document.getElementById('q-text').innerText = q.q;
+        document.getElementById('q-emoji').innerText = q.emoji;
+        document.getElementById('feedback').innerText = "";
+        document.getElementById('next-q-btn').classList.add('hidden');
+
+        // Czytaj pytanie po hiszpańsku
+        speak(q.q, 'es-ES');
+
+        const grid = document.getElementById('q-options');
+        grid.innerHTML = "";
+
+        q.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-btn';
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(opt === q.correct, btn, q.correct);
+            grid.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(isCorrect, btn, correctTxt) {
+        const btns = document.querySelectorAll('.quiz-btn');
+        btns.forEach(b => b.onclick = null);
+
+        if(isCorrect) {
+            btn.classList.add('correct');
+            document.getElementById('feedback').innerText = "¡Muy bien! 👍";
+            document.getElementById('feedback').style.color = "green";
+            speak("Dobrze", 'pl-PL');
+        } else {
+            btn.classList.add('wrong');
+            btns.forEach(b => {
+                if(b.innerText === correctTxt) b.classList.add('correct');
+            });
+            document.getElementById('feedback').innerText = "Pomyłka. Zobacz zielone.";
+            document.getElementById('feedback').style.color = "red";
+        }
+        document.getElementById('next-q-btn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+        qIndex++;
+        loadQuestion();
+    }
+
+    // Init
+    loadFlashcard();
+
+</script>
+
+</body>
+</html>
