@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biologia: Układ Pokarmowy (Losowy)</title>
+<style>
+    body { font-family: 'Verdana', sans-serif; background-color: #f0f8ff; padding: 10px; text-align: center; }
+    #quiz-container { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    h1 { color: #2e8b57; margin-bottom: 10px; font-size: 1.5em; }
+    .question { font-size: 1.3em; margin-bottom: 20px; font-weight: bold; color: #333; }
+    .btn { display: block; width: 100%; padding: 20px; margin: 12px 0; font-size: 1.2em; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 12px; transition: 0.2s; touch-action: manipulation; }
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { background-color: #ccc; cursor: not-allowed; transform: none; }
+    .feedback { font-size: 1.2em; margin-top: 15px; font-weight: bold; min-height: 30px; }
+    .correct { color: green; }
+    .wrong { color: red; }
+    #score { font-size: 1.5em; color: #2e8b57; margin-top: 20px; }
+    #progress { font-size: 0.9em; color: #666; margin-bottom: 10px; }
+    #diagram-container { text-align: center; margin-bottom: 15px; display: none; }
+    #question-image { max-width: 100%; height: auto; border-radius: 10px; border: 2px solid #ddd; }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>🌱 Układ Pokarmowy</h1>
+    <div id="progress">Ładowanie...</div>
+    
+    <div id="diagram-container">
+        <img id="question-image" src="" alt="Schemat">
+    </div>
+    
+    <div id="question-text" class="question"></div>
+    <div id="answers"></div>
+    <div id="feedback" class="feedback"></div>
+    <button id="next-btn" class="btn" style="background-color: #2196F3; display:none; margin-top:20px;" onclick="nextQuestion()">Następne pytanie ➡️</button>
+</div>
+
+<script>
+    // Link do obrazka (działa lokalnie)
+    const onlineImage = "ukl-pok.jpg";
+
+    // BAZA PYTAŃ
+    // UWAGA: W tej wersji "correct: 0" oznacza, że PIERWSZA odpowiedź na liście (w kodzie) jest poprawna.
+    // Skrypt sam je potem pomiesza na ekranie, więc tu wpisuj poprawną zawsze jako pierwszą!
+    const rawQuestions = [
+        {
+            q: "Spójrz na schemat. Który narząd produkuje żółć?",
+            img: true,
+            a: ["Wątroba", "Trzustka", "Żołądek", "Jelito grube"],
+            correct: 0 
+        },
+        {
+            q: "Gdzie rozpoczyna się trawienie cukrów?",
+            img: false,
+            a: ["W jamie ustnej", "W żołądku", "W jelicie cienkim", "W przełyku"],
+            correct: 0
+        },
+        {
+            q: "Jaką funkcję pełni kwas solny w żołądku?",
+            img: false,
+            a: ["Zabija bakterie i aktywuje enzymy", "Trawi cukry", "Wchłania wodę", "Rozbija tłuszcze"],
+            correct: 0
+        },
+        {
+            q: "Enzym, który trawi białka w żołądku to:",
+            img: false,
+            a: ["Pepsyna", "Amylaza", "Lipaza", "Żółć"],
+            correct: 0
+        },
+        {
+            q: "Prawda czy Fałsz: Tłuszcze są trawione głównie w jamie ustnej.",
+            img: false,
+            a: ["FAŁSZ", "PRAWDA"], // Tu FAŁSZ jest poprawne (indeks 0)
+            correct: 0
+        },
+        {
+            q: "Kosmki jelitowe znajdują się w jelicie cienkim. Jaka jest ich rola?",
+            img: false,
+            a: ["Zwiększają powierzchnię wchłaniania", "Produkują kwas solny", "Rozdrabniają pokarm", "Magazynują żółć"],
+            correct: 0
+        },
+        {
+            q: "Który składnik pokarmowy pełni funkcję budulcową?",
+            img: false,
+            a: ["Białka", "Cukry", "Tłuszcze", "Witaminy"],
+            correct: 0
+        },
+        {
+            q: "Co dzieje się w jelicie grubym?",
+            img: false,
+            a: ["Wchłanianie wody i formowanie kału", "Trawienie białek", "Trawienie tłuszczów", "Wstępne trawienie cukrów"],
+            correct: 0
+        },
+        {
+            q: "Która witamina powstaje w naszej skórze pod wpływem słońca?",
+            img: false,
+            a: ["Witamina D", "Witamina C", "Witamina A", "Witamina B12"],
+            correct: 0
+        },
+        {
+            q: "Choroba brudnych rąk, wywoływana przez pasożyta to:",
+            img: false,
+            a: ["Owsica", "Próchnica", "Krzywica", "Szkorbut"],
+            correct: 0
+        },
+        {
+            q: "Na schemacie 'Przełyk' to długa rura prowadząca do żołądka. Jaką pełni funkcję?",
+            img: true,
+            a: ["Transportuje pokarm", "Trawi białka", "Wchłania witaminy", "Produkuje ślinę"],
+            correct: 0
+        }
+    ];
+
+    let questions = [];
+    let currentQuestion = 0;
+    let score = 0;
+
+    // Funkcja mieszająca (algorytm Fisher-Yates)
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // Przygotowanie quizu (mieszanie pytań)
+    function initQuiz() {
+    // 1. Kopiujemy wszystkie pytania
+    let allQuestions = JSON.parse(JSON.stringify(rawQuestions));
+    
+    // 2. Mieszamy je wszystkie
+    shuffleArray(allQuestions);
+    
+    // 3. Bierzemy tylko pierwsze 10 sztuk (wycinamy kawałek tortu)
+    questions = allQuestions.slice(0, 10); 
+    
+    // Reszta bez zmian. .length teraz wyniesie 10, a nie 50.
+    currentQuestion = 0;
+    score = 0;
+    loadQuestion();
+}
+    function loadQuestion() {
+        const q = questions[currentQuestion];
+        
+        // Obsługa obrazka
+        const imgContainer = document.getElementById('diagram-container');
+        const imgElement = document.getElementById('question-image');
+        
+        if (q.img) {
+            imgElement.src = onlineImage;
+            imgContainer.style.display = "block";
+        } else {
+            imgContainer.style.display = "none";
+        }
+
+        document.getElementById('question-text').textContent = q.q;
+        document.getElementById('progress').textContent = `Pytanie ${currentQuestion + 1} z ${questions.length}`;
+        document.getElementById('feedback').textContent = "";
+        document.getElementById('feedback').className = "feedback";
+        document.getElementById('next-btn').style.display = "none";
+        
+        const answersDiv = document.getElementById('answers');
+        answersDiv.innerHTML = "";
+
+        // PRZYGOTOWANIE ODPOWIEDZI (MIESZANIE)
+        // Tworzymy obiekty, które pamiętają, czy odpowiedź jest poprawna
+        let answers = q.a.map((text, index) => {
+            return { text: text, isCorrect: (index === q.correct) };
+        });
+        
+        // Mieszamy odpowiedzi
+        shuffleArray(answers);
+
+        // Generujemy przyciski
+        answers.forEach((ans) => {
+            const btn = document.createElement('button');
+            btn.className = 'btn';
+            btn.textContent = ans.text;
+            btn.onclick = () => checkAnswer(ans.isCorrect, btn, answers);
+            answersDiv.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(isCorrect, btnElement, allAnswers) {
+        const buttons = document.querySelectorAll('#answers .btn');
+        buttons.forEach(btn => btn.disabled = true); // Blokujemy wszystkie
+
+        if (isCorrect) {
+            btnElement.style.backgroundColor = "#2e8b57";
+            document.getElementById('feedback').textContent = "Brawo! 🎉";
+            document.getElementById('feedback').className = "feedback correct";
+            score++;
+        } else {
+            btnElement.style.backgroundColor = "#d32f2f";
+            document.getElementById('feedback').textContent = "Niestety, pomyłka.";
+            document.getElementById('feedback').className = "feedback wrong";
+            
+            // Podświetl poprawną odpowiedź (musimy ją znaleźć w pomieszanych przyciskach)
+            // Szukamy przycisku, który ma tekst poprawnej odpowiedzi
+            const correctAnsObj = allAnswers.find(a => a.isCorrect);
+            buttons.forEach(b => {
+                if (b.textContent === correctAnsObj.text) {
+                    b.style.backgroundColor = "#2e8b57";
+                }
+            });
+        }
+        document.getElementById('next-btn').style.display = "block";
+    }
+
+    function nextQuestion() {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+            loadQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    function showResult() {
+        document.getElementById('diagram-container').style.display = "none";
+        
+        let message = "";
+        if (score === questions.length) message = "Mistrzostwo świata! 🏆";
+        else if (score > 7) message = "Bardzo dobry wynik! 👍";
+        else message = "Możemy spróbować jeszcze raz! 💪";
+
+        document.getElementById('quiz-container').innerHTML = `
+            <h1>Koniec testu!</h1>
+            <div id="score">Wynik: ${score} / ${questions.length}</div>
+            <p style="font-size:1.4em; margin-top:20px; color:#333;">${message}</p>
+            <button class="btn" style="background-color: #2196F3; margin-top:30px;" onclick="location.reload()">Zagraj od nowa 🔄</button>
+        `;
+    }
+
+    // Start
+    initQuiz();
+</script>
+
+</body>
+</html>
