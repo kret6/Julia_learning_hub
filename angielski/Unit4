@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angielski: Unit 4 - Shopping Spree</title>
+<style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f4f8; padding: 10px; text-align: center; }
+    #quiz-container { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+    h1 { color: #00247d; margin-bottom: 5px; font-size: 1.6em; } /* Kolor "Royal Blue" */
+    h2 { color: #cf142b; font-size: 1em; margin-top: 0; margin-bottom: 20px; } /* Czerwony akcent */
+    
+    .question { font-size: 1.5em; margin-bottom: 25px; font-weight: bold; color: #333; padding: 15px; background-color: #e8eaf6; border-radius: 10px; }
+    
+    .btn { display: block; width: 100%; padding: 15px; margin: 12px 0; font-size: 1.2em; cursor: pointer; background-color: #fff; color: #333; border: 2px solid #e0e0e0; border-radius: 15px; transition: 0.2s; font-weight: 500; }
+    .btn:hover { background-color: #f5f5f5; border-color: #bbb; }
+    .btn:disabled { cursor: not-allowed; opacity: 0.7; }
+    
+    .correct { background-color: #4CAF50 !important; color: white !important; border-color: #4CAF50 !important; }
+    .wrong { background-color: #f44336 !important; color: white !important; border-color: #f44336 !important; }
+    
+    #feedback { font-size: 1.3em; margin-top: 20px; font-weight: bold; min-height: 30px; }
+    #progress { color: #888; margin-bottom: 10px; font-size: 0.9em; }
+    
+    /* Flagi jako małe ozdobniki */
+    .lang-icon { font-size: 1.5em; vertical-align: middle; margin-right: 10px; }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>🇬🇧 English Master</h1>
+    <h2>Unit 4: Zakupy i Pieniądze</h2>
+    <div id="progress">Ładowanie...</div>
+    
+    <div id="question-box">
+        <div id="question-text" class="question"></div>
+        <div id="answers"></div>
+    </div>
+
+    <div id="feedback"></div>
+    <button id="next-btn" class="btn" style="background-color: #00247d; color: white; display:none; margin-top:20px;" onclick="nextQuestion()">Next Question ➡️</button>
+</div>
+
+<script>
+    // Baza słówek zrekonstruowana ze skanu (str. 54, kolumny 1 i 2)
+    // Format: q: Pytanie, a: [Dobra odp, Zła1, Zła2, Zła3]
+    const rawData = [
+        // --- Shopping (Zakupy) ---
+        { pl: "okazja (cenowa)", en: "bargain", distractors: ["baggage", "brand", "basket"] },
+        { pl: "klient / klientka", en: "customer", distractors: ["customs", "costume", "consumer"] },
+        { pl: "zniżka", en: "discount", distractors: ["discuss", "count", "receipt"] },
+        { pl: "karta podarunkowa", en: "gift card", distractors: ["credit card", "id card", "post card"] },
+        { pl: "w promocji / w ofercie specjalnej", en: "on special offer", distractors: ["on sale", "on price", "on discount"] },
+        { pl: "kieszonkowe", en: "pocket money", distractors: ["cash money", "wallet", "profit"] },
+        { pl: "ekspedient / sprzedawca", en: "shop assistant", distractors: ["shopping list", "manager", "shopper"] },
+        { pl: "centrum handlowe", en: "shopping mall", distractors: ["shop center", "market", "high street"] },
+        { pl: "bazar uliczny / targ", en: "street market", distractors: ["supermarket", "street shop", "grocery"] },
+        { pl: "wyprzedaż", en: "the sales", distractors: ["the sells", "the salary", "the shops"] },
+        { pl: "za połowę ceny", en: "50% off", distractors: ["50% of", "half price off", "cheap price"] },
+        { pl: "kup jeden, drugi gratis", en: "buy one, get one free", distractors: ["buy one, take two", "one for one", "free shopping"] },
+
+        // --- Money & Payments (Pieniądze) ---
+        { pl: "bankomat", en: "cash machine", distractors: ["cashier", "money box", "bank computer"] },
+        { pl: "reszta (pieniędzy)", en: "change", distractors: ["rest", "leftovers", "chance"] },
+        { pl: "płacić kartą", en: "pay by card", distractors: ["pay on card", "pay with card", "use card"] },
+        { pl: "płacić gotówką", en: "pay in cash", distractors: ["pay by cash", "pay with money", "pay coins"] },
+        { pl: "płacić zbliżeniowo", en: "pay contactless", distractors: ["pay contact", "pay wifi", "pay touch"] },
+        { pl: "paragon", en: "receipt", distractors: ["recipe", "reception", "bill"] },
+
+        // --- Useful Phrases (Przydatne zwroty) ---
+        { pl: "Czy mogę zapłacić zbliżeniowo?", en: "Can I pay contactless?", distractors: ["Can I pay contact?", "Do I pay wifi?", "Can I buy contactless?"] },
+        { pl: "Proszę, to Pani reszta i paragon.", en: "Here's your change and receipt.", distractors: ["Here is your rest and recipe.", "Take your money and bill.", "Change and receipt for you."] },
+        { pl: "Chciałbym zapłacić za te słuchawki.", en: "I'd like to pay for these headphones.", distractors: ["I want buy headphones.", "I pay for this headphones.", "I like headphones."] },
+        { pl: "Poproszę ten mały niebieski.", en: "I'll take the small blue one.", distractors: ["I take small blue.", "Please small blue.", "I want the blue small."] },
+        { pl: "Przepraszam, nie przyjmujemy kart.", en: "Sorry, we don't take cards.", distractors: ["Sorry, no cards.", "We don't like cards.", "Only cash please."] },
+        { pl: "Mam banknot 20-funtowy.", en: "I've got a £20 note.", distractors: ["I have £20 paper.", "I've got a £20 receipt.", "I have 20 pounds cash."] }
+    ];
+
+    let questions = [];
+    let currentQuestion = 0;
+    let score = 0;
+
+    // Funkcja mieszająca (Tasowanie)
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // Generowanie pytań w obie strony (PL->ENG i ENG->PL)
+    function generateQuestions() {
+        let qList = [];
+        
+        rawData.forEach(item => {
+            // Pytanie 1: PL -> ENG
+            let answersEng = [item.en, ...item.distractors];
+            qList.push({
+                type: "PL",
+                q: item.pl,
+                a: answersEng,
+                correct: item.en // Przechowujemy tekst poprawnej odpowiedzi
+            });
+
+            // Pytanie 2: ENG -> PL (Tworzymy dystraktory polskie "w locie" biorąc losowe inne hasła)
+            // To prosta metoda: bierzemy 3 losowe inne polskie znaczenia
+            let otherPolish = rawData.filter(x => x.pl !== item.pl).map(x => x.pl);
+            shuffleArray(otherPolish);
+            let answersPl = [item.pl, otherPolish[0], otherPolish[1], otherPolish[2]];
+            
+            qList.push({
+                type: "ENG",
+                q: item.en,
+                a: answersPl,
+                correct: item.pl
+            });
+        });
+
+        return shuffleArray(qList);
+    }
+
+    function initQuiz() {
+        questions = generateQuestions();
+        // Ograniczmy długość quizu do np. 20 pytań na jedną sesję, żeby nie zamęczyć
+        if(questions.length > 20) questions = questions.slice(0, 20);
+        
+        currentQuestion = 0;
+        score = 0;
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        const q = questions[currentQuestion];
+        const langIcon = q.type === "PL" ? "🇵🇱 Co to znaczy po angielsku?" : "🇬🇧 Co to znaczy po polsku?";
+        
+        document.getElementById('question-text').innerHTML = `<div style="font-size:0.6em; color:#666; margin-bottom:10px;">${langIcon}</div>` + q.q;
+        document.getElementById('progress').textContent = `Pytanie ${currentQuestion + 1} z ${questions.length}`;
+        document.getElementById('feedback').textContent = "";
+        document.getElementById('feedback').className = "";
+        document.getElementById('next-btn').style.display = "none";
+        
+        const answersDiv = document.getElementById('answers');
+        answersDiv.innerHTML = "";
+
+        // Tasowanie odpowiedzi
+        let shuffledAnswers = shuffleArray([...q.a]);
+
+        shuffledAnswers.forEach((ans) => {
+            const btn = document.createElement('button');
+            btn.className = 'btn';
+            btn.textContent = ans;
+            btn.onclick = () => checkAnswer(ans, q.correct, btn);
+            answersDiv.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(selected, correct, btnElement) {
+        const buttons = document.querySelectorAll('#answers .btn');
+        buttons.forEach(btn => btn.disabled = true);
+
+        if (selected === correct) {
+            btnElement.className = "btn correct";
+            document.getElementById('feedback').textContent = "Excellent! ✨";
+            document.getElementById('feedback').style.color = "green";
+            score++;
+        } else {
+            btnElement.className = "btn wrong";
+            document.getElementById('feedback').textContent = "Ups! Poprawna to: " + correct;
+            document.getElementById('feedback').style.color = "#d32f2f";
+            
+            // Pokaż poprawną
+            buttons.forEach(b => {
+                if (b.textContent === correct) b.className = "btn correct";
+            });
+        }
+        document.getElementById('next-btn').style.display = "block";
+    }
+
+    function nextQuestion() {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+            loadQuestion();
+        } else {
+            document.getElementById('quiz-container').innerHTML = `
+                <h1>Good Job!</h1>
+                <div style="font-size:1.5em; color:#00247d; margin:20px;">Twój wynik: ${score} / ${questions.length}</div>
+                <p>Słówka opanowane. Jutro w szkole będzie easy! 😎</p>
+                <button class="btn" style="background-color: #00247d; color: white;" onclick="location.reload()">Powtórz jeszcze raz</button>
+            `;
+        }
+    }
+
+    initQuiz();
+</script>
+
+</body>
+</html>
