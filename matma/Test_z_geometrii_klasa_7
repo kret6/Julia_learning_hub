@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matematyka: Trening Mistrza</title>
+<style>
+    body { font-family: 'Verdana', sans-serif; background-color: #fff3e0; padding: 10px; text-align: center; }
+    #quiz-container { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    h1 { color: #e65100; margin-bottom: 10px; font-size: 1.5em; }
+    .question { font-size: 1.3em; margin-bottom: 20px; font-weight: bold; color: #333; }
+    
+    /* Nowy styl dla przycisku podpowiedzi */
+    .hint-btn { background-color: #ffca28; color: #333; font-weight: bold; padding: 10px 20px; border: none; border-radius: 20px; cursor: pointer; margin-bottom: 15px; display: inline-block; }
+    .hint-text { display: none; background-color: #fff8e1; border: 1px dashed #ffb300; padding: 10px; margin: 10px 0; color: #555; font-style: italic; }
+
+    .btn { display: block; width: 100%; padding: 18px; margin: 10px 0; font-size: 1.2em; cursor: pointer; background-color: #ff9800; color: white; border: none; border-radius: 12px; transition: 0.2s; }
+    .btn:disabled { background-color: #ccc; cursor: not-allowed; }
+    .feedback { font-size: 1.2em; margin-top: 15px; font-weight: bold; min-height: 30px; }
+    .correct { color: green; }
+    .wrong { color: red; }
+    #question-image { max-width: 100%; height: auto; border-radius: 10px; border: 2px solid #ddd; display: none; margin: 0 auto 15px auto; }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>📐 Geometria: Tajna Broń</h1>
+    <div id="progress" style="margin-bottom:15px; color:#666;">Ładowanie...</div>
+    
+    <img id="question-image" src="" alt="Zadanie">
+    
+    <div id="question-text" class="question"></div>
+
+    <button id="hint-toggle" class="hint-btn" onclick="toggleHint()">💡 Potrzebuję koła ratunkowego</button>
+    <div id="hint-box" class="hint-text"></div>
+    
+    <div id="answers"></div>
+    <div id="feedback" class="feedback"></div>
+    <button id="next-btn" class="btn" style="background-color: #2196F3; display:none; margin-top:20px;" onclick="nextQuestion()">Następne pytanie ➡️</button>
+</div>
+
+<script>
+    // BAZA PYTAŃ Z PODPOWIEDZIAMI
+    const rawQuestions = [
+        // --- DZIAŁ 7: UKŁAD WSPÓŁRZĘDNYCH (NOWOŚĆ!) ---
+        {
+            q: "Punkt A ma współrzędne (3, -2). W której ćwiartce układu leży?",
+            imgSrc: null,
+            hint: "Pierwsza liczba (3) jest dodatnia (prawo), druga (-2) ujemna (dół). Prawo-dół to IV ćwiartka.",
+            a: ["IV ćwiartka", "I ćwiartka", "II ćwiartka", "III ćwiartka"],
+            correct: 0
+        },
+        {
+            q: "Jakie współrzędne ma środek układu współrzędnych (punkt 0)?",
+            imgSrc: null,
+            hint: "To sam środek, gdzie przecinają się osie X i Y.",
+            a: ["(0, 0)", "(1, 1)", "(0, 1)", "(1, 0)"],
+            correct: 0
+        },
+        {
+            q: "Mamy punkty A=(2, 5) i B=(2, 1). Jaka jest odległość między nimi?",
+            imgSrc: null,
+            hint: "Zauważ, że X jest taki sam (2). Policz różnicę igreków: 5 - 1 = ?",
+            a: ["4", "3", "5", "6"],
+            correct: 0
+        },
+        {
+            q: "Punkt P=(-4, -4). Gdzie on leży?",
+            imgSrc: null,
+            hint: "Lewo (minus) i Dół (minus). Lewy dolny róg to III ćwiartka.",
+            a: ["III ćwiartka", "II ćwiartka", "IV ćwiartka", "Na osi Y"],
+            correct: 0
+        },
+        // --- ZADANIA Z KLUCZA ODPOWIEDZI (Nowa Era) ---
+        {
+            q: "Zadanie z klucza: Masz punkty (-2, 0) i (2, 0). Gdzie leży środek tego odcinka?",
+            imgSrc: null,
+            hint: "Środek między -2 a 2 to zero. Wysokość się nie zmienia.",
+            a: ["(0, 0)", "(2, 2)", "(-1, 0)", "(0, 2)"],
+            correct: 0
+        },
+        {
+            q: "Jak obliczyć środek odcinka? (Wzór dla ambitnych)",
+            imgSrc: null,
+            hint: "Dodajesz iksy do siebie i dzielisz na pół. To samo z igrekami. (Średnia arytmetyczna).",
+            a: ["(x1+x2)/2 , (y1+y2)/2", "x1 - x2", "x1 * x2", "Pitagorasem"],
+            correct: 0
+        },
+        {
+            q: "Która oś to Oś OY?",
+            imgSrc: null,
+            hint: "Ygrek jest jak Yeti - stoi pionowo (albo jak krawat).",
+            a: ["Pionowa (góra-dół)", "Pozioma (lewo-prawo)", "Ukośna", "Okrągła"],
+            correct: 0
+        },
+        {
+            q: "Co to za figura: A=(0,0), B=(4,0), C=(4,3), D=(0,3)?",
+            imgSrc: null,
+            hint: "Narysuj w głowie. Podstawa 4, wysokość 3. Kąty proste.",
+            a: ["Prostokąt", "Trapez", "Trójkąt", "Romb"],
+            correct: 0
+        },
+		
+		// --- TWIERDZENIE PITAGORASA (PODSTAWY) ---
+        {
+            q: "Jak brzmi Twierdzenie Pitagorasa?",
+            imgSrc: null, 
+            hint: "Suma kwadratów przyprostokątnych jest równa kwadratowi przeciwprostokątnej.",
+            a: ["a² + b² = c²", "a + b = c", "a² - b² = c²", "a² * b² = c²"],
+            correct: 0
+        },
+        {
+            q: "Przyprostokątne mają długości 3 i 4. Ile wynosi przeciwprostokątna (c)?",
+            imgSrc: null,
+            hint: "Policz: 3² + 4² = 9 + 16 = 25. Jaka liczba do kwadratu daje 25?",
+            a: ["5", "7", "6", "25"],
+            correct: 0
+        },
+        {
+            q: "Mamy trójkąt prostokątny. Przeciwprostokątna c=10, jedna przyprostokątna a=6. Oblicz drugą (b).",
+            imgSrc: null, 
+            hint: "Wzór przekształcony: b² = c² - a². Czyli: 100 - 36 = 64.",
+            a: ["8", "4", "16", "64"],
+            correct: 0
+        },
+
+        // --- KWADRAT I JEGO PRZEKĄTNA ---
+        {
+            q: "Wzór na przekątną kwadratu (d) o boku 'a' to:",
+            imgSrc: null,
+            hint: "Przekątna jest dłuższa od boku o pierwiastek z dwóch.",
+            a: ["a√2", "a√3", "a / 2", "a²"],
+            correct: 0
+        },
+        {
+            q: "Bok kwadratu ma 5 cm. Ile ma jego przekątna?",
+            imgSrc: null,
+            hint: "Podstaw do wzoru a√2.",
+            a: ["5√2 cm", "10 cm", "5√3 cm", "25 cm"],
+            correct: 0
+        },
+        {
+            q: "Przekątna kwadratu wynosi 6√2. Jaki jest bok tego kwadratu?",
+            imgSrc: null,
+            hint: "Skoro wzór to a√2, a my mamy 6√2, to co stoi przed pierwiastkiem?",
+            a: ["6", "3", "12", "6√2"],
+            correct: 0
+        },
+
+        // --- TRÓJKĄT RÓWNOBOCZNY ---
+        {
+            q: "Wzór na wysokość (h) trójkąta równobocznego o boku 'a' to:",
+            imgSrc: null,
+            hint: "Zapamiętaj: 'a' razy pierwiastek z TRZECH przez DWA.",
+            a: ["(a√3) / 2", "a√2", "(a√2) / 2", "a√3"],
+            correct: 0
+        },
+        {
+            q: "Bok trójkąta równobocznego ma 10 cm. Jaka jest jego wysokość?",
+            imgSrc: null,
+            hint: "Podstaw do wzoru: (10√3) / 2. Skróć 10 z 2.",
+            a: ["5√3", "10√3", "5√2", "20"],
+            correct: 0
+        },
+        {
+            q: "Pole trójkąta równobocznego. Wzór to:",
+            imgSrc: null, 
+            hint: "a kwadrat razy pierwiastek z 3 przez CZTERY.",
+            a: ["(a²√3) / 4", "(a²√3) / 2", "a * h", "a²"],
+            correct: 0
+        },
+
+        // --- ZADANIA Z KLUCZA ODPOWIEDZI (REKONSTRUKCJA) ---
+        {
+            q: "Czy trójkąt o bokach 6, 8, 10 jest prostokątny?",
+            imgSrc: null,
+            hint: "Sprawdź Pitagorasa: czy 6² + 8² = 10²? (36 + 64 = 100).",
+            a: ["TAK", "NIE"],
+            correct: 0
+        },
+        {
+            q: "Zadanie z klucza: Przeciwprostokątna trójkąta o bokach 5 i 12 wynosi...",
+            imgSrc: null,
+            hint: "5² + 12² = 25 + 144 = 169. Pierwiastek z 169 to?",
+            a: ["13", "17", "15", "14"],
+            correct: 0
+        },
+		
+		// --- GEOMETRIA PŁASKA (KĄTY) ---
+        {
+            q: "Zadanie 5: Spójrz na trójkąt. Mamy kąty 80° i 40°. Ile musi mieć trzeci kąt (x), skoro suma to zawsze 180°?",
+            imgSrc: "zad5.jpg",
+            hint: "Działanie: 180 - (80 + 40) = ...",
+            a: ["60°", "100°", "40°", "120°"],
+            correct: 0
+        },
+        {
+            q: "Zadanie 6: To są kąty wierzchołkowe (leżą naprzeciwko siebie). Jaką miarę ma kąt x?",
+            imgSrc: "zad6.jpg",
+            hint: "Kąty wierzchołkowe są zawsze RÓWNE.",
+            a: ["40°", "140°", "180°", "90°"],
+            correct: 0
+        },
+        {
+            q: "Jak nazywamy kąt, który jest większy niż 180° (wygląda jak nadgryzione ciastko)?",
+            imgSrc: null, // Tu nie trzeba obrazka, ćwiczymy wyobraźnię/nazwę
+            hint: "Jest 'wklęśnięty' do środka.",
+            a: ["Kąt wklęsły", "Kąt rozwarty", "Kąt półpełny", "Kąt ostry"],
+            correct: 0
+        },
+
+        // --- POLA FIGUR (LICZENIE) ---
+        {
+            q: "Zadanie 11: Oblicz pole trójkąta. Podstawa a=8 cm, wysokość h=3 cm.",
+            imgSrc: "zad11.jpg",
+            hint: "Wzór na trójkąt: (a * h) / 2. Czyli (8 * 3) podzielone na pół.",
+            a: ["12 cm²", "24 cm²", "11 cm²", "6 cm²"],
+            correct: 0
+        },
+        {
+            q: "Zadanie 12: Oblicz pole równoległoboku. Podstawa a=7 cm, wysokość h=5 cm.",
+            imgSrc: "zad12.jpg",
+            hint: "Wzór na równoległobok to po prostu: a * h. Nie dzielimy na pół!",
+            a: ["35 cm²", "17,5 cm²", "12 cm²", "70 cm²"],
+            correct: 0
+        },
+        {
+            q: "Zadanie 9: Jakie pole ma kwadrat o boku a=4 cm?",
+            imgSrc: null,
+            hint: "Pole kwadratu to bok razy bok (a * a).",
+            a: ["16 cm²", "8 cm²", "20 cm²", "12 cm²"],
+            correct: 0
+        },
+        {
+            q: "Zadanie 13 (Dla ambitnych): Ta figura to trapez. Górna podstawa ma 5cm, dolna ma 7cm (5+2), wysokość 3cm.",
+            imgSrc: "zad13.jpg",
+            hint: "Możesz to policzyć jako Prostokąt (5*3) dodać Trójkąt (2*3 / 2).",
+            a: ["18 cm²", "15 cm²", "21 cm²", "35 cm²"],
+            correct: 0
+            // Wyjaśnienie dla Ciebie: Prostokąt 15 + Trójkąt 3 = 18.
+        },
+
+        // --- JEDNOSTKI ---
+        {
+            q: "Zadanie 10: Zamiana jednostek. 4 ary (a) - ile to metrów kwadratowych?",
+            imgSrc: null,
+            hint: "Jeden ar to kwadrat 10m na 10m, czyli ma 100 m². Pomnóż 4 * 100.",
+            a: ["400 m²", "40 m²", "4000 m²", "4 m²"],
+            correct: 0
+        },
+        {
+            q: "Ile stopni ma suma kątów wewnętrznych w KAŻDYM trójkącie?",
+            imgSrc: null,
+            hint: "Zapamiętaj liczbę magiczną dla trójkątów. Kąt półpełny.",
+            a: ["180°", "360°", "90°", "100°"],
+            correct: 0
+        }
+    ];
+
+    let questions = [];
+    let currentQuestion = 0;
+    let score = 0;
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function initQuiz() {
+        let allQuestions = JSON.parse(JSON.stringify(rawQuestions));
+        shuffleArray(allQuestions);
+        questions = allQuestions;
+        currentQuestion = 0;
+        score = 0;
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        const q = questions[currentQuestion];
+        
+        // Resetujemy widok podpowiedzi
+        document.getElementById('hint-box').style.display = "none";
+        document.getElementById('hint-toggle').style.display = "inline-block"; // Pokaż przycisk
+        
+        // Jeśli pytanie nie ma podpowiedzi (pole hint jest puste), ukryj przycisk
+        if (!q.hint) {
+            document.getElementById('hint-toggle').style.display = "none";
+        } else {
+            document.getElementById('hint-box').textContent = q.hint;
+        }
+
+        // Obrazek
+        const imgElement = document.getElementById('question-image');
+        if (q.imgSrc) {
+            imgElement.src = q.imgSrc;
+            imgElement.style.display = "block";
+        } else {
+            imgElement.style.display = "none";
+        }
+
+        document.getElementById('question-text').textContent = q.q;
+        document.getElementById('progress').textContent = `Pytanie ${currentQuestion + 1} z ${questions.length}`;
+        document.getElementById('feedback').textContent = "";
+        document.getElementById('feedback').className = "feedback";
+        document.getElementById('next-btn').style.display = "none";
+        
+        const answersDiv = document.getElementById('answers');
+        answersDiv.innerHTML = "";
+
+        let answers = q.a.map((text, index) => {
+            return { text: text, isCorrect: (index === q.correct) };
+        });
+        
+        shuffleArray(answers);
+
+        answers.forEach((ans) => {
+            const btn = document.createElement('button');
+            btn.className = 'btn';
+            btn.textContent = ans.text;
+            btn.onclick = () => checkAnswer(ans.isCorrect, btn, answers);
+            answersDiv.appendChild(btn);
+        });
+    }
+
+    function toggleHint() {
+        const hintBox = document.getElementById('hint-box');
+        if (hintBox.style.display === "none") {
+            hintBox.style.display = "block";
+        } else {
+            hintBox.style.display = "none";
+        }
+    }
+
+    function checkAnswer(isCorrect, btnElement, allAnswers) {
+        const buttons = document.querySelectorAll('#answers .btn');
+        buttons.forEach(btn => btn.disabled = true);
+
+        // Ukryj przycisk podpowiedzi po odpowiedzi, żeby nie rozpraszał
+        document.getElementById('hint-toggle').style.display = "none"; 
+        document.getElementById('hint-box').style.display = "none";
+
+        if (isCorrect) {
+            btnElement.style.backgroundColor = "#4CAF50";
+            document.getElementById('feedback').textContent = "Brawo! Jesteś wielka! 🌟"; // Wzmocnienie pozytywne
+            document.getElementById('feedback').className = "feedback correct";
+            score++;
+        } else {
+            btnElement.style.backgroundColor = "#f44336";
+            document.getElementById('feedback').textContent = "Jeszcze chwila treningu i będzie dobrze.";
+            document.getElementById('feedback').className = "feedback wrong";
+            
+            const correctAnsObj = allAnswers.find(a => a.isCorrect);
+            buttons.forEach(b => {
+                if (b.textContent === correctAnsObj.text) {
+                    b.style.backgroundColor = "#4CAF50";
+                }
+            });
+        }
+        document.getElementById('next-btn').style.display = "block";
+    }
+
+    function nextQuestion() {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+            loadQuestion();
+        } else {
+            document.getElementById('quiz-container').innerHTML = `
+                <h1>Koniec treningu!</h1>
+                <div style="font-size:1.5em; color:#e65100; margin:20px;">Twój wynik: ${score} / ${questions.length}</div>
+                <p>Nieważne co mówią w szkole - tutaj rządzisz Ty! 😎</p>
+                <button class="btn" onclick="location.reload()">Jeszcze raz</button>
+            `;
+        }
+    }
+
+    initQuiz();
+</script>
+
+</body>
+</html>
