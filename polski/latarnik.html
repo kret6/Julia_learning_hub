@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polski: Latarnik</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #e3f2fd; /* Jasny błękit */
+            margin: 0;
+            padding: 10px;
+            text-align: center;
+            color: #0d47a1; /* Ciemny granat */
+        }
+        #container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+            border: 4px solid #1565c0;
+        }
+        h1 { margin-bottom: 20px; font-size: 26px; }
+        
+        .btn-big {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            margin: 15px 0;
+            border: none;
+            border-radius: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            color: white;
+            box-shadow: 0 5px 0 rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .btn-big:active { transform: translateY(4px); box-shadow: none; }
+        
+        .btn-story { background-color: #1565c0; } /* Granat */
+        .btn-magic { background-color: #00897b; } /* Morski turkus */
+        
+        .btn-quiz { background-color: #f9a825; margin-top: 30px; color: #333;} /* Żółty/Złoty */
+        .btn-opt { background-color: #f1f8e9; color: #33691e; font-size: 18px; padding: 15px; box-shadow: 0 4px 0 #dcedc8;}
+        
+        .hidden { display: none; }
+        .emoji { font-size: 35px; }
+        .quote { font-style: italic; color: #555; margin-bottom: 10px; }
+
+        /* Quiz Styles */
+        .correct { background-color: #66bb6a !important; color: white !important; }
+        .wrong { background-color: #ef5350 !important; color: white !important; }
+        #feedback { font-weight: bold; min-height: 30px; margin-top: 10px; font-size: 20px;}
+    </style>
+</head>
+<body>
+
+<div id="container">
+
+    <div id="menu">
+        <a href="../index.html" style="position:absolute; top:10px; left:10px; text-decoration:none; font-size:30px;">🏠</a>
+        <h1>🌊 Latarnik i Słowa</h1>
+        <p>Posłuchaj o Skawińskim i magicznych sztuczkach pisarza.</p>
+
+        <button class="btn-big btn-story" onclick="playLesson(1)">
+            <span class="emoji">👴</span> 1. Kim był Skawiński?
+        </button>
+
+        <button class="btn-big btn-story" onclick="playLesson(2)">
+            <span class="emoji">📖</span> 2. Budowa Opowiadania
+        </button>
+        
+        <button class="btn-big btn-magic" onclick="playLesson(3)">
+            <span class="emoji">✨</span> 3. Magia (Środki Stylistyczne)
+        </button>
+
+        <button class="btn-big btn-quiz" onclick="startQuiz()">
+            <span class="emoji">🎓</span> Sprawdź się
+        </button>
+    </div>
+
+    <div id="quiz" class="hidden">
+        <div class="quote" id="q-quote"></div>
+        <h2 id="q-text">Pytanie...</h2>
+        <div id="options"></div>
+        <div id="feedback"></div>
+        <button id="next-btn" class="btn-big btn-quiz hidden" onclick="nextQuestion()">Dalej ➡</button>
+    </div>
+
+    <div id="end" class="hidden">
+        <h1>Koniec! ⚓</h1>
+        <p>Jesteś mistrzynią polskiego. Odpoczywaj.</p>
+        <button class="btn-big btn-quiz" onclick="location.reload()">Jeszcze raz?</button>
+        <br>
+        <a href="../index.html" class="btn-big" style="background-color: #1565c0;">Wróć do bazy</a>
+    </div>
+
+</div>
+
+<script>
+    // --- DANE LEKCJI (AUDIO) ---
+    const lessons = {
+        1: "Skawiński to stary Polak, tułacz. Walczył w wielu wojnach, ale na starość chciał spokoju. Został latarnikiem w Aspinwall, daleko od Polski. Był sumienny i pracowity. Ale pewnego dnia dostał paczkę z polskimi książkami. Zaczął czytać Pana Tadeusza, zaczytał się, zapomniał włączyć latarnię i statek się rozbił. Przez tęsknotę za ojczyzną stracił pracę i musiał ruszyć w dalszą tułaczkę.",
+        2: "Co musi mieć opowiadanie? Po pierwsze: CZAS i MIEJSCE akcji. Tutaj to lata 70-te, wyspa Aspinwall koło Panamy. Po drugie: BOHATER, czyli nasz Skawiński. Po trzecie: NARRATOR. W Latarniku narrator wie wszystko, ale nie bierze udziału w akcji. Mamy też DIALOGI (rozmowy) i MONOLOGI (gdy Skawiński mówi do siebie).",
+        3: "Teraz trudniejsze. Pisarze używają magicznych sztuczek. PORÓWNANIE to coś 'jak' coś. Np. 'twardy jak skała'. OŻYWIENIE to gdy rzecz robi to co człowiek. Np. 'morze ryczy', 'zegar idzie'. APOSTROFA to uroczysty zwrot do kogoś, np. 'Litwo! Ojczyzno moja!'."
+    };
+
+    // --- DANE QUIZU ---
+    const quizData = [
+        {
+            q: "Dzień do dnia podobny JAK dwa paciorki w różańcu. Co to jest?",
+            quote: '"Dzień do dnia staje się podobny jak dwa paciorki w różańcu..."',
+            a: ["Porównanie (bo jest 'jak')", "Uosobienie", "Pytanie"],
+            correct: 0,
+            feedback: "Tak! Skoro jest słowo JAK, to zawsze jest Porównanie."
+        },
+        {
+            q: "Morze GRAŁO. Czy morze umie grać?",
+            quote: '"W dole pod jego stopami grało morze."',
+            a: ["To zwykły opis", "Ożywienie (nadanie cech życia)", "Porównanie"],
+            correct: 1,
+            feedback: "Brawo. Morze nie jest żywe, więc to Ożywienie."
+        },
+        {
+            q: "LITWO! OJCZYZNO MOJA! (Zwrot do kogoś)",
+            quote: '"Litwo, ojczyzno moja, ty jesteś jak zdrowie!"',
+            a: ["Apostrofa (Zwrot)", "Epitiet", "Narracja"],
+            correct: 0,
+            feedback: "Tak. Gdy wołamy do kogoś wielkimi słowami, to Apostrofa."
+        },
+        {
+            q: "Bałwany (fale) SKAKAŁY Z WŚCIEKŁOŚCIĄ.",
+            quote: '"Bałwany skakały z wściekłością na urwisko..."',
+            a: ["Porównanie", "Ożywienie (Uosobienie)", "Dialog"],
+            correct: 1,
+            feedback: "Super. Fale nie mogą być wściekłe. To cecha ludzka."
+        },
+        {
+            q: "Dlaczego Skawiński stracił pracę?",
+            quote: "Pytanie o treść lektury",
+            a: ["Zaspał", "Zaczytał się w polskiej książce", "Upił się"],
+            correct: 1,
+            feedback: "Tak. Czytał Pana Tadeusza i zapomniał o całym świecie."
+        }
+    ];
+
+    // --- LOGIKA ---
+    let currentQ = 0;
+
+    function speak(text) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'pl-PL';
+        u.rate = 0.95; 
+        window.speechSynthesis.speak(u);
+    }
+
+    function playLesson(num) {
+        speak(lessons[num]);
+    }
+
+    function startQuiz() {
+        document.getElementById('menu').classList.add('hidden');
+        document.getElementById('quiz').classList.remove('hidden');
+        currentQ = 0;
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        if (currentQ >= quizData.length) {
+            document.getElementById('quiz').classList.add('hidden');
+            document.getElementById('end').classList.remove('hidden');
+            speak("Koniec lekcji polskiego. Wspaniale ci poszło.");
+            return;
+        }
+
+        const data = quizData[currentQ];
+        document.getElementById('q-text').innerText = data.q;
+        if(data.quote) document.getElementById('q-quote').innerText = data.quote;
+        
+        document.getElementById('feedback').innerText = "";
+        document.getElementById('next-btn').classList.add('hidden');
+        
+        speak(data.q);
+
+        const optsDiv = document.getElementById('options');
+        optsDiv.innerHTML = "";
+
+        data.a.forEach((ans, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-big btn-opt';
+            btn.innerText = ans;
+            btn.onclick = () => checkAnswer(index, btn);
+            optsDiv.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(idx, btn) {
+        const data = quizData[currentQ];
+        const allBtns = document.querySelectorAll('.btn-opt');
+        allBtns.forEach(b => b.onclick = null);
+
+        if (idx === data.correct) {
+            btn.classList.add('correct');
+            document.getElementById('feedback').innerText = data.feedback;
+            speak("Dobrze! " + data.feedback);
+        } else {
+            btn.classList.add('wrong');
+            allBtns[data.correct].classList.add('correct');
+            speak("Nie. To było: " + data.a[data.correct]);
+        }
+        document.getElementById('next-btn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+        currentQ++;
+        loadQuestion();
+    }
+</script>
+
+</body>
+</html>
