@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biologia: Krew</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #ffebee; /* Bardzo jasny czerwony */
+            margin: 0;
+            padding: 10px;
+            text-align: center;
+            color: #b71c1c;
+        }
+        #container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+            border: 4px solid #ef5350;
+        }
+        h1 { margin-bottom: 20px; font-size: 26px; }
+        
+        .btn-big {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            margin: 15px 0;
+            border: none;
+            border-radius: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            color: white;
+            box-shadow: 0 5px 0 rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .btn-big:active { transform: translateY(4px); box-shadow: none; }
+        
+        .btn-audio { background-color: #ef5350; } /* Czerwony */
+        .btn-quiz { background-color: #66bb6a; margin-top: 30px;} /* Zielony */
+        .btn-opt { background-color: #ffcdd2; color: #b71c1c; font-size: 18px; padding: 15px; box-shadow: 0 4px 0 #e57373;}
+        
+        .hidden { display: none; }
+        .emoji { font-size: 40px; }
+
+        /* Quiz Styles */
+        .correct { background-color: #66bb6a !important; color: white !important; }
+        .wrong { background-color: #bdbdbd !important; opacity: 0.6; }
+        #feedback { font-weight: bold; min-height: 30px; margin-top: 10px; font-size: 20px;}
+    </style>
+</head>
+<body>
+
+<div id="container">
+
+    <div id="menu">
+        <a href="../index.html" style="position:absolute; top:10px; left:10px; text-decoration:none; font-size:30px;">🏠</a>
+        <h1>🩸 Krew: Rzeka Życia</h1>
+        <p>Julia, dzisiaj tylko słuchamy. Kliknij i zamknij oczy.</p>
+
+        <button class="btn-big btn-audio" onclick="playLesson(1)">
+            <span class="emoji">🥤</span> 1. Co to jest Osocze?
+        </button>
+
+        <button class="btn-big btn-audio" onclick="playLesson(2)">
+            <span class="emoji">🚑</span> 2. Krwinki (Zadania)
+        </button>
+        
+        <button class="btn-big btn-audio" onclick="playLesson(3)">
+            <span class="emoji">🅾️</span> 3. Grupy Krwi (Extra)
+        </button>
+
+        <button class="btn-big btn-quiz" onclick="startQuiz()">
+            <span class="emoji">🎓</span> Sprawdź wiedzę (Quiz)
+        </button>
+    </div>
+
+    <div id="quiz" class="hidden">
+        <h2 id="q-text">Pytanie...</h2>
+        <div id="options"></div>
+        <div id="feedback"></div>
+        <button id="next-btn" class="btn-big btn-audio hidden" onclick="nextQuestion()">Dalej ➡</button>
+    </div>
+
+    <div id="end" class="hidden">
+        <h1>Brawo! 🎉</h1>
+        <p>Odpoczywaj. Jesteś super!</p>
+        <button class="btn-big btn-quiz" onclick="location.reload()">Jeszcze raz?</button>
+        <br>
+        <a href="../index.html" class="btn-big btn-audio">Wróć do bazy</a>
+    </div>
+
+</div>
+
+<script>
+    // --- DANE LEKCJI (AUDIO) ---
+    const lessons = {
+        1: "Cześć Julia. Wyobraź sobie krew jako zupę. Woda w tej zupie to OSOCZE. Osocze to głównie woda, ale pływają w niej rozpuszczone składniki: glukoza, czyli jedzenie dla komórek, sole mineralne, hormony i dwutlenek węgla, który organizm wyrzuca. Pamiętaj: Osocze to płynna baza.",
+        2: "Teraz " + "gęste" + " w zupie, czyli krwinki. Mamy trzy rodzaje. Pierwsze to ERYTROCYTY, czyli czerwone krwinki. To są taksówki. Wożą tlen z płuc do komórek. Drugie to LEUKOCYTY, białe krwinki. To są żołnierze. Walczą z bakteriami i wirusami. Trzecie to PŁYTKI KRWI. To są plasterki. Jak się skaleczysz, one robią strup i tamują krew.",
+        3: "Na koniec grupy krwi. Są cztery główne: A, B, AB oraz zero. Każda z nich może mieć czynnik Rh plus, albo minus. To ważne przy transfuzji, czyli podawaniu krwi w szpitalu. Musisz dostać taką grupę, która pasuje do Twojej."
+    };
+
+    // --- DANE QUIZU ---
+    const quizData = [
+        {
+            q: "Z czego w większości składa się krew?",
+            a: ["Z osocza (wody)", "Z tłuszczu", "Z kości"],
+            correct: 0,
+            feedback: "Tak! Osocze to płynna baza."
+        },
+        {
+            q: "Co robią Erytrocyty (Czerwone krwinki)?",
+            a: ["Walczą z wirusami", "Transportują tlen", "Robią strupy"],
+            correct: 1,
+            feedback: "Brawo! Są jak czerwone taksówki z tlenem."
+        },
+        {
+            q: "Kto broni nas przed bakteriami (Odporność)?",
+            a: ["Płytki krwi", "Erytrocyty", "Leukocyty (Białe)"],
+            correct: 2,
+            feedback: "Dokładnie. Leukocyty to żołnierze."
+        },
+        {
+            q: "Co robią Płytki Krwi przy skaleczeniu?",
+            a: ["Tamują krew (skrzep)", "Transportują tlen", "Nic nie robią"],
+            correct: 0,
+            feedback: "Super. Działają jak naturalny plaster."
+        },
+        {
+            q: "Jakie są grupy krwi?",
+            a: ["Tylko A i B", "A, B, AB, 0", "X, Y, Z"],
+            correct: 1,
+            feedback: "Świetnie. Pamiętaj też o Rh plus i minus."
+        }
+    ];
+
+    // --- LOGIKA ---
+    let currentQ = 0;
+
+    function speak(text) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'pl-PL';
+        u.rate = 0.9; // Trochę wolniej dla zmęczonej głowy
+        window.speechSynthesis.speak(u);
+    }
+
+    function playLesson(num) {
+        speak(lessons[num]);
+    }
+
+    function startQuiz() {
+        document.getElementById('menu').classList.add('hidden');
+        document.getElementById('quiz').classList.remove('hidden');
+        currentQ = 0;
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        if (currentQ >= quizData.length) {
+            document.getElementById('quiz').classList.add('hidden');
+            document.getElementById('end').classList.remove('hidden');
+            speak("Koniec! Odpoczywaj kochanie.");
+            return;
+        }
+
+        const data = quizData[currentQ];
+        document.getElementById('q-text').innerText = data.q;
+        document.getElementById('feedback').innerText = "";
+        document.getElementById('next-btn').classList.add('hidden');
+        
+        // Czytaj pytanie
+        speak(data.q);
+
+        const optsDiv = document.getElementById('options');
+        optsDiv.innerHTML = "";
+
+        data.a.forEach((ans, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-big btn-opt';
+            btn.innerText = ans;
+            btn.onclick = () => checkAnswer(index, btn);
+            optsDiv.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(idx, btn) {
+        const data = quizData[currentQ];
+        const allBtns = document.querySelectorAll('.btn-opt');
+        
+        // Blokada klikania
+        allBtns.forEach(b => b.onclick = null);
+
+        if (idx === data.correct) {
+            btn.classList.add('correct');
+            document.getElementById('feedback').innerText = data.feedback;
+            speak("Dobrze! " + data.feedback);
+        } else {
+            btn.classList.add('wrong');
+            allBtns[data.correct].classList.add('correct'); // Pokaż dobrą
+            speak("Pomyłka. Prawidłowa to: " + data.a[data.correct]);
+        }
+        
+        document.getElementById('next-btn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+        currentQ++;
+        loadQuestion();
+    }
+</script>
+
+</body>
+</html>
