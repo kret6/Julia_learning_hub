@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matma: Algebra</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #e8eaf6; /* Jasny indygo/matematyczny */
+            margin: 0;
+            padding: 10px;
+            text-align: center;
+            color: #1a237e;
+        }
+        #container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+            border: 4px solid #3f51b5;
+        }
+        h1 { margin-bottom: 20px; font-size: 26px; }
+        
+        .btn-big {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            margin: 15px 0;
+            border: none;
+            border-radius: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            color: white;
+            box-shadow: 0 5px 0 rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .btn-big:active { transform: translateY(4px); box-shadow: none; }
+        
+        .btn-learn { background-color: #3f51b5; } /* Indygo */
+        .btn-trap { background-color: #d81b60; } /* Różowy - Pułapka */
+        
+        .btn-quiz { background-color: #009688; margin-top: 30px;} /* Morski */
+        .btn-opt { background-color: #e8eaf6; color: #1a237e; font-size: 24px; padding: 20px; box-shadow: 0 4px 0 #c5cae9; font-family: monospace;}
+        
+        .hidden { display: none; }
+        .emoji { font-size: 35px; }
+        .math-symbol { font-size: 40px; font-weight: bold; margin-right: 15px;}
+
+        /* Quiz Styles */
+        .correct { background-color: #66bb6a !important; color: white !important; }
+        .wrong { background-color: #ef5350 !important; color: white !important; }
+        #feedback { font-weight: bold; min-height: 30px; margin-top: 10px; font-size: 20px;}
+    </style>
+</head>
+<body>
+
+<div id="container">
+
+    <div id="menu">
+        <a href="../index.html" style="position:absolute; top:10px; left:10px; text-decoration:none; font-size:30px;">🏠</a>
+        <h1>🧮 Algebra: Język Szyfrów</h1>
+        <p>Zamieniamy słowa na matematyczne znaczki.</p>
+
+        <button class="btn-big btn-learn" onclick="playLesson(1)">
+            <span class="emoji">➕</span> 1. Suma (Dodawanie)
+        </button>
+
+        <button class="btn-big btn-learn" onclick="playLesson(2)">
+            <span class="emoji">➖</span> 2. Różnica (Odejmowanie)
+        </button>
+
+        <button class="btn-big btn-learn" onclick="playLesson(3)">
+            <span class="emoji">✖️</span> 3. Iloczyn i Iloraz
+        </button>
+        
+        <button class="btn-big btn-trap" onclick="playLesson(4)">
+            <span class="emoji">⚠️</span> 4. Pułapka: "O" czy "Razy"?
+        </button>
+
+        <button class="btn-big btn-quiz" onclick="startQuiz()">
+            <span class="emoji">🕵️‍♀️</span> Złam Szyfr (Quiz)
+        </button>
+    </div>
+
+    <div id="quiz" class="hidden">
+        <h2 id="q-text">Jak zapiszesz...</h2>
+        <div id="options"></div>
+        <div id="feedback"></div>
+        <button id="next-btn" class="btn-big btn-quiz hidden" onclick="nextQuestion()">Dalej ➡</button>
+    </div>
+
+    <div id="end" class="hidden">
+        <h1>Szyfr złamany! 🔓</h1>
+        <p>Teraz rozumiesz język matematyki.</p>
+        <button class="btn-big btn-quiz" onclick="location.reload()">Jeszcze raz?</button>
+        <br>
+        <a href="../index.html" class="btn-big" style="background-color: #3f51b5;">Wróć do bazy</a>
+    </div>
+
+</div>
+
+<script>
+    // --- DANE LEKCJI (AUDIO) ---
+    const lessons = {
+        1: "Suma to wynik dodawania. Gdy słyszysz SUMA, piszesz plus. Suma liczb x i pięć, to po prostu x dodać pięć. Zapamiętaj: Suma równa się Plus.",
+        2: "Różnica to odejmowanie. Gdy słyszysz RÓŻNICA, piszesz minus. Różnica liczb a i b, to a odjąć b. Uwaga! Ważna jest kolejność. Liczba o 5 mniejsza od x, to x odjąć pięć.",
+        3: "Iloczyn to mnożenie, czyli razy. Iloczyn a i b to a razy b. Często w algebrze nie piszemy kropki. Trzy a to to samo co trzy razy a. A Iloraz? To dzielenie. Zapisujemy je zazwyczaj jako ułamek.",
+        4: "To najważniejsza lekcja! Słuchaj uważnie. O trzy WIĘCEJ to dodawanie: x plus 3. Ale trzy RAZY więcej to mnożenie: 3 razy x. Pamiętaj: literka O znaczy dodać lub odjąć. Słowo RAZY znaczy mnożyć lub dzielić."
+    };
+
+    // --- DANE QUIZU ---
+    const quizData = [
+        {
+            q: "Suma liczb a i b",
+            a: ["a + b", "a - b", "a • b"],
+            correct: 0,
+            feedback: "Tak! Suma to dodawanie (+)."
+        },
+        {
+            q: "Różnica liczb x i 3",
+            a: ["x : 3", "x - 3", "3 - x"],
+            correct: 1,
+            feedback: "Brawo. Różnica to minus."
+        },
+        {
+            q: "Liczba 3 RAZY większa od x",
+            a: ["x + 3", "3x", "x - 3"],
+            correct: 1,
+            feedback: "Dokładnie. Razy to mnożenie (3x)."
+        },
+        {
+            q: "Liczba O 3 większa od x",
+            a: ["x + 3", "3x", "x : 3"],
+            correct: 0,
+            feedback: "Super! 'O' znaczy dodać (x+3)."
+        },
+        {
+            q: "Liczba o 5 MNIEJSZA od k",
+            a: ["5 - k", "k - 5", "k : 5"],
+            correct: 1,
+            feedback: "Tak. Od 'k' zabieramy 5."
+        },
+        {
+            q: "Połowa liczby x",
+            a: ["2x", "x + 2", "x : 2"],
+            correct: 2,
+            feedback: "Świetnie. Połowa to dzielenie przez 2."
+        }
+    ];
+
+    // --- LOGIKA ---
+    let currentQ = 0;
+
+    function speak(text) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'pl-PL';
+        u.rate = 0.95; 
+        window.speechSynthesis.speak(u);
+    }
+
+    function playLesson(num) {
+        speak(lessons[num]);
+    }
+
+    function startQuiz() {
+        document.getElementById('menu').classList.add('hidden');
+        document.getElementById('quiz').classList.remove('hidden');
+        currentQ = 0;
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        if (currentQ >= quizData.length) {
+            document.getElementById('quiz').classList.add('hidden');
+            document.getElementById('end').classList.remove('hidden');
+            speak("Koniec treningu. Szyfr opanowany.");
+            return;
+        }
+
+        const data = quizData[currentQ];
+        document.getElementById('q-text').innerText = data.q;
+        document.getElementById('feedback').innerText = "";
+        document.getElementById('next-btn').classList.add('hidden');
+        
+        speak("Jak zapiszesz: " + data.q);
+
+        const optsDiv = document.getElementById('options');
+        optsDiv.innerHTML = "";
+
+        data.a.forEach((ans, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-big btn-opt';
+            btn.innerText = ans;
+            btn.onclick = () => checkAnswer(index, btn);
+            optsDiv.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(idx, btn) {
+        const data = quizData[currentQ];
+        const allBtns = document.querySelectorAll('.btn-opt');
+        allBtns.forEach(b => b.onclick = null);
+
+        if (idx === data.correct) {
+            btn.classList.add('correct');
+            document.getElementById('feedback').innerText = data.feedback;
+            speak("Dobrze! " + data.feedback);
+        } else {
+            btn.classList.add('wrong');
+            allBtns[data.correct].classList.add('correct');
+            speak("Nie. To będzie: " + data.a[data.correct]);
+        }
+        document.getElementById('next-btn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+        currentQ++;
+        loadQuestion();
+    }
+</script>
+
+</body>
+</html>
