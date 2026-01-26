@@ -8,7 +8,7 @@
 **Dedykowane, bezbarierowe środowisko edukacyjne zaprojektowane specjalnie dla Julii.**
 
 Projekt ma na celu niwelowanie barier wynikających z GMFCS 4, ograniczeń motoryki małej oraz problemów ze wzrokiem. Aplikacja zamienia standardowe, niedostępne materiały szkolne (skany, PDF) w interaktywne, audytywne i dotykowe lekcje cyfrowe (SPA).
-
+https://kret6.github.io/Julia_learning_hub/
 ---
 
 ## 🎯 Misja i Cel
