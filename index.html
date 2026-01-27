@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Centrum Nauki Julii</title>
+    <link rel="manifest" href="manifest.json">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, sans-serif;
@@ -11,109 +12,168 @@
             margin: 0;
             padding: 20px;
             text-align: center;
+            padding-bottom: 60px; /* Miejsce na dole */
         }
-        h1 { color: #333; margin-bottom: 30px; }
-        .grid {
+
+        h1 { color: #333; margin-bottom: 10px; font-size: 24px;}
+        p.subtitle { color: #666; font-size: 14px; margin-top: -5px; margin-bottom: 30px; }
+        
+        h2 { 
+            color: #555; 
+            text-align: left; 
+            max-width: 800px; 
+            margin: 30px auto 15px auto; 
+            border-bottom: 2px solid #ddd; 
+            padding-bottom: 5px; 
+            font-size: 16px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        /* --- STREFA PRIORYTETÓW (Duże kafle) --- */
+        .grid-priority {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             max-width: 800px;
             margin: 0 auto;
         }
-        .tile {
+
+        .tile-big {
             background: white;
             border-radius: 20px;
             padding: 20px;
             text-decoration: none;
             color: #333;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center; /* Ikonka obok tekstu */
+            justify-content: flex-start;
+            height: 90px;
+            border-left: 12px solid #ddd; /* Kolor z lewej */
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tile-big:active { transform: scale(0.96); }
+        .tile-big .icon { font-size: 45px; margin-right: 20px; margin-left: 10px; }
+        .tile-big .info { text-align: left; }
+        .tile-big .title { font-size: 20px; font-weight: bold; display: block; margin-bottom: 4px;}
+        .tile-big .status { font-size: 13px; color: #555; background: #f0f2f5; padding: 4px 10px; border-radius: 8px; display: inline-block;}
+        
+        /* Oznaczenie "PILNE" (opcjonalne) */
+        .tag-urgent { position: absolute; top: 10px; right: 10px; background: #ff5252; color: white; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+
+        /* --- STREFA ARCHIWUM (Małe kafle) --- */
+        .grid-archive {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tile-small {
+            background: white;
+            border-radius: 15px;
+            padding: 10px;
+            text-decoration: none;
+            color: #555;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 140px;
-            border-bottom: 5px solid #ddd;
+            height: 90px;
+            border-top: 5px solid #ddd;
+            opacity: 0.85;
         }
-        .tile:active { transform: scale(0.95); }
-        .tile:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
-        .icon { font-size: 50px; margin-bottom: 10px; }
-        .title { font-size: 18px; font-weight: bold; }
-        .status { font-size: 12px; color: #666; margin-top: 5px; background: #eee; padding: 2px 8px; border-radius: 10px;}
-        
+        .tile-small:hover { opacity: 1; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .tile-small .icon { font-size: 28px; margin-bottom: 5px; }
+        .tile-small .title { font-size: 13px; font-weight: bold; }
+        .tile-small .status { font-size: 10px; color: #888; display: none; } /* Ukrywamy status w małych, żeby było czyściej */
+
+        /* KOLORY PRZEDMIOTÓW */
         .historia { border-color: #8d6e63; }
         .chemia { border-color: #00acc1; }
         .hiszpanski { border-color: #ff6f00; }
         .angielski { border-color: #43a047; }
         .matma { border-color: #1976d2; }
-        .biologia { border-color: #66bb6a; }
+        .biologia { border-color: #ef5350; }
+        .polski { border-color: #1565c0; }
+
     </style>
 </head>
 <body>
 
-    <h1>👋 Cześć Julia! Czego się uczymy?</h1>
+    <h1>🚀 Centrum Dowodzenia</h1>
+    <p class="subtitle">Zalogowano: Julia</p>
 
-    <div class="grid">
-     
-        <a href="Historia/lekcja1.html" class="tile historia">
-            <div class="icon">📜</div>
-            <div class="title">Historia</div>
-            <div class="status">Po Powstaniu</div>
-        </a>
+    <h2>🔥 Do zrobienia (Pilne)</h2>
+    <div class="grid-priority">
         
-        <a href="Biologia/krew.html" class="tile biologia">
+        <a href="Biologia/krew.html" class="tile-big biologia">
             <div class="icon">🩸</div>
-            <div class="title">Biologia</div>
-            <div class="status">Krew (Audio)</div>
-        </a> 
-        
-        <a href="matma/algebra.html" class="tile matma">
-            <div class="icon">🧮</div>
-            <div class="title">Matma</div>
-            <div class="status">Algebra (Szyfr)</div>
+            <div class="info">
+                <div class="title">Biologia</div>
+                <div class="status">Krew (Audio)</div>
+            </div>
         </a>
 
-        <a href="Hiszpanski/lekcja1.html" class="tile hiszpanski">
-            <div class="icon">🇪🇸</div>
-            <div class="title">Hiszpański</div>
-            <div class="status">Wygląd</div>
-        </a>
-        
-        <a href="polski/latarnik.html" class="tile polski" style="border-color: #1565c0;">
+        <a href="polski/latarnik.html" class="tile-big polski">
             <div class="icon">🌊</div>
-            <div class="title">Polski</div>
-            <div class="status">Latarnik (Audio)</div>
+            <div class="info">
+                <div class="title">Polski</div>
+                <div class="status">Latarnik (Audio)</div>
+            </div>
         </a>
 
-        <a href="angielski/kartkowka1.html" class="tile angielski">
-    <div class="icon">🇬🇧</div>
-    <div class="title">Angielski</div>
-    <div class="status">Kartkówka 1</div>
-</a>
-        
-        <a href="matma/dodawanie-do-10.html" class="tile matma">
+        <a href="matma/algebra.html" class="tile-big matma">
             <div class="icon">🧮</div>
-            <div class="title">Matma</div>
-            <div class="status">Trening Mózgu</div>
+            <div class="info">
+                <div class="title">Matma</div>
+                <div class="status">Algebra (Szyfr)</div>
+            </div>
         </a>
 
-        <a href="matma/lekcja1.html" class="tile matma">
-            <div class="icon">🧮</div>
-            <div class="title">Matma</div>
-            <div class="status">Geometria</div>
+        <a href="angielski/kartkowka1.html" class="tile-big angielski">
+            <div class="tag-urgent">NA JUTRO</div>
+            <div class="icon">🇬🇧</div>
+            <div class="info">
+                <div class="title">Angielski</div>
+                <div class="status">Kartkówka</div>
+            </div>
         </a>
 
     </div>
 
-    <p style="margin-top: 40px; color: #888; font-size: 14px;">Wersja systemu: 5.5 (Final Clean)</p>
+
+    <h2>📚 Biblioteka (Powtórki)</h2>
+    <div class="grid-archive">
+
+        <a href="Historia/lekcja1.html" class="tile-small historia">
+            <div class="icon">📜</div>
+            <div class="title">Historia</div>
+        </a>
+
+        <a href="matma/dodawanie-do-10.html" class="tile-small matma">
+            <div class="icon">🧠</div>
+            <div class="title">Trening</div>
+        </a>
+
+        <a href="matma/lekcja1.html" class="tile-small matma">
+            <div class="icon">📐</div>
+            <div class="title">Geometria</div>
+        </a>
+
+        <a href="Hiszpanski/lekcja1.html" class="tile-small hiszpanski">
+            <div class="icon">🇪🇸</div>
+            <div class="title">Hiszpański</div>
+        </a>
+
+    </div>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
