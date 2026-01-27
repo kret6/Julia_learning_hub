@@ -12,11 +12,11 @@
             margin: 0;
             padding: 20px;
             text-align: center;
-            padding-bottom: 60px; /* Miejsce na dole */
+            padding-bottom: 80px; /* Miejsce na dole */
         }
 
-        h1 { color: #333; margin-bottom: 10px; font-size: 24px;}
-        p.subtitle { color: #666; font-size: 14px; margin-top: -5px; margin-bottom: 30px; }
+        h1 { color: #333; margin-bottom: 5px; font-size: 26px;}
+        p.subtitle { color: #666; font-size: 14px; margin-top: 0px; margin-bottom: 30px; }
         
         h2 { 
             color: #555; 
@@ -49,21 +49,21 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
             transition: transform 0.2s;
             display: flex;
-            align-items: center; /* Ikonka obok tekstu */
+            align-items: center; 
             justify-content: flex-start;
             height: 90px;
-            border-left: 12px solid #ddd; /* Kolor z lewej */
+            border-left: 12px solid #ddd;
             position: relative;
             overflow: hidden;
         }
         
         .tile-big:active { transform: scale(0.96); }
-        .tile-big .icon { font-size: 45px; margin-right: 20px; margin-left: 10px; }
+        .tile-big .icon { font-size: 45px; margin-right: 20px; margin-left: 5px; }
         .tile-big .info { text-align: left; }
         .tile-big .title { font-size: 20px; font-weight: bold; display: block; margin-bottom: 4px;}
         .tile-big .status { font-size: 13px; color: #555; background: #f0f2f5; padding: 4px 10px; border-radius: 8px; display: inline-block;}
         
-        /* Oznaczenie "PILNE" (opcjonalne) */
+        /* Tag PILNE */
         .tag-urgent { position: absolute; top: 10px; right: 10px; background: #ff5252; color: white; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
 
         /* --- STREFA ARCHIWUM (Małe kafle) --- */
@@ -92,8 +92,7 @@
         }
         .tile-small:hover { opacity: 1; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .tile-small .icon { font-size: 28px; margin-bottom: 5px; }
-        .tile-small .title { font-size: 13px; font-weight: bold; }
-        .tile-small .status { font-size: 10px; color: #888; display: none; } /* Ukrywamy status w małych, żeby było czyściej */
+        .tile-small .title { font-size: 13px; font-weight: bold; text-align: center;}
 
         /* KOLORY PRZEDMIOTÓW */
         .historia { border-color: #8d6e63; }
@@ -101,7 +100,7 @@
         .hiszpanski { border-color: #ff6f00; }
         .angielski { border-color: #43a047; }
         .matma { border-color: #1976d2; }
-        .biologia { border-color: #ef5350; }
+        .biologia { border-color: #66bb6a; } /* Poprawiony zielony z Twojego kodu */
         .polski { border-color: #1565c0; }
 
     </style>
@@ -109,7 +108,7 @@
 <body>
 
     <h1>🚀 Centrum Dowodzenia</h1>
-    <p class="subtitle">Zalogowano: Julia</p>
+    <p class="subtitle">Wersja 5.5 (Final)</p>
 
     <h2>🔥 Do zrobienia (Pilne)</h2>
     <div class="grid-priority">
@@ -150,7 +149,7 @@
     </div>
 
 
-    <h2>📚 Biblioteka (Powtórki)</h2>
+    <h2>📚 Biblioteka</h2>
     <div class="grid-archive">
 
         <a href="Historia/lekcja1.html" class="tile-small historia">
