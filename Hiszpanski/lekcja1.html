@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hiszpański: Wygląd i Charakter (Pełny)</title>
+    <title>Hiszpański: Wygląd i Charakter</title>
     <style>
-        /* STYL GŁÓWNY - FIESTA VIZUALNA 5.1 */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #fff3e0;
@@ -34,94 +33,61 @@
             align-items: center;
         }
 
-        h1 { margin: 10px 0 20px 0; font-size: 32px; color: #e65100; }
-        h2 { color: #ef6c00; margin-top: 20px; border-bottom: 2px solid #ffe0b2; display: inline-block; padding-bottom: 5px;}
-        p { font-size: 18px; margin-bottom: 20px; }
+        h1 { margin: 10px 0 10px 0; font-size: 32px; color: #e65100; }
+        p { font-size: 18px; margin-bottom: 30px; color: #555; }
 
-        /* TABELA DO NAUKI */
+        /* MENU */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn-menu {
+            border: none;
+            padding: 30px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 8px 0 rgba(0,0,0,0.2);
+            color: white;
+            text-decoration: none;
+        }
+        .btn-menu:active { transform: translateY(4px); box-shadow: none; }
+        .btn-menu span { font-size: 40px; margin-bottom: 10px; }
+
+        .btn-grammar { background-color: #0288d1; box-shadow: 0 8px 0 #01579b; }
+        .btn-vocab { background-color: #ff9800; box-shadow: 0 8px 0 #e65100; }
+
+        /* TABELA DO NAUKI (LISTA) */
         .study-table {
             width: 100%;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             text-align: left;
-            border-collapse: collapse;
         }
         .study-row {
             display: flex;
             align-items: center;
             background-color: #fff8e1;
             margin-bottom: 10px;
-            padding: 15px;
+            padding: 12px;
             border-radius: 15px;
-            border-left: 8px solid #ffca28;
+            border-left: 6px solid #ffca28;
             font-size: 18px;
         }
-        .study-row .emoji { font-size: 24px; margin-right: 15px; width: 40px; text-align: center;}
-        .study-row .es { font-weight: bold; color: #d84315; flex: 1; font-size: 20px;}
-        .study-row .pl { color: #555; flex: 1; font-style: italic; font-size: 18px;}
+        .study-row .emoji { font-size: 24px; margin-right: 15px; width: 35px; text-align: center;}
+        .study-row .es { font-weight: bold; color: #d84315; flex: 1; }
+        .study-row .pl { color: #555; flex: 1; font-style: italic; }
 
-        /* PRZYCISKI */
-        .btn-big {
-            background-color: #ff9800;
-            color: white;
-            border: none;
-            padding: 20px 30px;
-            font-size: 20px;
-            font-weight: bold;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 6px 0 #e65100;
-            transition: 0.2s;
-            margin: 20px 0;
-            width: 100%;
-            white-space: normal;
-        }
-        .btn-big:active { transform: translateY(4px); box-shadow: none; }
-        .btn-next { background-color: #43a047; box-shadow: 0 6px 0 #2e7d32; }
-        .btn-grammar { background-color: #0288d1; box-shadow: 0 6px 0 #01579b; }
-
-        /* FISZKI */
-        .flashcard-scene { width: 100%; height: 350px; perspective: 1000px; margin-bottom: 30px; cursor: pointer;}
-        .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s; }
-        .flashcard.flipped { transform: rotateY(180deg); }
-        .card-face {
-            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            border-radius: 20px; padding: 20px; box-sizing: border-box;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            border: 4px solid #ff9800;
-        }
-        .front { background-color: #fff8e1; color: #bf360c; }
-        .back { background-color: #e8f5e9; color: #1b5e20; transform: rotateY(180deg); }
-        .emoji-big { font-size: 80px; margin-bottom: 20px; }
-        .term { font-size: 40px; font-weight: bold; margin-bottom: 10px; }
-        .def { font-size: 28px; font-weight: bold; }
-
-        /* TRENING ZDAŃ (Nowy Styl) */
-        .sentence-box {
-            background-color: #e1f5fe;
-            padding: 20px;
-            border-radius: 20px;
-            font-size: 26px;
-            font-weight: bold;
-            color: #01579b;
-            margin-bottom: 30px;
-            border: 3px solid #0288d1;
-        }
-        .gap {
-            display: inline-block;
-            width: 100px;
-            border-bottom: 3px solid #01579b;
-            text-align: center;
-            color: #d84315;
-        }
-
-        /* QUIZ GRID */
-        .quiz-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 25px; 
-            width: 100%; 
-        }
+        /* QUIZ STYLES */
+        .quiz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
         .quiz-btn {
             background-color: #ffe0b2; border: none; padding: 15px;
             font-size: 20px; border-radius: 20px; cursor: pointer; color: #bf360c; font-weight: 700;
@@ -132,278 +98,202 @@
         .correct { background-color: #66bb6a !important; color: white !important; box-shadow: 0 5px 0 #2e7d32 !important;}
         .wrong { background-color: #ef5350 !important; color: white !important; opacity: 0.5; }
 
+        /* SENTENCE BOX */
+        .sentence-box {
+            background-color: #e1f5fe;
+            padding: 20px;
+            border-radius: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #01579b;
+            margin-bottom: 30px;
+            border: 3px solid #0288d1;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .gap { border-bottom: 3px solid #01579b; color: #d84315; padding: 0 10px; }
+
+        /* NAV */
+        .btn-nav {
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .btn-next { background-color: #43a047; box-shadow: 0 5px 0 #2e7d32; font-weight: bold; font-size: 22px; }
+
         .hidden { display: none !important; }
-        .small-text { font-size: 14px; color: #888; margin-top: 10px; }
+        .emoji-big { font-size: 70px; margin-bottom: 10px; }
+        .question-text { font-size: 30px; margin: 10px 0 30px 0; font-weight: bold; }
 
     </style>
 </head>
 <body>
 
 <div id="container">
-    
-    <div id="step-start">
+
+    <div id="screen-menu">
         <h1>¡Hola Julia! 🇪🇸</h1>
-        <p>Baza słówek została powiększona o materiał z podręcznika.</p>
+        <p>Wybierz tryb nauki:</p>
         
-        <div id="study-list"></div>
-        
-        <button class="btn-big btn-next" onclick="goToFlashcards()">Przeczytałam, idziemy do Fiszek ➡</button>
-    </div>
+        <div class="menu-grid">
+            <button class="btn-menu btn-grammar" onclick="startSentenceTraining()">
+                <span>✍️</span>
+                GRAMATYKA<br><small>(Zdania: Es, Tiene, Lleva)</small>
+            </button>
 
-    <div id="step-flashcards" class="hidden">
-        <h2>Trening Wzrokowy</h2>
-        <div class="flashcard-scene" onclick="flipCard()">
-            <div class="flashcard" id="card">
-                <div class="card-face front">
-                    <div class="emoji-big" id="fc-emoji"></div>
-                    <div class="term" id="fc-es">...</div>
-                    <div class="small-text">Kliknij, by zobaczyć tłumaczenie</div>
-                </div>
-                <div class="card-face back">
-                    <div class="def" id="fc-pl">...</div>
-                </div>
-            </div>
+            <button class="btn-menu btn-vocab" onclick="openVocabStudy()">
+                <span>🧠</span>
+                SŁÓWKA<br><small>(Lista + Quiz)</small>
+            </button>
         </div>
 
-        <button class="btn-big btn-next" onclick="nextCard()">Następne Słowo ➡</button>
-        <br>
-        <button class="btn-big btn-grammar" onclick="startSentenceTraining()">Idź do Zadań ze Zdań ✍️</button>
+        <a href="../index.html" class="btn-nav" style="margin-top: 40px; background-color: #777; width: auto; display: inline-block;">🏠 Wróć do Centrum</a>
     </div>
 
-    <div id="step-sentences" class="hidden">
-        <h2>Uzupełnij Zdanie</h2>
-        <p>Wybierz: Jest (Es), Ma (Tiene) czy Nosi (Lleva)?</p>
+    <div id="screen-vocab-study" class="hidden">
+        <h2 style="color: #e65100;">Lista do Nauki</h2>
+        <p style="font-size: 16px; margin-bottom: 15px;">Przeczytaj uważnie, zanim zaczniesz test.</p>
         
-        <div class="sentence-box" id="sentence-display">
-            ...
-        </div>
+        <div id="study-list"></div> <button class="btn-nav btn-next" onclick="startVocabQuiz()">Umiem! Idź do Quizu ➡</button>
+        <button class="btn-nav" onclick="location.reload()" style="background-color: #888; font-size: 14px; padding: 10px;">Wróć do Menu</button>
+    </div>
 
+    <div id="screen-vocab-quiz" class="hidden">
+        <div id="q-progress" style="font-weight:bold; color:#e65100;">Pytanie 1</div>
+        <div class="emoji-big" id="q-emoji"></div>
+        <div class="question-text" id="q-text">...</div>
+        
+        <div class="quiz-grid" id="q-options"></div>
+        <h3 id="q-feedback" style="min-height: 30px;"></h3>
+        
+        <button id="next-q-btn" class="btn-nav btn-next hidden" onclick="nextQuestion()">Dalej ➡</button>
+    </div>
+
+    <div id="screen-vocab-end" class="hidden">
+        <h1>¡Fantástico! 🎉</h1>
+        <p>Słówka zaliczone na 100%.</p>
+        <button class="btn-nav" onclick="location.reload()">Wróć do Menu</button>
+    </div>
+
+
+    <div id="screen-sentences" class="hidden">
+        <h2 style="color: #01579b;">Gramatyka</h2>
+        <div id="s-progress" style="color: #aaa; margin-bottom: 10px;">Zdanie 1/10</div>
+        
+        <div class="sentence-box" id="sentence-display">...</div>
         <div class="quiz-grid" id="sentence-options"></div>
         <h3 id="s-feedback" style="min-height: 30px;"></h3>
 
-        <button id="next-s-btn" class="btn-big btn-next hidden" onclick="nextSentence()">Następne Zdanie ➡</button>
+        <button id="next-s-btn" class="btn-nav btn-next hidden" onclick="nextSentence()">Dalej ➡</button>
     </div>
 
-    <div id="step-quiz" class="hidden">
-        <div id="progress" style="font-weight:bold; color:#e65100;">Pytanie 1</div>
-        <div class="emoji-big" id="q-emoji"></div>
-        <h2 id="q-text" style="font-size: 36px; margin: 10px 0;">...</h2>
-        
-        <div class="quiz-grid" id="q-options"></div>
-        <h3 id="feedback" style="min-height: 40px; font-size: 24px;"></h3>
-        
-        <button id="next-q-btn" class="btn-big btn-next hidden" onclick="nextQuestion()">Dalej ➡</button>
-    </div>
-
-    <div id="step-end" class="hidden">
-        <h1>¡Felicidades! 🎉</h1>
-        <p>Przeszłaś cały materiał: Słówka + Gramatyka.</p>
-        <br>
-        <button class="btn-big" onclick="location.reload()">Powtórz wszystko ↺</button>
-        <br>
-        <a href="../index.html" class="btn-big" style="background-color: #555; text-decoration: none; display: block; text-align: center;">Wróć do Menu</a>
+    <div id="screen-sentences-end" class="hidden">
+        <h1>Brawo! ✍️</h1>
+        <p>Gramatyka opanowana.</p>
+        <button class="btn-nav" onclick="location.reload()">Wróć do Menu</button>
     </div>
 
 </div>
 
 <script>
-    // --- 1. PEŁNA BAZA SŁÓWEK (UZUPEŁNIONA O PDF) ---
+    // --- DANE (SŁÓWKA) ---
     const vocab = [
-        // CAT 1: WŁOSY I OCZY (Szczegóły)
-        { es: "Moreno", pl: "Brunet / Ciemnowłosy", em: "👦🏽", cat: 1 },
-        { es: "Rubio", pl: "Blondyn", em: "👱‍♂️", cat: 1 },
-        { es: "Pelirrojo", pl: "Rudy", em: "👨‍🦰", cat: 1 },
-        { es: "Calvo", pl: "Łysy", em: "👨‍🦲", cat: 1 },
-        { es: "Pelo liso", pl: "Proste włosy", em: "👩‍🦰", cat: 1 },
-        { es: "Pelo rizado", pl: "Kręcone włosy", em: "👩‍🦱", cat: 1 },
-        { es: "Pelo corto", pl: "Krótkie włosy", em: "🧒", cat: 1 },
-        { es: "Pelo largo", pl: "Długie włosy", em: "👩", cat: 1 },
-        { es: "Pelo castaño", pl: "Brązowe włosy (Szatyn)", em: "🟤", cat: 1 }, // NOWE
-        { es: "Pelo blanco", pl: "Siwe/Białe włosy", em: "👴", cat: 1 }, // NOWE
-        { es: "Ojos azules", pl: "Niebieskie oczy", em: "🔵", cat: 1 }, // NOWE
-        { es: "Ojos verdes", pl: "Zielone oczy", em: "🟢", cat: 1 }, // NOWE
-        { es: "Ojos marrones", pl: "Brązowe oczy", em: "🟤", cat: 1 }, // NOWE
-        { es: "Ojos negros", pl: "Czarne oczy", em: "⚫", cat: 1 }, // NOWE
-
-        // CAT 2: WYGLĄD OGÓLNY I CIAŁO (Uzupełnione pary)
-        { es: "Barba", pl: "Broda", em: "🧔", cat: 2 },
-        { es: "Bigote", pl: "Wąsy", em: "👨", cat: 2 },
-        { es: "Gafas", pl: "Okulary", em: "👓", cat: 2 }, // NOWE
-        { es: "Alto", pl: "Wysoki", em: "🦒", cat: 2 }, // NOWE
-        { es: "Bajo", pl: "Niski", em: "🐜", cat: 2 }, // NOWE
-        { es: "Gordo", pl: "Gruby", em: "🐘", cat: 2 }, // NOWE
-        { es: "Delgado", pl: "Szczupły", em: "🎋", cat: 2 }, // NOWE
-        { es: "Guapo", pl: "Ładny/Przystojny", em: "😎", cat: 2 }, // NOWE
-        { es: "Feo", pl: "Brzydki", em: "👹", cat: 2 }, // NOWE
-        { es: "Joven", pl: "Młody", em: "👶", cat: 2 }, // NOWE
-        { es: "Mayor", pl: "Starszy", em: "👵", cat: 2 }, // NOWE
-
-        // CAT 3: CHARAKTER (Uzupełnione)
-        { es: "Amable", pl: "Miły", em: "😊", cat: 3 },
-        { es: "Desagradable", pl: "Nieprzyjemny", em: "😠", cat: 3 }, // NOWE
-        { es: "Optimista", pl: "Optymista", em: "🌞", cat: 3 },
-        { es: "Pesimista", pl: "Pesymista", em: "🌧️", cat: 3 },
-        { es: "Gracioso", pl: "Zabawny", em: "😂", cat: 3 },
-        { es: "Aburrido", pl: "Nudny", em: "🥱", cat: 3 }, // NOWE
-        { es: "Impaciente", pl: "Niecierpliwy", em: "😤", cat: 3 },
-        { es: "Serio", pl: "Poważny", em: "😐", cat: 3 },
-        { es: "Antipático", pl: "Niesympatyczny", em: "😒", cat: 3 },
-        { es: "Tímido", pl: "Nieśmiały", em: "🫣", cat: 3 },
-        { es: "Introvertido", pl: "Introwertyk", em: "😶", cat: 3 }
+        { es: "Moreno", pl: "Brunet", em: "👦🏽" },
+        { es: "Rubio", pl: "Blondyn", em: "👱‍♂️" },
+        { es: "Pelirrojo", pl: "Rudy", em: "👨‍🦰" },
+        { es: "Calvo", pl: "Łysy", em: "👨‍🦲" },
+        { es: "Pelo liso", pl: "Proste włosy", em: "👩‍🦰" },
+        { es: "Pelo rizado", pl: "Kręcone włosy", em: "👩‍🦱" },
+        { es: "Pelo corto", pl: "Krótkie włosy", em: "🧒" },
+        { es: "Pelo largo", pl: "Długie włosy", em: "👩" },
+        { es: "Pelo castaño", pl: "Brązowe (Szatyn)", em: "🟤" }, 
+        { es: "Pelo blanco", pl: "Siwe/Białe", em: "👴" },
+        { es: "Ojos azules", pl: "Niebieskie oczy", em: "🔵" },
+        { es: "Ojos verdes", pl: "Zielone oczy", em: "🟢" },
+        { es: "Ojos marrones", pl: "Brązowe oczy", em: "🟤" },
+        { es: "Barba", pl: "Broda", em: "🧔" },
+        { es: "Bigote", pl: "Wąsy", em: "👨" },
+        { es: "Gafas", pl: "Okulary", em: "👓" },
+        { es: "Alto", pl: "Wysoki", em: "🦒" },
+        { es: "Bajo", pl: "Niski", em: "🐜" },
+        { es: "Delgado", pl: "Szczupły", em: "🎋" },
+        { es: "Gordo", pl: "Gruby", em: "🐘" },
+        { es: "Amable", pl: "Miły", em: "😊" },
+        { es: "Gracioso", pl: "Zabawny", em: "😂" },
+        { es: "Serio", pl: "Poważny", em: "😐" },
+        { es: "Tímido", pl: "Nieśmiały", em: "🫣" },
+        { es: "Antipático", pl: "Niesympatyczny", em: "😒" }
     ];
 
-    // --- 2. BAZA ZDAŃ (GRAMATYKA Z PDF) ---
-    // Klucz: es (jest), tiene (ma), lleva (nosi), soy (jestem), tengo (mam)
+    // --- DANE (GRAMATYKA) ---
     const sentences = [
-        { s: "Ella ___ rubia.", ans: "Es", opts: ["Es", "Tiene", "Lleva"] }, // Opis
-        { s: "Ella ___ el pelo rubio.", ans: "Tiene", opts: ["Es", "Tiene", "Lleva"] }, // Posiadanie
+        { s: "Ella ___ rubia.", ans: "Es", opts: ["Es", "Tiene", "Lleva"] },
+        { s: "Ella ___ el pelo rubio.", ans: "Tiene", opts: ["Es", "Tiene", "Lleva"] },
         { s: "Él ___ bigote.", ans: "Tiene", opts: ["Es", "Tiene", "Soy"] },
         { s: "Mi abuelo ___ mayor.", ans: "Es", opts: ["Es", "Tiene", "Lleva"] },
-        { s: "Ana ___ gafas.", ans: "Lleva", opts: ["Es", "Tiene", "Lleva"] }, // Akcesoria
-        { s: "El chico ___ alto y guapo.", ans: "Es", opts: ["Es", "Tiene", "Lleva"] },
-        { s: "Nosotros ___ los ojos azules.", ans: "Tenemos", opts: ["Tenemos", "Somos", "Tienen"] }, // Odmiana
-        { s: "(Ja) ___ un perro.", ans: "Tengo", opts: ["Tengo", "Tiene", "Soy"] }, // Odmiana
-        { s: "Vosotros ___ el pelo corto.", ans: "Tenéis", opts: ["Tenéis", "Sois", "Tienen"] }, // Odmiana
+        { s: "Ana ___ gafas.", ans: "Lleva", opts: ["Es", "Tiene", "Lleva"] },
+        { s: "El chico ___ alto.", ans: "Es", opts: ["Es", "Tiene", "Lleva"] },
+        { s: "Nosotros ___ los ojos azules.", ans: "Tenemos", opts: ["Tenemos", "Somos", "Tienen"] },
+        { s: "(Ja) ___ un perro.", ans: "Tengo", opts: ["Tengo", "Tiene", "Soy"] },
+        { s: "Vosotros ___ el pelo corto.", ans: "Tenéis", opts: ["Tenéis", "Sois", "Tienen"] },
         { s: "La chica ___ delgada.", ans: "Es", opts: ["Es", "Tiene", "Lleva"] }
     ];
 
-    // --- GENEROWANIE TABELI ---
-    function renderStudyList() {
+    // --- FUNKCJA 1: GENEROWANIE LISTY (TABELI) ---
+    function openVocabStudy() {
+        document.getElementById('screen-menu').classList.add('hidden');
+        document.getElementById('screen-vocab-study').classList.remove('hidden');
+        window.scrollTo(0,0);
+        
         const container = document.getElementById('study-list');
-        const cats = {1: "Włosy i Oczy", 2: "Wygląd i Ciało", 3: "Charakter"};
+        container.innerHTML = "";
         
-        for (let c = 1; c <= 3; c++) {
-            const section = document.createElement('div');
-            section.innerHTML = `<h3>${cats[c]}</h3>`;
-            vocab.filter(v => v.cat === c).forEach(word => {
-                const row = document.createElement('div');
-                row.className = 'study-row';
-                row.innerHTML = `<div class="emoji">${word.em}</div><div class="es">${word.es}</div><div class="pl">${word.pl}</div>`;
-                section.appendChild(row);
-            });
-            container.appendChild(section);
-        }
-    }
-
-    // --- FISZKI ---
-    let fcIndex = 0;
-    function goToFlashcards() {
-        document.getElementById('step-start').classList.add('hidden');
-        document.getElementById('step-flashcards').classList.remove('hidden');
-        window.scrollTo(0,0);
-        loadFlashcard();
-    }
-    function loadFlashcard() {
-        const c = document.getElementById('card');
-        c.classList.remove('flipped');
-        const item = vocab[fcIndex];
-        setTimeout(() => {
-            document.getElementById('fc-emoji').innerText = item.em;
-            document.getElementById('fc-es').innerText = item.es;
-            document.getElementById('fc-pl').innerText = item.pl;
-        }, 200);
-    }
-    function flipCard() { document.getElementById('card').classList.toggle('flipped'); }
-    function nextCard() { fcIndex = (fcIndex + 1) % vocab.length; loadFlashcard(); }
-
-    // --- TRENING ZDAŃ (NOWY MODUŁ) ---
-    let sIndex = 0;
-    let sData = [];
-
-    function startSentenceTraining() {
-        document.getElementById('step-flashcards').classList.add('hidden');
-        document.getElementById('step-sentences').classList.remove('hidden');
-        window.scrollTo(0,0);
-        sData = sentences.sort(() => 0.5 - Math.random()); // Mieszamy zdania
-        loadSentence();
-    }
-
-    function loadSentence() {
-        if(sIndex >= sData.length) {
-            // Koniec zdań -> idziemy do Quizu
-            startQuiz();
-            return;
-        }
-        const item = sData[sIndex];
-        document.getElementById('sentence-display').innerHTML = item.s.replace('___', '<span class="gap">?</span>');
-        document.getElementById('s-feedback').innerText = "";
-        document.getElementById('next-s-btn').classList.add('hidden');
-        
-        const grid = document.getElementById('sentence-options');
-        grid.innerHTML = "";
-        
-        // Mieszamy opcje
-        const mixedOpts = [...item.opts].sort(() => 0.5 - Math.random());
-        
-        mixedOpts.forEach(opt => {
-            const btn = document.createElement('button');
-            btn.className = 'quiz-btn';
-            btn.innerText = opt;
-            btn.onclick = () => checkSentence(opt === item.ans, btn, item.ans, item.s);
-            grid.appendChild(btn);
+        vocab.forEach(word => {
+            const row = document.createElement('div');
+            row.className = 'study-row';
+            row.innerHTML = `<div class="emoji">${word.em}</div><div class="es">${word.es}</div><div class="pl">${word.pl}</div>`;
+            container.appendChild(row);
         });
     }
 
-    function checkSentence(isCorrect, btn, correctTxt, fullSentence) {
-        const btns = document.querySelectorAll('.quiz-btn');
-        btns.forEach(b => b.onclick = null);
-
-        if(isCorrect) {
-            btn.classList.add('correct');
-            document.getElementById('s-feedback').innerText = "Brawo! " + fullSentence.replace('___', correctTxt);
-            document.getElementById('s-feedback').style.color = "green";
-        } else {
-            btn.classList.add('wrong');
-            btns.forEach(b => { if(b.innerText === correctTxt) b.classList.add('correct'); });
-            document.getElementById('s-feedback').innerText = "Źle. Poprawnie: " + fullSentence.replace('___', correctTxt);
-            document.getElementById('s-feedback').style.color = "red";
-        }
-        document.getElementById('next-s-btn').classList.remove('hidden');
-    }
-
-    function nextSentence() {
-        sIndex++;
-        loadSentence();
-    }
-
-
-    // --- QUIZ KOŃCOWY ---
+    // --- FUNKCJA 2: QUIZ SŁÓWKOWY ---
     let qIndex = 0;
-    let quizData = [];
+    let qData = [];
 
-    function startQuiz() {
-        document.getElementById('step-sentences').classList.add('hidden');
-        document.getElementById('step-quiz').classList.remove('hidden');
+    function startVocabQuiz() {
+        document.getElementById('screen-vocab-study').classList.add('hidden');
+        document.getElementById('screen-vocab-quiz').classList.remove('hidden');
         window.scrollTo(0,0);
         
-        quizData = vocab.map(item => {
-            const distractors = vocab
-                .filter(v => v.es !== item.es)
-                .sort(() => 0.5 - Math.random())
-                .slice(0, 3)
-                .map(v => v.pl);
+        qData = vocab.map(item => {
+            const distractors = vocab.filter(v => v.es !== item.es).sort(() => 0.5 - Math.random()).slice(0, 3).map(v => v.pl);
             return {
-                q: item.es,
-                emoji: item.em,
-                correct: item.pl,
+                q: item.es, em: item.em, correct: item.pl,
                 options: [item.pl, ...distractors].sort(() => 0.5 - Math.random())
             };
         }).sort(() => 0.5 - Math.random());
-
+        
+        qIndex = 0;
         loadQuestion();
     }
 
     function loadQuestion() {
-        if(qIndex >= quizData.length) {
-            document.getElementById('step-quiz').classList.add('hidden');
-            document.getElementById('step-end').classList.remove('hidden');
+        if(qIndex >= qData.length) {
+            document.getElementById('screen-vocab-quiz').classList.add('hidden');
+            document.getElementById('screen-vocab-end').classList.remove('hidden');
             return;
         }
-        const q = quizData[qIndex];
-        document.getElementById('progress').innerText = `Pytanie ${qIndex+1} z ${quizData.length}`;
+        const q = qData[qIndex];
+        document.getElementById('q-progress').innerText = `Pytanie ${qIndex+1} z ${qData.length}`;
+        document.getElementById('q-emoji').innerText = q.em;
         document.getElementById('q-text').innerText = q.q;
-        document.getElementById('q-emoji').innerText = q.emoji;
-        document.getElementById('feedback').innerText = "";
+        document.getElementById('q-feedback').innerText = "";
         document.getElementById('next-q-btn').classList.add('hidden');
 
         const grid = document.getElementById('q-options');
@@ -412,34 +302,79 @@
             const btn = document.createElement('button');
             btn.className = 'quiz-btn';
             btn.innerText = opt;
-            btn.onclick = () => checkAnswer(opt === q.correct, btn, q.correct);
+            btn.onclick = () => checkQuestion(opt === q.correct, btn, q.correct);
             grid.appendChild(btn);
         });
     }
 
-    function checkAnswer(isCorrect, btn, correctTxt) {
-        const btns = document.querySelectorAll('.quiz-btn');
+    function checkQuestion(isCorrect, btn, correctTxt) {
+        const btns = document.querySelectorAll('#q-options .quiz-btn');
         btns.forEach(b => b.onclick = null);
         if(isCorrect) {
             btn.classList.add('correct');
-            document.getElementById('feedback').innerText = "Super! 👍";
-            document.getElementById('feedback').style.color = "green";
+            document.getElementById('q-feedback').innerText = "Dobrze! 👍";
+            document.getElementById('q-feedback').style.color = "green";
         } else {
             btn.classList.add('wrong');
             btns.forEach(b => { if(b.innerText === correctTxt) b.classList.add('correct'); });
-            document.getElementById('feedback').innerText = "Pomyłka.";
-            document.getElementById('feedback').style.color = "red";
+            document.getElementById('q-feedback').innerText = "Pomyłka.";
+            document.getElementById('q-feedback').style.color = "red";
         }
         document.getElementById('next-q-btn').classList.remove('hidden');
     }
+    function nextQuestion() { qIndex++; loadQuestion(); }
 
-    function nextQuestion() {
-        qIndex++;
-        loadQuestion();
+    // --- FUNKCJA 3: GRAMATYKA (ZDANIA) ---
+    let sIndex = 0;
+    let sData = [];
+
+    function startSentenceTraining() {
+        document.getElementById('screen-menu').classList.add('hidden');
+        document.getElementById('screen-sentences').classList.remove('hidden');
+        sData = sentences.sort(() => 0.5 - Math.random());
+        sIndex = 0;
+        loadSentence();
     }
 
-    // Init
-    renderStudyList();
+    function loadSentence() {
+        if(sIndex >= sData.length) {
+            document.getElementById('screen-sentences').classList.add('hidden');
+            document.getElementById('screen-sentences-end').classList.remove('hidden');
+            return;
+        }
+        const item = sData[sIndex];
+        document.getElementById('s-progress').innerText = `Zdanie ${sIndex+1} z ${sData.length}`;
+        document.getElementById('sentence-display').innerHTML = item.s.replace('___', '<span class="gap">?</span>');
+        document.getElementById('s-feedback').innerText = "";
+        document.getElementById('next-s-btn').classList.add('hidden');
+        
+        const grid = document.getElementById('sentence-options');
+        grid.innerHTML = "";
+        [...item.opts].sort(() => 0.5 - Math.random()).forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-btn';
+            btn.innerText = opt;
+            btn.onclick = () => checkSentence(opt === item.ans, btn, item.ans, item.s);
+            grid.appendChild(btn);
+        });
+    }
+
+    function checkSentence(isCorrect, btn, correctTxt, full) {
+        const btns = document.querySelectorAll('#sentence-options .quiz-btn');
+        btns.forEach(b => b.onclick = null);
+        if(isCorrect) {
+            btn.classList.add('correct');
+            document.getElementById('s-feedback').innerText = "Brawo!";
+            document.getElementById('s-feedback').style.color = "green";
+        } else {
+            btn.classList.add('wrong');
+            btns.forEach(b => { if(b.innerText === correctTxt) b.classList.add('correct'); });
+            document.getElementById('s-feedback').innerText = "Poprawnie: " + full.replace('___', correctTxt);
+            document.getElementById('s-feedback').style.color = "red";
+        }
+        document.getElementById('next-s-btn').classList.remove('hidden');
+    }
+    function nextSentence() { sIndex++; loadSentence(); }
 
 </script>
 
