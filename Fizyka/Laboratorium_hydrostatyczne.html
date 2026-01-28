@@ -76,7 +76,7 @@
             background: #fff;
             border-left: 6px solid #ab47bc;
             padding: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             text-align: left;
@@ -95,6 +95,47 @@
             margin: 10px 0;
             border: 2px dashed #ab47bc;
             color: #4a148c;
+        }
+
+        /* PRZYCISKI AUDIO I SPRAWDZANIA */
+        .btn-audio {
+            background-color: #ba68c8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 0 #8e24aa;
+        }
+        .btn-audio:active { transform: translateY(2px); box-shadow: none; }
+        
+        .btn-check {
+            background-color: white;
+            color: #7b1fa2;
+            border: 2px solid #7b1fa2;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .check-content {
+            display: none;
+            background-color: #e1bee7;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 15px;
         }
 
         /* QUIZ */
@@ -179,38 +220,73 @@
 
     <div id="theory-screen" class="section-view hidden">
         <button class="back-btn" onclick="showSection('menu')">⬅ Wróć</button>
-        <h2 style="text-align: center; color: #7b1fa2;">Powtórzenie (s. 114)</h2>
+        <h2 style="text-align: center; color: #7b1fa2;">Audio-Lekcje</h2>
+        <p style="text-align:center; font-size:14px; color:#666;">Posłuchaj, a potem powiedz tacie, co zapamiętałaś.</p>
 
         <div class="theory-card">
-            <h3>1. Ciśnienie Hydrostatyczne</h3>
-            <p>Zależy od <strong>gęstości cieczy</strong> i <strong>wysokości słupa cieczy</strong> (głębokości).</p>
-            <p>Paradoks: Nie zależy od kształtu naczynia!</p>
+            <h3>1. Ciśnienie (Szpilki vs Narty)</h3>
             <img src="paradoks.jpg" class="theory-img" onerror="this.style.display='none'">
-            <div class="formula-box">p = d · g · h</div>
+            <div class="formula-box">p = F / S</div>
+            
+            <button class="btn-audio" onclick="speak('Ciśnienie zależy od siły i powierzchni. Wyobraź sobie szpilkę i nartę. Szpilka ma małą powierzchnię, więc wbija się mocno - robi wielkie ciśnienie. Narta ma dużą powierzchnię, więc nacisk się rozkłada - ciśnienie jest małe. Wzór to siła dzielona przez powierzchnię.')">
+                📢 Posłuchaj Hani (30s)
+            </button>
+            
+            <button class="btn-check" onclick="toggleCheck('c1')">👁️ Sprawdź się</button>
+            <div id="c1" class="check-content">
+                <strong>Zapamiętaj:</strong><br>
+                Mała powierzchnia (szpilka) = OGROMNE ciśnienie.<br>
+                Duża powierzchnia (narta) = Małe ciśnienie.
+            </div>
         </div>
 
         <div class="theory-card">
-            <h3>2. Prawo Pascala</h3>
-            <p>Nacisk wywierany z zewnątrz na ciecz rozchodzi się <strong>jednakowo we wszystkich kierunkach</strong>.</p>
-            <p>Zastosowanie: <strong>Prasa Hydrauliczna</strong> i hamulce.</p>
+            <h3>2. Prawo Pascala (Pasta do zębów)</h3>
             <img src="prasa_schemat.jpg" class="theory-img" onerror="this.style.display='none'">
             <div class="formula-box">F₁ / S₁ = F₂ / S₂</div>
+
+            <button class="btn-audio" onclick="speak('Prawo Pascala działa jak tubka pasty do zębów. Jak naciśniesz tubkę w jednym miejscu, pasta chce wylecieć każdym otworem z taką samą siłą. Woda przenosi nacisk wszędzie tak samo. Dzięki temu działają hamulce w samochodzie.')">
+                📢 Posłuchaj Hani (30s)
+            </button>
+
+            <button class="btn-check" onclick="toggleCheck('c2')">👁️ Sprawdź się</button>
+            <div id="c2" class="check-content">
+                <strong>Prawo Pascala:</strong><br>
+                Naciskasz w jednym miejscu -> ciśnienie rozchodzi się <strong>wszędzie tak samo</strong>.
+            </div>
         </div>
 
         <div class="theory-card">
-            <h3>3. Prawo Archimedesa</h3>
-            <p>Na ciało w wodzie działa <strong>Siła Wyporu</strong> (w górę). Jest ona równa ciężarowi wypartej wody.</p>
+            <h3>3. Wypór (Wanna i Archimedes)</h3>
             <img src="archimedes_sily.jpg" class="theory-img" onerror="this.style.display='none'">
-            <div class="formula-box">Fw = d · V · g</div>
+            <div class="formula-box">Fw = Ciężar wypartej wody</div>
+
+            <button class="btn-audio" onclick="speak('Wyobraź sobie, że wchodzisz do pełnej wanny. Woda się wylewa, prawda? Siła, która wypycha Cię do góry, jest równa ciężarowi tej wylanej wody. To jest prawo Archimedesa. Im więcej wody wypchniesz swoim ciałem, tym mocniej woda wypycha Ciebie.')">
+                📢 Posłuchaj Hani (30s)
+            </button>
+
+            <button class="btn-check" onclick="toggleCheck('c3')">👁️ Sprawdź się</button>
+            <div id="c3" class="check-content">
+                <strong>Siła Wyporu:</strong><br>
+                Działa zawsze <strong>do góry</strong>.<br>
+                Zależy od tego, ile wody "wypchnęło" ciało.
+            </div>
         </div>
 
         <div class="theory-card">
-            <h3>4. Warunki Pływania</h3>
+            <h3>4. Pływa czy Tonie?</h3>
             <img src="plywanie_warunki.jpg" class="theory-img" onerror="this.style.display='none'">
-            <ul>
-                <li><strong>Ciało tonie:</strong> Gęstość ciała > Gęstość cieczy.</li>
-                <li><strong>Ciało pływa:</strong> Gęstość ciała < Gęstość cieczy.</li>
-            </ul>
+            
+            <button class="btn-audio" onclick="speak('To proste. Patrzysz na gęstość. Jeśli coś jest gęstsze od wody, jak kamień czy żelazo - tonie. Jeśli ma mniejszą gęstość, jak drewno czy styropian - pływa. A lód? Jest lżejszy od wody, dlatego kostki lodu pływają w herbacie.')">
+                📢 Posłuchaj Hani (30s)
+            </button>
+
+            <button class="btn-check" onclick="toggleCheck('c4')">👁️ Sprawdź się</button>
+            <div id="c4" class="check-content">
+                <strong>Zasada:</strong><br>
+                Gęstość ciała > Gęstość wody = <strong>TONIE</strong>.<br>
+                Gęstość ciała < Gęstość wody = <strong>PŁYWA</strong>.
+            </div>
         </div>
     </div>
 
@@ -240,12 +316,27 @@
 <script>
     // --- NAWIGACJA ---
     function showSection(id) {
+        window.speechSynthesis.cancel(); // Stop audio przy zmianie ekranu
         document.querySelectorAll('.section-view').forEach(el => el.classList.add('hidden'));
         if(id === 'menu') document.getElementById('menu-screen').classList.remove('hidden');
         if(id === 'sim') document.getElementById('sim-screen').classList.remove('hidden');
         if(id === 'theory') document.getElementById('theory-screen').classList.remove('hidden');
         if(id === 'none') return; 
         window.scrollTo(0,0);
+    }
+
+    // --- AUDIO ---
+    function speak(text) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'pl-PL';
+        u.rate = 0.95; // Lekko wolniej dla zrozumienia
+        window.speechSynthesis.speak(u);
+    }
+
+    function toggleCheck(id) {
+        const el = document.getElementById(id);
+        el.style.display = (el.style.display === 'block') ? 'none' : 'block';
     }
 
     // --- SYMULATOR ---
