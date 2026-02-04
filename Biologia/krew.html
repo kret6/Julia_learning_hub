@@ -27,11 +27,11 @@
         .btn-big {
             display: block;
             width: 100%;
-            padding: 20px;
-            margin: 15px 0;
+            padding: 15px; /* Zmniejszyłem nieco padding, bo będzie więcej opcji */
+            margin: 10px 0;
             border: none;
             border-radius: 20px;
-            font-size: 22px;
+            font-size: 18px; /* Nieco mniejsza czcionka dla odpowiedzi */
             font-weight: bold;
             cursor: pointer;
             transition: 0.2s;
@@ -41,12 +41,13 @@
             align-items: center;
             justify-content: center;
             gap: 15px;
+            white-space: normal; /* Pozwala na zawijanie tekstu przy długich odpowiedziach */
         }
         .btn-big:active { transform: translateY(4px); box-shadow: none; }
         
-        .btn-audio { background-color: #ef5350; } /* Czerwony */
-        .btn-quiz { background-color: #66bb6a; margin-top: 30px;} /* Zielony */
-        .btn-opt { background-color: #ffcdd2; color: #b71c1c; font-size: 18px; padding: 15px; box-shadow: 0 4px 0 #e57373;}
+        .btn-audio { background-color: #ef5350; font-size: 22px; padding: 20px; } 
+        .btn-quiz { background-color: #66bb6a; margin-top: 30px; font-size: 22px; padding: 20px;} 
+        .btn-opt { background-color: #ffcdd2; color: #b71c1c; box-shadow: 0 4px 0 #e57373;}
         
         .hidden { display: none; }
         .emoji { font-size: 40px; }
@@ -84,6 +85,7 @@
     </div>
 
     <div id="quiz" class="hidden">
+        <div style="font-size: 14px; color: #ef5350; margin-bottom: 10px;">Pytanie <span id="q-num">1</span>/10</div>
         <h2 id="q-text">Pytanie...</h2>
         <div id="options"></div>
         <div id="feedback"></div>
@@ -92,7 +94,7 @@
 
     <div id="end" class="hidden">
         <h1>Brawo! 🎉</h1>
-        <p>Odpoczywaj. Jesteś super!</p>
+        <p>Koniec testu. Jesteś mistrzynią biologii!</p>
         <button class="btn-big btn-quiz" onclick="location.reload()">Jeszcze raz?</button>
         <br>
         <a href="../index.html" class="btn-big btn-audio">Wróć do bazy</a>
@@ -102,43 +104,74 @@
 
 <script>
     // --- DANE LEKCJI (AUDIO) ---
+    // Zostawiłem bez zmian, pasują ogólnie do tematu
     const lessons = {
         1: "Cześć Julia. Wyobraź sobie krew jako zupę. Woda w tej zupie to OSOCZE. Osocze to głównie woda, ale pływają w niej rozpuszczone składniki: glukoza, czyli jedzenie dla komórek, sole mineralne, hormony i dwutlenek węgla, który organizm wyrzuca. Pamiętaj: Osocze to płynna baza.",
-        2: "Teraz " + "gęste" + " w zupie, czyli krwinki. Mamy trzy rodzaje. Pierwsze to ERYTROCYTY, czyli czerwone krwinki. To są taksówki. Wożą tlen z płuc do komórek. Drugie to LEUKOCYTY, białe krwinki. To są żołnierze. Walczą z bakteriami i wirusami. Trzecie to PŁYTKI KRWI. To są plasterki. Jak się skaleczysz, one robią strup i tamują krew.",
+        2: "Teraz gęste w zupie, czyli krwinki. Mamy trzy rodzaje. Pierwsze to ERYTROCYTY, czyli czerwone krwinki. To są taksówki. Wożą tlen z płuc do komórek. Drugie to LEUKOCYTY, białe krwinki. To są żołnierze. Walczą z bakteriami i wirusami. Trzecie to PŁYTKI KRWI. To są plasterki. Jak się skaleczysz, one robią strup i tamują krew.",
         3: "Na koniec grupy krwi. Są cztery główne: A, B, AB oraz zero. Każda z nich może mieć czynnik Rh plus, albo minus. To ważne przy transfuzji, czyli podawaniu krwi w szpitalu. Musisz dostać taką grupę, która pasuje do Twojej."
     };
 
-    // --- DANE QUIZU ---
+    // --- NOWE DANE QUIZU (10 pytań) ---
     const quizData = [
         {
-            q: "Z czego w większości składa się krew?",
-            a: ["Z osocza (wody)", "Z tłuszczu", "Z kości"],
-            correct: 0,
+            q: "Co stanowi płynną część krwi, w której zawieszone są krwinki?",
+            a: ["Hemoglobina", "Osocze", "Limfa", "Woda utleniona"],
+            correct: 1, // B
             feedback: "Tak! Osocze to płynna baza."
         },
         {
-            q: "Co robią Erytrocyty (Czerwone krwinki)?",
-            a: ["Walczą z wirusami", "Transportują tlen", "Robią strupy"],
-            correct: 1,
-            feedback: "Brawo! Są jak czerwone taksówki z tlenem."
+            q: "Jaka jest główna funkcja erytrocytów (krwinek czerwonych)?",
+            a: ["Zwalczanie wirusów", "Krzepnięcie krwi", "Transport tlenu", "Produkcja hormonów"],
+            correct: 2, // C
+            feedback: "Brawo! Są jak taksówki z tlenem."
         },
         {
-            q: "Kto broni nas przed bakteriami (Odporność)?",
-            a: ["Płytki krwi", "Erytrocyty", "Leukocyty (Białe)"],
-            correct: 2,
+            q: "Dzięki czemu krew ma czerwony kolor?",
+            a: ["Dzięki hemoglobinie", "Przez żelazo w osoczu", "Dzięki płytkom", "Przez cukier"],
+            correct: 0, // A
+            feedback: "Super. Hemoglobina to czerwony barwnik."
+        },
+        {
+            q: "Które krwinki odpowiadają za odporność i walkę z wirusami?",
+            a: ["Erytrocyty", "Płytki krwi", "Osocze", "Leukocyty (Białe)"],
+            correct: 3, // D
             feedback: "Dokładnie. Leukocyty to żołnierze."
         },
         {
-            q: "Co robią Płytki Krwi przy skaleczeniu?",
-            a: ["Tamują krew (skrzep)", "Transportują tlen", "Nic nie robią"],
-            correct: 0,
-            feedback: "Super. Działają jak naturalny plaster."
+            q: "Co robią płytki krwi, gdy się skaleczysz?",
+            a: ["Przyspieszają krążenie", "Tworzą strup", "Dostarczają tlen", "Nic nie robią"],
+            correct: 1, // B
+            feedback: "Tak jest. Są jak naturalny plaster."
         },
         {
-            q: "Jakie są grupy krwi?",
-            a: ["Tylko A i B", "A, B, AB, 0", "X, Y, Z"],
-            correct: 1,
-            feedback: "Świetnie. Pamiętaj też o Rh plus i minus."
+            q: "Gdzie u człowieka powstają nowe komórki krwi?",
+            a: ["W sercu", "W wątrobie", "W szpiku kostnym", "W nerkach"],
+            correct: 2, // C
+            feedback: "Świetnie. Szpik kostny to fabryka krwi."
+        },
+        {
+            q: "Która grupa krwi to uniwersalny dawca?",
+            a: ["Grupa AB", "Grupa A", "Grupa B", "Grupa 0 (Zero)"],
+            correct: 3, // D
+            feedback: "Tak! Grupę Zero można dać każdemu."
+        },
+        {
+            q: "Kiedy występuje konflikt serologiczny?",
+            a: ["Matka Rh-, Dziecko Rh+", "Kłótnia dawcy z biorcą", "Za wysokie ciśnienie", "Brak płytek"],
+            correct: 0, // A
+            feedback: "Brawo. To rzadka, ale ważna sytuacja."
+        },
+        {
+            q: "Czego NIE mają dojrzałe krwinki czerwone?",
+            a: ["Dwóch jąder", "Jądra komórkowego", "Błony komórkowej", "Kształtu"],
+            correct: 1, // B
+            feedback: "Dokładnie. Robią miejsce na tlen."
+        },
+        {
+            q: "Co transportuje krew OPRÓCZ tlenu?",
+            a: ["Tylko wodę", "Impulsy nerwowe", "Składniki odżywcze", "Tylko witaminy"],
+            correct: 2, // C
+            feedback: "Tak! Roznosi jedzenie do komórek."
         }
     ];
 
@@ -149,7 +182,7 @@
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(text);
         u.lang = 'pl-PL';
-        u.rate = 0.9; // Trochę wolniej dla zmęczonej głowy
+        u.rate = 0.9; 
         window.speechSynthesis.speak(u);
     }
 
@@ -168,11 +201,13 @@
         if (currentQ >= quizData.length) {
             document.getElementById('quiz').classList.add('hidden');
             document.getElementById('end').classList.remove('hidden');
-            speak("Koniec! Odpoczywaj kochanie.");
+            speak("Koniec testu! Jesteś wspaniała.");
             return;
         }
 
         const data = quizData[currentQ];
+        // Aktualizacja licznika pytań
+        document.getElementById('q-num').innerText = currentQ + 1;
         document.getElementById('q-text').innerText = data.q;
         document.getElementById('feedback').innerText = "";
         document.getElementById('next-btn').classList.add('hidden');
@@ -206,7 +241,7 @@
         } else {
             btn.classList.add('wrong');
             allBtns[data.correct].classList.add('correct'); // Pokaż dobrą
-            speak("Pomyłka. Prawidłowa to: " + data.a[data.correct]);
+            speak("Nie szkodzi. Prawidłowa to: " + data.a[data.correct]);
         }
         
         document.getElementById('next-btn').classList.remove('hidden');
