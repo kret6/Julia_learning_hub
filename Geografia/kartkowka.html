@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geografia: Baza Wiedzy</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            text-align: center; 
+            background-color: #fffde7; /* Lekko żółte tło geograficzne */
+            margin: 0; padding: 20px;
+            color: #333;
+            overflow-y: auto;
+            min-height: 100vh;
+        }
+
+        h1 { margin-bottom: 10px; font-size: 1.8rem; color: #f57f17; }
+        p { color: #555; margin-bottom: 30px; }
+
+        .btn-big {
+            display: flex; align-items: center; gap: 15px; text-align: left;
+            width: 100%; max-width: 500px; margin: 15px auto; padding: 20px;
+            font-size: 18px; border: none; border-radius: 15px; 
+            cursor: pointer; color: white;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1); 
+            transition: transform 0.1s;
+        }
+        .btn-big:active { transform: scale(0.96); }
+        
+        .btn-audio { background-color: #fbc02d; color: #333; font-weight: bold; } 
+        .btn-quiz { background-color: #388e3c; justify-content: center; font-weight: bold; margin-top: 40px; } 
+        
+        .emoji { font-size: 28px; min-width: 40px; }
+        
+        .back-btn { background: #eee; color: #333; padding: 10px 20px; border: none; border-radius: 20px; text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 20px;}
+    </style>
+</head>
+<body>
+
+    <a href="../index.html" class="back-btn">⬅ Wróć do Panelu</a>
+
+    <div id="menu">
+        <h1>🌍 Geografia: Europa i Polska</h1>
+        <p>Wersja audio. Kliknij, aby posłuchać materiału przed testem.</p>
+
+        <button class="btn-big btn-audio" onclick="playLesson(1)">
+            <span class="emoji">🗺️</span> 1. Mapa Polityczna Europy
+        </button>
+
+        <button class="btn-big btn-audio" onclick="playLesson(2)">
+            <span class="emoji">🇵🇱</span> 2. Podział Polski (Gminy, Powiaty)
+        </button>
+        
+        <button class="btn-big btn-audio" onclick="playLesson(3)">
+            <span class="emoji">👶</span> 3. Przyrost Naturalny
+        </button>
+
+        <button class="btn-big btn-audio" onclick="playLesson(4)">
+            <span class="emoji">📊</span> 4. Płeć i Wiek Produkcyjny
+        </button>
+
+        <button class="btn-big btn-quiz" onclick="window.location.href='/quiz'">
+            <span class="emoji">🎓</span> PRZEJDŹ DO BLOOD ENGINE (TEST)
+        </button>
+    </div>
+
+    <script>
+        const LESSONS = {
+            1: "Lekcja pierwsza: Przemiany na mapie politycznej Europy. W Europie znajduje się obecnie 46 państw. Największym krajem jest Rosja, a najmniejszym Watykan. Pamiętaj, że Rosja, Turcja i Kazachstan to państwa leżące na dwóch kontynentach: w Europie i Azji. Ważnym pojęciem są 'terytoria zależne' – to obszary, które nie są samodzielnymi państwami, lecz podlegają innemu krajowi. Przykłady to Grenlandia należąca do Danii, czy Gibraltar należący do Wielkiej Brytanii. Najważniejsze zmiany granic nastąpiły na przełomie wieków: w 1990 roku zjednoczyły się Niemcy, w 1991 rozpadł się Związek Radziecki (powstało z niego 15 państw, m.in. Ukraina, Litwa), rozpadła się Jugosławia (na m.in. Chorwację i Serbię) oraz w 1993 Czechosłowacja na Czechy i Słowację.",
+            
+            2: "Lekcja druga: Podział administracyjny Polski. 1 stycznia 1999 roku wprowadzono w Polsce trójstopniowy podział terytorialny. Składa się on z 16 województw, ponad 300 powiatów (ziemskich i grodzkich) oraz z prawie 2500 gmin. Największym i najludniejszym województwem jest mazowieckie, a najmniejszym opolskie. Gmina zajmuje się sprawami codziennymi: szkołami podstawowymi, przedszkolami i wywozem śmieci. Powiat prowadzi szkoły średnie i szpitale powiatowe, a województwo zajmuje się polityką regionalną.",
+            
+            3: "Lekcja trzecia: Ludność i Przyrost Naturalny. Polska liczy ponad 38 milionów mieszkańców. Przyrost naturalny to różnica między liczbą urodzeń a liczbą zgonów (U minus Z). Niezwykle ważny jest Współczynnik Przyrostu Naturalnego (WPN). Oblicza się go, dzieląc przyrost przez ogólną liczbę ludności, a wynik mnoży się przez 1000. WPN podajemy wyłącznie w promilach, nigdy w procentach! Obecnie w Polsce społeczeństwo się starzeje – rodzi się za mało dzieci, a medycyna pozwala żyć dłużej.",
+            
+            4: "Lekcja czwarta: Struktura płci i wieku. W Polsce żyje więcej kobiet niż mężczyzn – na 100 mężczyzn przypada 107 kobiet. Chłopców rodzi się nieco więcej, ale to kobiety żyją średnio o kilka lat dłużej. Wynika to z faktu, że mężczyźni częściej pracują w niebezpiecznych zawodach, ulegają wypadkom i chorobom cywilizacyjnym. Na klasówce na pewno pojawią się ekonomiczne grupy wieku. Zapamiętaj: wiek przedprodukcyjny to osoby od zera do siedemnastu lat. Wiek produkcyjny to kobiety od osiemnastu do pięćdziesięciu dziewięciu lat oraz mężczyźni od osiemnastu do sześćdziesięciu czterech lat. Wiek poprodukcyjny to czas emerytury."
+        };
+
+        function speak(text) {
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(text);
+            u.lang = 'pl-PL';
+            const voices = window.speechSynthesis.getVoices();
+            const plVoice = voices.find(v => v.lang.includes('pl') || v.lang.includes('PL'));
+            if (plVoice) {
+                u.voice = plVoice;
+            }
+            window.speechSynthesis.speak(u);
+        }
+
+        window.speechSynthesis.onvoiceschanged = () => {
+            window.speechSynthesis.getVoices();
+        };
+
+        function playLesson(num) { 
+            speak(LESSONS[num]); 
+        }
+    </script>
+</body>
+</html>
