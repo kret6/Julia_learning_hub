@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geografia: Baza Wiedzy</title>
+    <title>Geografia: Europa i Polska (All-in-One)</title>
     <style>
         body { 
             font-family: 'Segoe UI', sans-serif; 
             text-align: center; 
-            background-color: #fffde7; /* Lekko żółte tło geograficzne */
+            background-color: #fffde7; 
             margin: 0; padding: 20px;
             color: #333;
             overflow-y: auto;
@@ -34,15 +34,38 @@
         .emoji { font-size: 28px; min-width: 40px; }
         
         .back-btn { background: #eee; color: #333; padding: 10px 20px; border: none; border-radius: 20px; text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 20px;}
+
+        /* Kontener Quizu */
+        #quiz-container { 
+            max-width: 600px; margin: 0 auto; 
+            background: white; padding: 20px; border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15); 
+        }
+        
+        .answer-btn { 
+            display: block; width: 100%; padding: 18px; margin: 12px 0; 
+            background: #f5f5f5; border: 2px solid #e0e0e0; border-radius: 12px; 
+            font-size: 1.1rem; cursor: pointer; color: #333; text-align: left;
+        }
+        .answer-btn:active { background-color: #e0e0e0; }
+
+        .hidden { display: none !important; }
+        
+        .correct { background-color: #66bb6a !important; color: white !important; border-color: #43a047 !important; }
+        .wrong { background-color: #ef5350 !important; color: white !important; border-color: #c62828 !important; }
+
+        /* Pasek Postępu */
+        .progress-container { width: 100%; background-color: #e0e0e0; border-radius: 10px; margin-bottom: 20px; height: 10px; overflow: hidden; }
+        .progress-bar { height: 100%; background-color: #f57f17; width: 0%; transition: width 0.3s ease; }
     </style>
 </head>
 <body>
 
-    <a href="../index.html" class="back-btn">⬅ Wróć do Panelu</a>
+    <a href="../index.html" id="btn-back" class="back-btn">⬅ Wróć do Panelu</a>
 
     <div id="menu">
         <h1>🌍 Geografia: Europa i Polska</h1>
-        <p>Wersja audio. Kliknij, aby posłuchać materiału przed testem.</p>
+        <p>Posłuchaj materiału, a potem uruchom test.</p>
 
         <button class="btn-big btn-audio" onclick="playLesson(1)">
             <span class="emoji">🗺️</span> 1. Mapa Polityczna Europy
@@ -60,40 +83,137 @@
             <span class="emoji">📊</span> 4. Płeć i Wiek Produkcyjny
         </button>
 
-        <button class="btn-big btn-quiz" onclick="window.location.href='/quiz'">
-            <span class="emoji">🎓</span> PRZEJDŹ DO BLOOD ENGINE (TEST)
+        <button class="btn-big btn-quiz" onclick="startQuiz()">
+            <span class="emoji">🎓</span> ROZPOCZNIJ TEST (BLOOD ENGINE)
         </button>
+    </div>
+
+    <div id="quiz-container" class="hidden">
+        <div style="display:flex; justify-content:space-between; color:#888; margin-bottom:10px;">
+            <span>Geografia</span>
+            <span>Pytanie <span id="q-current">1</span> / <span id="q-total">14</span></span>
+        </div>
+        
+        <div class="progress-container">
+            <div id="quiz-progress" class="progress-bar"></div>
+        </div>
+
+        <h2 id="q-text" style="font-size: 1.4rem; min-height: 80px;">Ładowanie...</h2>
+
+        <div id="answers-grid">
+            <button class="answer-btn" onclick="check(0)" id="btn-0">A</button>
+            <button class="answer-btn" onclick="check(1)" id="btn-1">B</button>
+            <button class="answer-btn" onclick="check(2)" id="btn-2">C</button>
+            <button class="answer-btn" onclick="check(3)" id="btn-3">D</button>
+        </div>
+    </div>
+
+    <div id="end-screen" class="hidden" style="margin-top: 50px;">
+        <h1>🎉 Koniec Testu!</h1>
+        <h2 id="final-score">Wynik: 0/0</h2>
+        <button class="btn-big btn-quiz" onclick="location.reload()">Jeszcze raz?</button>
     </div>
 
     <script>
         const LESSONS = {
-            1: "Lekcja pierwsza: Przemiany na mapie politycznej Europy. W Europie znajduje się obecnie 46 państw. Największym krajem jest Rosja, a najmniejszym Watykan. Pamiętaj, że Rosja, Turcja i Kazachstan to państwa leżące na dwóch kontynentach: w Europie i Azji. Ważnym pojęciem są 'terytoria zależne' – to obszary, które nie są samodzielnymi państwami, lecz podlegają innemu krajowi. Przykłady to Grenlandia należąca do Danii, czy Gibraltar należący do Wielkiej Brytanii. Najważniejsze zmiany granic nastąpiły na przełomie wieków: w 1990 roku zjednoczyły się Niemcy, w 1991 rozpadł się Związek Radziecki (powstało z niego 15 państw, m.in. Ukraina, Litwa), rozpadła się Jugosławia (na m.in. Chorwację i Serbię) oraz w 1993 Czechosłowacja na Czechy i Słowację.",
+            1: "Lekcja pierwsza: Przemiany na mapie politycznej Europy. W Europie znajduje się obecnie 46 państw. Największym krajem jest Rosja, a najmniejszym Watykan. Pamiętaj, że Rosja, Turcja i Kazachstan to państwa leżące na dwóch kontynentach: w Europie i Azji. Ważnym pojęciem są 'terytoria zależne' – to obszary, które nie są samodzielnymi państwami, lecz podlegają innemu krajowi. Przykłady to Grenlandia należąca do Danii, czy Gibraltar należący do Wielkiej Brytanii. Najważniejsze zmiany granic nastąpiły na przełomie wieków: w 1990 roku zjednoczyły się Niemcy, w 1991 rozpadł się Związek Radziecki, rozpadła się Jugosławia oraz w 1993 Czechosłowacja na Czechy i Słowację.",
             
-            2: "Lekcja druga: Podział administracyjny Polski. 1 stycznia 1999 roku wprowadzono w Polsce trójstopniowy podział terytorialny. Składa się on z 16 województw, ponad 300 powiatów (ziemskich i grodzkich) oraz z prawie 2500 gmin. Największym i najludniejszym województwem jest mazowieckie, a najmniejszym opolskie. Gmina zajmuje się sprawami codziennymi: szkołami podstawowymi, przedszkolami i wywozem śmieci. Powiat prowadzi szkoły średnie i szpitale powiatowe, a województwo zajmuje się polityką regionalną.",
+            2: "Lekcja druga: Podział administracyjny Polski. 1 stycznia 1999 roku wprowadzono w Polsce trójstopniowy podział terytorialny. Składa się on z 16 województw, ponad 300 powiatów oraz z prawie 2500 gmin. Największym i najludniejszym województwem jest mazowieckie, a najmniejszym opolskie. Gmina zajmuje się sprawami codziennymi: szkołami podstawowymi, przedszkolami i wywozem śmieci. Powiat prowadzi szkoły średnie i szpitale powiatowe, a województwo zajmuje się polityką regionalną.",
             
-            3: "Lekcja trzecia: Ludność i Przyrost Naturalny. Polska liczy ponad 38 milionów mieszkańców. Przyrost naturalny to różnica między liczbą urodzeń a liczbą zgonów (U minus Z). Niezwykle ważny jest Współczynnik Przyrostu Naturalnego (WPN). Oblicza się go, dzieląc przyrost przez ogólną liczbę ludności, a wynik mnoży się przez 1000. WPN podajemy wyłącznie w promilach, nigdy w procentach! Obecnie w Polsce społeczeństwo się starzeje – rodzi się za mało dzieci, a medycyna pozwala żyć dłużej.",
+            3: "Lekcja trzecia: Ludność i Przyrost Naturalny. Polska liczy ponad 38 milionów mieszkańców. Przyrost naturalny to różnica między liczbą urodzeń a liczbą zgonów. Niezwykle ważny jest Współczynnik Przyrostu Naturalnego. Oblicza się go, dzieląc przyrost przez ogólną liczbę ludności, a wynik mnoży się przez 1000. Podajemy go wyłącznie w promilach, nigdy w procentach! Obecnie w Polsce społeczeństwo się starzeje – rodzi się za mało dzieci, a medycyna pozwala żyć dłużej.",
             
-            4: "Lekcja czwarta: Struktura płci i wieku. W Polsce żyje więcej kobiet niż mężczyzn – na 100 mężczyzn przypada 107 kobiet. Chłopców rodzi się nieco więcej, ale to kobiety żyją średnio o kilka lat dłużej. Wynika to z faktu, że mężczyźni częściej pracują w niebezpiecznych zawodach, ulegają wypadkom i chorobom cywilizacyjnym. Na klasówce na pewno pojawią się ekonomiczne grupy wieku. Zapamiętaj: wiek przedprodukcyjny to osoby od zera do siedemnastu lat. Wiek produkcyjny to kobiety od osiemnastu do pięćdziesięciu dziewięciu lat oraz mężczyźni od osiemnastu do sześćdziesięciu czterech lat. Wiek poprodukcyjny to czas emerytury."
+            4: "Lekcja czwarta: Struktura płci i wieku. W Polsce żyje więcej kobiet niż mężczyzn – na 100 mężczyzn przypada 107 kobiet. Chłopców rodzi się nieco więcej, ale to kobiety żyją średnio o kilka lat dłużej. Na klasówce na pewno pojawią się ekonomiczne grupy wieku. Zapamiętaj: wiek przedprodukcyjny to osoby od zera do siedemnastu lat. Wiek produkcyjny to kobiety od osiemnastu do pięćdziesięciu dziewięciu lat oraz mężczyźni od osiemnastu do sześćdziesięciu czterech lat. Wiek poprodukcyjny to czas emerytury."
         };
+
+        const QUESTIONS = [
+            { t: "Wskaż państwa, których terytorium leży na dwóch kontynentach (w Europie i Azji):", a: ["Rosja, Turcja i Kazachstan", "Grecja, Włochy i Hiszpania", "Rosja, Ukraina i Białoruś", "Turcja, Bułgaria i Rumunia"], c: 0 },
+            { t: "Czym są terytoria zależne i podaj ich prawidłowy przykład:", a: ["To w pełni niepodległe państwa wyspiarskie, np. Islandia", "To obszary należące politycznie do innego państwa, np. Grenlandia należąca do Danii", "To państwa powstałe po rozpadzie ZSRR", "To województwa przygraniczne"], c: 1 },
+            { t: "Jakie główne zmiany na politycznej mapie Europy zaszły po 1989/1990 roku?", a: ["Połączenie się Czech i Słowacji", "Rozpad Niemiec na wschodnie i zachodnie", "Zjednoczenie Niemiec oraz rozpad ZSRR, Jugosławii i Czechosłowacji", "Powstanie Cesarstwa Austro-Węgierskiego"], c: 2 },
+            { t: "Z ilu szczebli składa się podział administracyjny wprowadzony w 1999 r. i ile mamy województw?", a: ["Z dwóch szczebli, 49 województw", "Z trzech szczebli (gminy, powiaty, województwa), 16 województw", "Z czterech szczebli, 14 województw", "Tylko z powiatów i gmin"], c: 1 },
+            { t: "Które z wymienionych zadań należy do obowiązków GMINY?", a: ["Zarządzanie szpitalami powiatowymi", "Utrzymanie przedszkoli, szkół podstawowych i wywóz śmieci", "Polityka regionalna województwa", "Budowa autostrad"], c: 1 },
+            { t: "Które województwo w Polsce jest największe, a które najmniejsze?", a: ["Największe: śląskie / Najmniejsze: podkarpackie", "Największe: mazowieckie / Najmniejsze: opolskie", "Największe: wielkopolskie / Najmniejsze: świętokrzyskie", "Największe: małopolskie / Najmniejsze: lubuskie"], c: 1 },
+            { t: "Jaki jest prawidłowy wzór na obliczenie Przyrostu Naturalnego (PN)?", a: ["Liczba urodzeń plus liczba zgonów (U + Z)", "Liczba zgonów minus liczba urodzeń (Z - U)", "Liczba urodzeń minus liczba zgonów (U - Z)", "Wszystkie zgony pomnożone przez 1000"], c: 2 },
+            { t: "W jakich jednostkach ZAWSZE podaje się Współczynnik Przyrostu Naturalnego (WPN)?", a: ["W procentach (%)", "W promilach (‰)", "W liczbach całkowitych", "Na kilometr kwadratowy"], c: 1 },
+            { t: "Zjawisko 'starzenia się społeczeństwa' polega na:", a: ["Tym, że rośnie liczba urodzeń, a spada długość życia", "Zwiększaniu się udziału osób starszych, na skutek wydłużenia długości życia i małej liczby urodzeń dzieci", "Tylko i wyłącznie na wyjazdach młodych za granicę", "Mniejszej liczbie szpitali"], c: 1 },
+            { t: "Jak w Polsce kształtuje się podział ludności według płci?", a: ["Żyje więcej mężczyzn niż kobiet", "Liczba kobiet i mężczyzn jest dokładnie taka sama", "Ogółem żyje więcej kobiet (107 na 100 mężczyzn), ale wśród małych dzieci przeważają chłopcy", "Płeć rozkłada się równo w każdym wieku"], c: 2 },
+            { t: "Z jakiego powodu w Polsce w starszych rocznikach jest znacznie więcej kobiet niż mężczyzn?", a: ["Ponieważ kobiety żyją średnio o ok. 8 lat dłużej (rzadziej wykonują niebezpieczne zawody)", "Bo starsi mężczyźni masowo wyjeżdżają z kraju", "Bo w Polsce w ogóle nie rodzą się chłopcy", "To błąd statystyczny"], c: 0 },
+            { t: "Z jakich osób składa się 'wiek przedprodukcyjny'?", a: ["Tylko z noworodków", "Z osób w wieku od 0 do 17 lat", "Z osób od 18 do 25 lat", "Ze studentów"], c: 1 },
+            { t: "Jakie są ramy wieku PRODUKCYJNEGO (zdolności do pracy) w Polsce?", a: ["Dla wszystkich od 18 do 65 lat", "Od 18 do 50 lat", "Dla kobiet: 18–59 lat, dla mężczyzn: 18–64 lata", "Od 20 do 60 lat"], c: 2 },
+            { t: "Jeśli piramida płci i wieku jakiegoś państwa przypomina grzyb z BARDZO WĄSKĄ podstawą, to znaczy, że:", a: ["Jest to społeczeństwo bardzo młode", "Rodzi się tam mnóstwo dzieci", "Jest to społeczeństwo starzejące się (niska liczba urodzeń)", "W państwie trwa wyż demograficzny"], c: 2 }
+        ];
+
+        let currentIdx = 0;
+        let score = 0;
 
         function speak(text) {
             window.speechSynthesis.cancel();
             const u = new SpeechSynthesisUtterance(text);
             u.lang = 'pl-PL';
-            const voices = window.speechSynthesis.getVoices();
-            const plVoice = voices.find(v => v.lang.includes('pl') || v.lang.includes('PL'));
-            if (plVoice) {
-                u.voice = plVoice;
-            }
             window.speechSynthesis.speak(u);
         }
 
-        window.speechSynthesis.onvoiceschanged = () => {
-            window.speechSynthesis.getVoices();
-        };
+        function playLesson(num) {
+            speak(LESSONS[num]);
+        }
 
-        function playLesson(num) { 
-            speak(LESSONS[num]); 
+        function startQuiz() {
+            document.getElementById('menu').classList.add('hidden');
+            document.getElementById('btn-back').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            window.speechSynthesis.cancel();
+            currentIdx = 0;
+            score = 0;
+            document.getElementById('q-total').innerText = QUESTIONS.length;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if(currentIdx >= QUESTIONS.length) {
+                finishQuiz();
+                return;
+            }
+            const q = QUESTIONS[currentIdx];
+            document.getElementById('q-current').innerText = currentIdx + 1;
+            document.getElementById('q-text').innerText = q.t;
+            
+            // Pasek postępu
+            document.getElementById('quiz-progress').style.width = ((currentIdx) / QUESTIONS.length * 100) + '%';
+            
+            for(let i=0; i<4; i++) {
+                const btn = document.getElementById(`btn-${i}`);
+                btn.innerText = q.a[i];
+                btn.className = 'answer-btn'; 
+                btn.disabled = false;
+            }
+        }
+
+        function check(idx) {
+            const q = QUESTIONS[currentIdx];
+            const btn = document.getElementById(`btn-${idx}`);
+            
+            for(let i=0; i<4; i++) document.getElementById(`btn-${i}`).disabled = true;
+
+            if(idx === q.c) {
+                btn.classList.add('correct');
+                score++;
+            } else {
+                btn.classList.add('wrong');
+                document.getElementById(`btn-${q.c}`).classList.add('correct');
+            }
+
+            setTimeout(() => {
+                currentIdx++;
+                loadQuestion();
+            }, 2000);
+        }
+
+        function finishQuiz() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('end-screen').classList.remove('hidden');
+            document.getElementById('btn-back').classList.remove('hidden');
+            
+            const percent = Math.round(score / QUESTIONS.length * 100);
+            document.getElementById('final-score').innerText = `Wynik: ${score} / ${QUESTIONS.length} (${percent}%)`;
         }
     </script>
 </body>
