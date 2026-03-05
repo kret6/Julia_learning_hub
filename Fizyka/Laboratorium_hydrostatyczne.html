@@ -71,7 +71,7 @@
         .section-view { width: 100%; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
-        /* TEORIA - KARTY (Wg Podręcznika s. 114) */
+        /* TEORIA - KARTY */
         .theory-card {
             background: #fff;
             border-left: 6px solid #ab47bc;
@@ -187,18 +187,17 @@
 
             <button class="btn-menu bg-theory" onclick="showSection('theory')">
                 <div class="icon">📚</div>
-                <div>Podręcznik (s.114)<br><small>Wzory i Prawa</small></div>
+                <div>Podręcznik<br><small>Wzory i Prawa na test</small></div>
             </button>
 
             <button class="btn-menu bg-test" onclick="startQuiz()">
                 <div class="icon">📝</div>
-                <div>TEST 1<br><small>"To trzeba umieć"</small></div>
+                <div>TEST<br><small>"To trzeba umieć"</small></div>
             </button>
         </div>
 
         <a href="../index.html" class="nav-btn" style="display:block; text-align:center; text-decoration:none; margin-top:40px;">🏠 Wróć do Pulpitu</a>
     </div>
-
 
     <div id="sim-screen" class="section-view hidden">
         <button class="back-btn" onclick="showSection('menu')">⬅ Wróć</button>
@@ -217,83 +216,62 @@
         <p id="sim-result" style="text-align: center; font-weight: bold; margin-top: 15px; color: #0288d1;">Wybierz materiał...</p>
     </div>
 
-
     <div id="theory-screen" class="section-view hidden">
         <button class="back-btn" onclick="showSection('menu')">⬅ Wróć</button>
-        <h2 style="text-align: center; color: #7b1fa2;">Audio-Lekcje</h2>
+        <h2 style="text-align: center; color: #7b1fa2;">Audio-Lekcje (Pewniaki na Test)</h2>
         <p style="text-align:center; font-size:14px; color:#666;">Posłuchaj, a potem powiedz tacie, co zapamiętałaś.</p>
 
         <div class="theory-card">
-            <h3>1. Ciśnienie (Szpilki vs Narty)</h3>
-            <img src="paradoks.jpg" class="theory-img" onerror="this.style.display='none'">
+            <h3>1. Ciśnienie a Parcie (Jedna Noga)</h3>
             <div class="formula-box">p = F / S</div>
             
-            <button class="btn-audio" onclick="speak('Ciśnienie zależy od siły i powierzchni. Wyobraź sobie szpilkę i nartę. Szpilka ma małą powierzchnię, więc wbija się mocno - robi wielkie ciśnienie. Narta ma dużą powierzchnię, więc nacisk się rozkłada - ciśnienie jest małe. Wzór to siła dzielona przez powierzchnię.')">
-                📢 Posłuchaj Hani (30s)
+            <button class="btn-audio" onclick="speak('Ciśnienie zależy od siły i powierzchni. Kiedy stoisz na jednej nodze, wywierasz potężne ciśnienie, bo powierzchnia styku z podłogą jest mała. Gdy leżysz, ciśnienie jest najmniejsze. Pamiętaj o jednostkach: ciśnienie mierzymy w Paskalach, ale uwaga! Siła parcia to siła, więc mierzymy ją w Niutonach.')">
+                📢 Posłuchaj Hani
             </button>
             
             <button class="btn-check" onclick="toggleCheck('c1')">👁️ Sprawdź się</button>
             <div id="c1" class="check-content">
-                <strong>Zapamiętaj:</strong><br>
-                Mała powierzchnia (szpilka) = OGROMNE ciśnienie.<br>
-                Duża powierzchnia (narta) = Małe ciśnienie.
+                <strong>ZAPAMIĘTAJ:</strong><br>
+                Jednostka ciśnienia to <strong>Paskal (Pa)</strong>.<br>
+                Jednostka siły parcia to <strong>Niuton (N)</strong>.<br>
+                Stanie na 1 nodze = największe ciśnienie!
             </div>
         </div>
 
         <div class="theory-card">
-            <h3>2. Prawo Pascala (Pasta do zębów)</h3>
-            <img src="prasa_schemat.jpg" class="theory-img" onerror="this.style.display='none'">
-            <div class="formula-box">F₁ / S₁ = F₂ / S₂</div>
+            <h3>2. Ciśnienie Hydrostatyczne (Haczyki)</h3>
+            <div class="formula-box">p = d · g · h</div>
 
-            <button class="btn-audio" onclick="speak('Prawo Pascala działa jak tubka pasty do zębów. Jak naciśniesz tubkę w jednym miejscu, pasta chce wylecieć każdym otworem z taką samą siłą. Woda przenosi nacisk wszędzie tak samo. Dzięki temu działają hamulce w samochodzie.')">
-                📢 Posłuchaj Hani (30s)
+            <button class="btn-audio" onclick="speak('Tutaj pani na pewno zrobi pułapkę! Ciśnienie wody zależy tylko od gęstości, głębokości i przyspieszenia ziemskiego. Jest do nich proporcjonalne. A od czego NIE zależy? Nie zależy absolutnie od kształtu naczynia ani od materiału, z którego zrobiono to naczynie.')">
+                📢 Posłuchaj Hani
             </button>
 
             <button class="btn-check" onclick="toggleCheck('c2')">👁️ Sprawdź się</button>
             <div id="c2" class="check-content">
-                <strong>Prawo Pascala:</strong><br>
-                Naciskasz w jednym miejscu -> ciśnienie rozchodzi się <strong>wszędzie tak samo</strong>.
+                <strong>ZALEŻY OD:</strong> Gęstości cieczy, wysokości słupa cieczy i przyspieszenia ziemskiego.<br>
+                <strong>NIE ZALEŻY OD:</strong> Kształtu naczynia i materiału ścian.
             </div>
         </div>
 
         <div class="theory-card">
-            <h3>3. Wypór (Wanna i Archimedes)</h3>
-            <img src="archimedes_sily.jpg" class="theory-img" onerror="this.style.display='none'">
-            <div class="formula-box">Fw = Ciężar wypartej wody</div>
+            <h3>3. Gazy i Ciśnienie Atmosferyczne</h3>
+            <div class="formula-box">Barometr</div>
 
-            <button class="btn-audio" onclick="speak('Wyobraź sobie, że wchodzisz do pełnej wanny. Woda się wylewa, prawda? Siła, która wypycha Cię do góry, jest równa ciężarowi tej wylanej wody. To jest prawo Archimedesa. Im więcej wody wypchniesz swoim ciałem, tym mocniej woda wypycha Ciebie.')">
-                📢 Posłuchaj Hani (30s)
+            <button class="btn-audio" onclick="speak('W zamkniętych gazach i cieczach ciśnienie jest przekazywane we wszystkich kierunkach tak samo! To jest Prawo Pascala. A czym mierzymy ciśnienie powietrza, czyli atmosferyczne? Zawsze używamy do tego Barometru.')">
+                📢 Posłuchaj Hani
             </button>
 
             <button class="btn-check" onclick="toggleCheck('c3')">👁️ Sprawdź się</button>
             <div id="c3" class="check-content">
-                <strong>Siła Wyporu:</strong><br>
-                Działa zawsze <strong>do góry</strong>.<br>
-                Zależy od tego, ile wody "wypchnęło" ciało.
-            </div>
-        </div>
-
-        <div class="theory-card">
-            <h3>4. Pływa czy Tonie?</h3>
-            <img src="plywanie_warunki.jpg" class="theory-img" onerror="this.style.display='none'">
-            
-            <button class="btn-audio" onclick="speak('To proste. Patrzysz na gęstość. Jeśli coś jest gęstsze od wody, jak kamień czy żelazo - tonie. Jeśli ma mniejszą gęstość, jak drewno czy styropian - pływa. A lód? Jest lżejszy od wody, dlatego kostki lodu pływają w herbacie.')">
-                📢 Posłuchaj Hani (30s)
-            </button>
-
-            <button class="btn-check" onclick="toggleCheck('c4')">👁️ Sprawdź się</button>
-            <div id="c4" class="check-content">
-                <strong>Zasada:</strong><br>
-                Gęstość ciała > Gęstość wody = <strong>TONIE</strong>.<br>
-                Gęstość ciała < Gęstość wody = <strong>PŁYWA</strong>.
+                Kierunki: <strong>We wszystkich kierunkach jednakowo</strong>.<br>
+                Pomiar atmosferyczny: <strong>Barometr</strong>.
             </div>
         </div>
     </div>
 
-
     <div id="test-screen" class="section-view hidden">
         <button class="back-btn" onclick="showSection('menu')">⬅ Przerwij</button>
-        <h2 id="q-number" style="text-align: center; color: #c62828;">Pytanie 1/6</h2>
+        <h2 id="q-number" style="text-align: center; color: #c62828;">Pytanie 1</h2>
         
         <div class="theory-card" style="border-left-color: #c62828;">
             <p id="q-text" class="quiz-question">...</p>
@@ -314,9 +292,8 @@
 </div>
 
 <script>
-    // --- NAWIGACJA ---
     function showSection(id) {
-        window.speechSynthesis.cancel(); // Stop audio przy zmianie ekranu
+        window.speechSynthesis.cancel();
         document.querySelectorAll('.section-view').forEach(el => el.classList.add('hidden'));
         if(id === 'menu') document.getElementById('menu-screen').classList.remove('hidden');
         if(id === 'sim') document.getElementById('sim-screen').classList.remove('hidden');
@@ -325,12 +302,11 @@
         window.scrollTo(0,0);
     }
 
-    // --- AUDIO ---
     function speak(text) {
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(text);
         u.lang = 'pl-PL';
-        u.rate = 0.95; // Lekko wolniej dla zrozumienia
+        u.rate = 0.95;
         window.speechSynthesis.speak(u);
     }
 
@@ -339,7 +315,6 @@
         el.style.display = (el.style.display === 'block') ? 'none' : 'block';
     }
 
-    // --- SYMULATOR ---
     function runSim(mat) {
         const block = document.getElementById('block');
         const res = document.getElementById('sim-result');
@@ -375,43 +350,49 @@
         }, 500);
     }
 
-    // --- QUIZ (Na podstawie Testu 1 i 2 z podręcznika) ---
+    // Pytania bezpośrednio ze skanów Nauczyciela
     const questions = [
         {
-            q: "Obie maszyny mają taką samą masę. Pojazd I ma wąskie opony, a Pojazd II ma szerokie gąsienice. Który wywiera WIĘKSZE ciśnienie na podłoże?",
-            opts: ["Pojazd I (wąskie opony)", "Pojazd II (szerokie gąsienice)", "Oba takie samo"],
-            ans: 0,
-            info: "Mniejsza powierzchnia = Większe ciśnienie (przy tej samej masie)."
+            q: "W jakiej pozycji wywrzesz NAJWIĘKSZE ciśnienie na podłogę?",
+            opts: ["Leżąc płasko na plecach", "Stojąc na dwóch nogach", "Stojąc na jednej nodze", "Siedząc na krześle"],
+            ans: 2,
+            info: "Im mniejsza powierzchnia nacisku, tym ciśnienie staje się większe! Stojąc na jednej nodze, cała siła skupia się na małej stopie."
         },
         {
-            q: "W prasie hydraulicznej i hamulcach samochodowych znalazło zastosowanie prawo:",
-            opts: ["Archimedesa", "Pascala", "Grawitacji"],
+            q: "Jaką jednostkę ma SIŁA PARCIA?",
+            opts: ["Paskal (Pa)", "Niuton (N)", "Kilogram (kg)", "Metr (m)"],
             ans: 1,
-            info: "Prawo Pascala mówi o przenoszeniu ciśnienia (tłoki)."
+            info: "Parcie to SIŁA, więc mierzymy ją w Niutonach (N). Dopiero ciśnienie mierzymy w Paskalach."
         },
         {
-            q: "W naczyniu I jest ciecz o małej gęstości, a w naczyniu II ciecz o dużej gęstości. Poziom cieczy jest taki sam. Gdzie jest większe ciśnienie na dnie?",
-            opts: ["W naczyniu I", "W naczyniu II", "Jest takie samo"],
+            q: "Czy ciśnienie hydrostatyczne na dnie naczynia zależy od jego KSZTAŁTU lub od MATERIAŁU z jakiego jest zbudowane?",
+            opts: ["Tak, materiał ma wielkie znaczenie", "Zależy tylko od kształtu", "Nie! Kształt i materiał naczynia nie mają żadnego znaczenia", "Tak, ale tylko w małych kubkach"],
+            ans: 2,
+            info: "Woda naciska tak samo na dno w rurce i w szerokim basenie (to paradoks hydrostatyczny). Materiał też nic nie zmienia."
+        },
+        {
+            q: "Zatem, od czego ZALEŻY ciśnienie hydrostatyczne i do czego jest proporcjonalne?",
+            opts: ["Tylko do temperatury cieczy", "Do gęstości cieczy, wysokości słupa cieczy i przyspieszenia ziemskiego", "Tylko do ilości wody w naczyniu", "Do kształtu naczynia"],
             ans: 1,
-            info: "Wzór: p = d·g·h. Większa gęstość (d) = Większe ciśnienie."
+            info: "Zgodnie ze wzorem (p = d·g·h), ciśnienie jest proporcjonalne do gęstości (d), głębokości (h) i przyspieszenia (g)."
         },
         {
-            q: "Aby wyznaczyć siłę wyporu działającą na ciało zanurzone w cieczy (nie znając gęstości cieczy), musimy znać:",
-            opts: ["Tylko ciężar ciała w powietrzu", "Ciężar ciała w powietrzu i w wodzie (różnicę)", "Objętość naczynia"],
+            q: "Czy ciśnienie hydrostatyczne zależy od wartości przyspieszenia ziemskiego?",
+            opts: ["Nie, to podchwytliwe pytanie", "Tak, zależy od przyspieszenia ziemskiego", "Tylko w ciepłej wodzie", "Zależy tylko w gazach"],
             ans: 1,
-            info: "Siła wyporu to różnica: Ciężar w powietrzu minus Ciężar w wodzie."
+            info: "Oczywiście, że tak! We wzorze na ciśnienie mamy 'g', czyli przyspieszenie ziemskie."
         },
         {
-            q: "Łódź podwodna wynurza się, ponieważ:",
-            opts: ["Wypompowuje wodę ze zbiorników (zmniejsza średnią gęstość)", "Nabiera wody do zbiorników", "Zwiększa swoją masę"],
-            ans: 0,
-            info: "Żeby wypłynąć, siła wyporu musi być większa od ciężaru."
+            q: "W jakich kierunkach jest przekazywane ciśnienie w gazach?",
+            opts: ["Tylko pionowo w dół", "Tylko na boki naczynia", "We wszystkich kierunkach tak samo (jednakowo)", "Tylko pionowo do góry"],
+            ans: 2,
+            info: "To zasada działania Prawa Pascala – ciśnienie w zamkniętym gazie lub cieczy rozchodzi się równomiernie wszędzie."
         },
         {
-            q: "Wraz ze wzrostem wysokości nad poziomem morza (np. w górach), ciśnienie atmosferyczne:",
-            opts: ["Rośnie", "Maleje", "Nie zmienia się"],
-            ans: 1,
-            info: "Im wyżej, tym mniej powietrza nad nami, więc ciśnienie maleje."
+            q: "Jakiego przyrządu użyjesz do sprawdzenia pomiaru ciśnienia atmosferycznego?",
+            opts: ["Termometru", "Wagi", "Barometru", "Siłomierza"],
+            ans: 2,
+            info: "Zawsze używamy do tego barometru!"
         }
     ];
 
