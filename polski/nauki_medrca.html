@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polski: Nauki Mędrca (All-in-One)</title>
+    <style>
+        /* STYL GŁÓWNY - POLONISTYCZNY NIEBIESKI */
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            text-align: center; 
+            background-color: #e3f2fd; 
+            margin: 0; padding: 20px;
+            color: #0d47a1;
+            overflow-y: auto;
+            min-height: 100vh;
+        }
+
+        h1 { margin-bottom: 10px; font-size: 1.8rem; color: #1565c0; }
+        p { color: #555; margin-bottom: 30px; }
+
+        .btn-big {
+            display: flex; align-items: center; gap: 15px; text-align: left;
+            width: 100%; max-width: 500px; margin: 15px auto; padding: 20px;
+            font-size: 18px; border: none; border-radius: 15px; 
+            cursor: pointer; color: white;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1); 
+            transition: transform 0.1s;
+        }
+        .btn-big:active { transform: scale(0.96); }
+        
+        .btn-audio { background-color: #1976d2; color: white; font-weight: bold; } 
+        .btn-quiz { background-color: #388e3c; justify-content: center; font-weight: bold; margin-top: 40px; } 
+        
+        .emoji { font-size: 28px; min-width: 40px; }
+        
+        .back-btn { background: #eee; color: #333; padding: 10px 20px; border: none; border-radius: 20px; text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 20px;}
+
+        /* Kontener Quizu */
+        #quiz-container { 
+            max-width: 600px; margin: 0 auto; 
+            background: white; padding: 20px; border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15); 
+        }
+        
+        .answer-btn { 
+            display: block; width: 100%; padding: 18px; margin: 12px 0; 
+            background: #f5f5f5; border: 2px solid #e0e0e0; border-radius: 12px; 
+            font-size: 1.1rem; cursor: pointer; color: #333; text-align: left;
+        }
+        .answer-btn:active { background-color: #e0e0e0; }
+
+        .hidden { display: none !important; }
+        
+        .correct { background-color: #66bb6a !important; color: white !important; border-color: #43a047 !important; }
+        .wrong { background-color: #ef5350 !important; color: white !important; border-color: #c62828 !important; }
+
+        /* Pasek Postępu */
+        .progress-container { width: 100%; background-color: #e0e0e0; border-radius: 10px; margin-bottom: 20px; height: 10px; overflow: hidden; }
+        .progress-bar { height: 100%; background-color: #1565c0; width: 0%; transition: width 0.3s ease; }
+
+        /* Karty Teorii */
+        .theory-card {
+            background: #fff; border-left: 6px solid #1565c0; padding: 15px; margin: 15px auto; 
+            max-width: 500px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-align: left; color: #333;
+        }
+        .theory-card h3 { margin-top: 0; color: #0d47a1; font-size: 16px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .alert-red { color: #d32f2f; font-weight: bold; }
+        .alert-green { color: #388e3c; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <a href="../index.html" id="btn-back" class="back-btn">⬅ Wróć do Panelu</a>
+
+    <div id="menu">
+        <h1>📖 Polski: Nauki Mędrca</h1>
+        <p>Posłuchaj materiału, przejrzyj pojęcia i uruchom test.</p>
+
+        <button class="btn-big btn-audio" onclick="playLesson(1)">
+            <span class="emoji">🎭</span> 1. Treść tekstu i Morał
+        </button>
+
+        <button class="btn-big btn-audio" onclick="playLesson(2)">
+            <span class="emoji">🗣️</span> 2. Narrator i Równoważnik
+        </button>
+        
+        <button class="btn-big btn-audio" onclick="playLesson(3)">
+            <span class="emoji">📚</span> 3. Synonimy i Części mowy
+        </button>
+
+        <div class="theory-card">
+            <h3>SZYBKA ŚCIĄGAWKA NA KARTKÓWKĘ:</h3>
+            <ul>
+                <li><strong>MORAŁ:</strong> Pouczenie, z którego płynie wniosek (Nie przejmuj się innymi).</li>
+                <li><strong>RÓWNOWAŻNIK ZDANIA:</strong> Wypowiedź <span class="alert-red">BEZ CZASOWNIKA</span> (np. "Co to za wstyd!"). Zwykłe zdanie zawsze ma czasownik!</li>
+                <li><strong>SYNONIM:</strong> Wyraz bliskoznaczny (mędrzec = starzec).</li>
+                <li><strong>POTOCZYZM:</strong> Język potoczny, codzienny (wlec się, idiota).</li>
+                <li><strong>FRAZEOLOGIZM:</strong> Związek wyrazowy o przenośnym znaczeniu (dać upust oburzeniu).</li>
+                <li><strong>RZECZOWNIK:</strong> Kto? Co? (osioł, ojciec).</li>
+                <li><strong>CZASOWNIK:</strong> Co robi? (słucha, niesie).</li>
+            </ul>
+        </div>
+
+        <button class="btn-big btn-quiz" onclick="startQuiz()">
+            <span class="emoji">🎓</span> ROZPOCZNIJ TEST (BLOOD ENGINE)
+        </button>
+    </div>
+
+    <div id="quiz-container" class="hidden">
+        <div style="display:flex; justify-content:space-between; color:#888; margin-bottom:10px;">
+            <span>Język Polski</span>
+            <span>Pytanie <span id="q-current">1</span> / <span id="q-total">10</span></span>
+        </div>
+        
+        <div class="progress-container">
+            <div id="quiz-progress" class="progress-bar"></div>
+        </div>
+
+        <div style="display:flex; align-items: flex-start; gap: 10px;">
+            <h2 id="q-text" style="font-size: 1.4rem; min-height: 80px; text-align: left; margin-top:0;">Ładowanie...</h2>
+            <button onclick="speak(document.getElementById('q-text').innerText)" style="background:none; border:none; font-size:24px; cursor:pointer;" title="Przeczytaj na głos">🔊</button>
+        </div>
+
+        <div id="answers-grid">
+            <button class="answer-btn" onclick="check(0)" id="btn-0">A</button>
+            <button class="answer-btn" onclick="check(1)" id="btn-1">B</button>
+            <button class="answer-btn" onclick="check(2)" id="btn-2">C</button>
+            <button class="answer-btn" onclick="check(3)" id="btn-3">D</button>
+        </div>
+        
+        <div id="q-feedback" style="text-align: center; font-weight: bold; margin-top: 15px; min-height: 25px; font-size: 16px;"></div>
+        <button id="next-btn" class="back-btn hidden" onclick="nextQuestion()" style="background: #1565c0; color: white; width: 100%; margin-top: 15px;">Następne Pytanie ➡</button>
+    </div>
+
+    <div id="end-screen" class="hidden" style="margin-top: 50px;">
+        <h1>🎉 Koniec Testu!</h1>
+        <h2 id="final-score">Wynik: 0/0</h2>
+        <button class="btn-big btn-quiz" onclick="location.reload()">Jeszcze raz?</button>
+    </div>
+
+    <script>
+        const LESSONS = {
+            1: "Lekcja pierwsza: Treść i Morał. Bajka opowiada o starym mędrcu, jego zakompleksionym synu i osiołku. Przez pięć dni chodzili na bazar w różnej konfiguracji: jechał ojciec, jechał syn, szli obok, jechali we dwóch, a na końcu nieśli osła. Za każdym razem ludzie ich krytykowali. Morał, czyli pouczenie płynące z tekstu, brzmi: cokolwiek zrobisz, ludzie zawsze znajdą powód do krytyki. Dlatego nie należy przejmować się cudzą opinią, tylko iść własną drogą.",
+            
+            2: "Lekcja druga: Narrator i Równoważnik zdania. Narrator w tym tekście to narrator trzecioosobowy i wszechwiedzący. Wie, co dzieje się w głowie syna, i dlaczego ten nie chce wyjść z domu. Drugie pojęcie to Równoważnik zdania. Pamiętaj: równoważnik nie ma orzeczenia, czyli czasownika! Na przykład wypowiedź 'Co to za wstyd!' to równoważnik, bo nie ma tu żadnej czynności. Gdybyśmy powiedzieli 'To jest wstyd', byłoby to już zdanie, bo mamy czasownik 'jest'.",
+            
+            3: "Lekcja trzecia: Słownictwo i Części mowy. Synonimy to wyrazy bliskoznaczne, na przykład: mędrzec, starzec, ojciec. Frazeologizm to stały związek wyrazów o przenośnym znaczeniu, na przykład 'dać upust oburzeniu'. Potocyzm to wyraz z codziennego, luźnego języka, na przykład 'wlec się' albo 'idiota'. Przypomnijmy sobie jeszcze najważniejsze części mowy. Rzeczownik odpowiada na kto? co? – na przykład osioł. Czasownik to czynność, odpowiada na: co robi? – na przykład niesie. Przymiotnik to cecha, odpowiada na: jaki? – na przykład stary."
+        };
+
+        const QUESTIONS = [
+            { 
+                t: "Jaki jest MORAŁ płynący z bajki 'Nauki mędrca'?", 
+                a: ["Zawsze słuchaj rad mądrzejszych od siebie.", "Należy dbać o zwierzęta pociągowe.", "Cokolwiek zrobisz, ludzie i tak będą cię oceniać – nie przejmuj się ich opinią.", "Kupcy na targu zawsze mają rację."], 
+                c: 2, 
+                info: "Morał to ostateczne pouczenie. Ojciec udowodnił synowi, że ludziom nigdy nie da się dogodzić." 
+            },
+            { 
+                t: "Który z poniższych zwrotów to RÓWNOWAŻNIK ZDANIA?", 
+                a: ["Kupcy głośno drwili z ojca.", "Co to za wstyd!", "Chłopiec usiadł na osiołku.", "Mędrzec podsumował to wnioskiem."], 
+                c: 1, 
+                info: "Równoważnik zdania NIE MA czasownika (orzeczenia). 'Co to za wstyd!' nie opisuje żadnej czynności." 
+            },
+            { 
+                t: "Czym charakteryzuje się ZDANIE w przeciwieństwie do równoważnika?", 
+                a: ["Jest krótsze.", "Posiada czasownik (orzeczenie).", "Zawsze kończy się wykrzyknikiem.", "Pisze się je tylko wielkimi literami."], 
+                c: 1, 
+                info: "Zdanie MUSI mieć czasownik (orzeczenie). Równoważnik zdania go nie ma." 
+            },
+            { 
+                t: "Wyrazy 'mędrzec', 'starzec', 'ojciec' z tekstu to w stosunku do siebie:", 
+                a: ["Antonimy (przeciwieństwa)", "Homonimy", "Synonimy (wyrazy bliskoznaczne)", "Czasowniki"], 
+                c: 2, 
+                info: "Synonimy to wyrazy, które oznaczają to samo lub bardzo podobną rzecz." 
+            },
+            { 
+                t: "Użyte przez kupców słowo 'idiotów' albo sformułowanie 'wlec się' to w literaturze przykład:", 
+                a: ["Potocyzmu (języka potocznego)", "Zdrobnienia", "Archaizmu", "Porównania"], 
+                c: 0, 
+                info: "Potocyzmy to słowa z luźnego, codziennego, potocznego języka." 
+            },
+            { 
+                t: "Co to jest FRAZEOLOGIZM (związek frazeologiczny)?", 
+                a: ["Osoba biorąca udział w dialogu.", "Stałe połączenie wyrazów o przenośnym znaczeniu (np. 'dać upust').", "Każdy wyraz pisany dużą literą.", "Słowo pożyczone z obcego języka."], 
+                c: 1, 
+                info: "Frazeologizmów nie traktujemy dosłownie. 'Dali upust oburzeniu' to frazeologizm oznaczający głośne wyrażenie złości." 
+            },
+            { 
+                t: "Jaki narrator występuje w tym tekście?", 
+                a: ["Pierwszoosobowy ('Ja poszedłem z synem na bazar').", "Trzecioosobowy i wszechwiedzący (zna myśli i lęki syna).", "Jest to tekst bez narratora.", "Narratorem jest osioł."], 
+                c: 1, 
+                info: "Narrator wypowiada się w 3. osobie ('poszedł', 'powiedział') i wie wszystko – w tym to, jakie syn ma kompleksy." 
+            },
+            { 
+                t: "Słowo 'osioł' to jaka część mowy?", 
+                a: ["Przymiotnik (jaki?)", "Czasownik (co robi?)", "Rzeczownik (kto? co?)", "Przysłówek (jak?)"], 
+                c: 2, 
+                info: "Rzeczowniki nazywają rzeczy, osoby i zwierzęta. Odpowiadają na pytania KTO? lub CO?." 
+            },
+            { 
+                t: "Słowa 'słuchać', 'iść', 'dosiadać' to:", 
+                a: ["Czasowniki", "Rzeczowniki", "Przymiotniki", "Liczebniki"], 
+                c: 0, 
+                info: "Czasowniki oznaczają czynności lub stany. Odpowiadają na pytania: CO ROBI? CO SIĘ Z NIM DZIEJE?." 
+            },
+            { 
+                t: "Które z podanych słów to przymiotnik?", 
+                a: ["Bazar", "Spójrzcie", "Stary", "Mędrzec"], 
+                c: 2, 
+                info: "Przymiotnik oznacza cechę. Odpowiada na pytanie JAKI? JAKA? JAKIE? (jaki? - stary)." 
+            }
+        ];
+
+        let currentIdx = 0;
+        let score = 0;
+
+        function speak(text) {
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(text);
+            u.lang = 'pl-PL';
+            window.speechSynthesis.speak(u);
+        }
+
+        function playLesson(num) {
+            speak(LESSONS[num]);
+        }
+
+        function startQuiz() {
+            document.getElementById('menu').classList.add('hidden');
+            document.getElementById('btn-back').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            window.speechSynthesis.cancel();
+            currentIdx = 0;
+            score = 0;
+            document.getElementById('q-total').innerText = QUESTIONS.length;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if(currentIdx >= QUESTIONS.length) {
+                finishQuiz();
+                return;
+            }
+            const q = QUESTIONS[currentIdx];
+            document.getElementById('q-current').innerText = currentIdx + 1;
+            document.getElementById('q-text').innerText = q.t;
+            document.getElementById('q-feedback').innerText = "";
+            document.getElementById('next-btn').classList.add('hidden');
+            
+            // Pasek postępu
+            document.getElementById('quiz-progress').style.width = ((currentIdx) / QUESTIONS.length * 100) + '%';
+            
+            for(let i=0; i<4; i++) {
+                const btn = document.getElementById(`btn-${i}`);
+                btn.innerText = q.a[i];
+                btn.className = 'answer-btn'; 
+                btn.disabled = false;
+            }
+        }
+
+        function check(idx) {
+            const q = QUESTIONS[currentIdx];
+            const btn = document.getElementById(`btn-${idx}`);
+            
+            for(let i=0; i<4; i++) document.getElementById(`btn-${i}`).disabled = true;
+
+            if(idx === q.c) {
+                btn.classList.add('correct');
+                score++;
+                document.getElementById('q-feedback').innerText = "✅ Dobrze! " + q.info;
+                document.getElementById('q-feedback').style.color = "#388e3c";
+            } else {
+                btn.classList.add('wrong');
+                document.getElementById(`btn-${q.c}`).classList.add('correct');
+                document.getElementById('q-feedback').innerText = "❌ Błąd. " + q.info;
+                document.getElementById('q-feedback').style.color = "#d32f2f";
+            }
+
+            document.getElementById('next-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentIdx++;
+            loadQuestion();
+        }
+
+        function finishQuiz() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('end-screen').classList.remove('hidden');
+            document.getElementById('btn-back').classList.remove('hidden');
+            
+            const percent = Math.round(score / QUESTIONS.length * 100);
+            document.getElementById('final-score').innerText = `Wynik: ${score} / ${QUESTIONS.length} (${percent}%)`;
+        }
+    </script>
+</body>
+</html>
