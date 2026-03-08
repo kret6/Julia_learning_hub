@@ -3,162 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fizyka: Hydrostatyka</title>
+    <title>Fizyka: Hydrostatyka (Master Class)</title>
     <style>
         /* STYL GŁÓWNY - FIZYCZNY FIOLET */
-        body {
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            background-color: #f3e5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 10px;
-            color: #4a148c;
-        }
-
-        #container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(74, 20, 140, 0.2);
-            width: 100%;
-            max-width: 800px;
-            border: 4px solid #ab47bc;
-            min-height: 600px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f3e5f5; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding: 10px; color: #4a148c; overflow-y: auto;}
+        #container { background-color: white; padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(74, 20, 140, 0.2); width: 100%; max-width: 800px; border: 4px solid #ab47bc; margin-bottom: 50px;}
         h1 { margin: 10px 0 20px 0; font-size: 28px; color: #7b1fa2; text-align: center; }
         
-        /* MENU GRID */
-        .menu-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        .btn-menu {
-            border: none;
-            padding: 25px;
-            font-size: 20px;
-            font-weight: bold;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            box-shadow: 0 6px 0 rgba(0,0,0,0.1);
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
+        .menu-grid { display: grid; grid-template-columns: 1fr; gap: 20px; width: 100%; margin-top: 20px; }
+        .btn-menu { border: none; padding: 25px; font-size: 20px; font-weight: bold; border-radius: 20px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: flex-start; box-shadow: 0 6px 0 rgba(0,0,0,0.1); color: white; position: relative; overflow: hidden; }
         .btn-menu:active { transform: translateY(4px); box-shadow: none; }
         .btn-menu .icon { font-size: 35px; margin-right: 15px; }
         
-        .bg-sim { background: linear-gradient(45deg, #42a5f5, #1976d2); }
         .bg-theory { background: linear-gradient(45deg, #ab47bc, #7b1fa2); }
         .bg-test { background: linear-gradient(45deg, #ef5350, #c62828); }
 
-        /* SEKCJE */
         .hidden { display: none !important; }
         .section-view { width: 100%; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
-        /* TEORIA - KARTY */
-        .theory-card {
-            background: #fff;
-            border-left: 6px solid #ab47bc;
-            padding: 15px;
-            margin-bottom: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            text-align: left;
-        }
-        .theory-card h3 { margin-top: 0; color: #6a1b9a; border-bottom: 1px solid #eee; padding-bottom: 5px;}
+        /* TEORIA */
+        .theory-card { background: #fff; border-left: 6px solid #ab47bc; padding: 20px; margin-bottom: 25px; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.08); text-align: left; }
+        .theory-card h3 { margin-top: 0; color: #6a1b9a; border-bottom: 2px solid #f3e5f5; padding-bottom: 8px;}
+        .theory-img { width: 100%; max-width: 400px; display: block; margin: 15px auto; border-radius: 10px; border: 1px solid #ddd; }
         
-        .formula-box {
-            background: #f3e5f5;
-            padding: 10px;
-            border-radius: 8px;
-            font-family: monospace;
-            font-weight: bold;
-            text-align: center;
-            font-size: 18px;
-            margin: 10px 0;
-            border: 2px dashed #ab47bc;
-            color: #4a148c;
-        }
-
-        /* PRZYCISKI AUDIO I SPRAWDZANIA */
-        .btn-audio {
-            background-color: #ba68c8;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 0 #8e24aa;
-        }
+        .formula-box { background: #f3e5f5; padding: 15px; border-radius: 8px; font-family: monospace; font-weight: bold; text-align: center; font-size: 22px; margin: 15px 0; border: 2px dashed #ab47bc; color: #4a148c; letter-spacing: 2px;}
+        .btn-audio { background-color: #ba68c8; color: white; border: none; padding: 12px 20px; border-radius: 20px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; box-shadow: 0 4px 0 #8e24aa; }
         .btn-audio:active { transform: translateY(2px); box-shadow: none; }
-        
-        .btn-check {
-            background-color: white;
-            color: #7b1fa2;
-            border: 2px solid #7b1fa2;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .check-content {
-            display: none;
-            background-color: #e1bee7;
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 10px;
-            font-size: 15px;
-        }
 
         /* QUIZ */
-        .quiz-question { font-size: 18px; font-weight: bold; margin-bottom: 20px; text-align: left;}
-        .quiz-options { display: grid; gap: 10px; }
-        .quiz-btn {
-            background: #f3e5f5; border: 2px solid #ce93d8;
-            padding: 15px; border-radius: 15px; font-size: 16px;
-            cursor: pointer; text-align: left; color: #4a148c;
-        }
-        .quiz-btn.correct { background: #66bb6a; color: white; border-color: #2e7d32; }
-        .quiz-btn.wrong { background: #ef5350; color: white; border-color: #c62828; }
-
-        /* NAWIGACJA */
-        .nav-btn {
-            margin-top: 20px; padding: 12px 25px; background: #555; color: white;
-            border: none; border-radius: 25px; cursor: pointer; font-size: 16px; width: 100%;
-        }
-        .back-btn { background: #eee; color: #333; margin-bottom: 10px; width: auto; padding: 8px 15px;}
+        .quiz-question { font-size: 20px; font-weight: bold; margin-bottom: 20px; text-align: left; line-height: 1.4;}
+        .quiz-options { display: grid; gap: 12px; }
+        .quiz-btn { background: #f3e5f5; border: 2px solid #ce93d8; padding: 18px; border-radius: 15px; font-size: 16px; cursor: pointer; text-align: left; color: #4a148c; font-weight: 500; transition: background 0.2s;}
+        .quiz-btn:hover { background: #e1bee7; }
+        .quiz-btn.correct { background: #66bb6a !important; color: white !important; border-color: #2e7d32 !important; }
+        .quiz-btn.wrong { background: #ef5350 !important; color: white !important; border-color: #c62828 !important; }
         
-        /* Pasek Postępu */
-        .progress-container { width: 100%; background-color: #e0e0e0; border-radius: 10px; margin-bottom: 20px; height: 10px; overflow: hidden; }
-        .progress-bar { height: 100%; background-color: #ab47bc; width: 0%; transition: width 0.3s ease; }
+        .feedback-box { background: #f5f5f5; padding: 15px; border-radius: 10px; margin-top: 20px; font-size: 16px; display: none; border-left: 5px solid #ccc;}
 
+        .nav-btn { margin-top: 25px; padding: 15px 25px; background: #555; color: white; border: none; border-radius: 25px; cursor: pointer; font-size: 16px; width: 100%; font-weight: bold;}
+        .back-btn { background: #eee; color: #333; margin-bottom: 20px; padding: 10px 20px; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; display: inline-block;}
+        
+        .progress-container { width: 100%; background-color: #e0e0e0; border-radius: 10px; margin-bottom: 25px; height: 12px; overflow: hidden; }
+        .progress-bar { height: 100%; background-color: #ab47bc; width: 0%; transition: width 0.4s ease; }
     </style>
 </head>
 <body>
@@ -166,77 +53,59 @@
 <div id="container">
     
     <div id="menu-screen" class="section-view">
-        <h1>⚛️ Centrum Hydrostatyki</h1>
+        <h1>⚛️ Fizyka: Hydrostatyka (Master Class)</h1>
         
         <div class="menu-grid">
             <button class="btn-menu bg-theory" onclick="showSection('theory')">
                 <div class="icon">📚</div>
-                <div>Podręcznik<br><small>Wykład i wzory</small></div>
+                <div>Wykłady i Wzory<br><small>Dokładne omówienie teorii</small></div>
             </button>
 
             <button class="btn-menu bg-test" onclick="startQuiz()">
                 <div class="icon">📝</div>
-                <div>TEST<br><small>Ćwiczenia sprawdzające</small></div>
+                <div>TEST Z UZASADNIENIAMI<br><small>Ćwiczenia z wyjaśnieniami</small></div>
             </button>
         </div>
 
-        <a href="../index.html" class="nav-btn" style="display:block; text-align:center; text-decoration:none; margin-top:40px;">🏠 Wróć do Pulpitu</a>
+        <button class="nav-btn" onclick="window.history.back()" style="margin-top:40px;">🏠 Wróć do Pulpitu</button>
     </div>
 
     <div id="theory-screen" class="section-view hidden">
-        <button class="back-btn" onclick="showSection('menu')">⬅ Wróć</button>
-        <h2 style="text-align: center; color: #7b1fa2;">Audio-Wykłady (Twarde definicje)</h2>
+        <button class="back-btn" onclick="showSection('menu')">⬅ Wróć do Menu</button>
+        <h2 style="text-align: center; color: #7b1fa2;">Pełne Wykłady (Słuchaj uważnie)</h2>
 
         <div class="theory-card">
-            <h3>1. Ciśnienie Hydrostatyczne (Zależności)</h3>
+            <h3>1. Parcie to SIŁA, Ciśnienie to WYNIK</h3>
+            <img src="cisnienie_stopy.jpg" class="theory-img" onerror="this.style.display='none'" alt="Nacisk stóp">
+            <div class="formula-box">p = F / S</div>
+            <button class="btn-audio" onclick="speak('Lekcja pierwsza. Zrozum różnicę między parciem a ciśnieniem. Parcie, oznaczane we wzorze literą F, to siła nacisku. Jak każdą siłę w fizyce, mierzymy ją w Niutonach. Z kolei ciśnienie, oznaczane literą p, mówi o tym, jak ta siła rozkłada się na daną powierzchnię S. Ciśnienie mierzymy w Paskalach. Największe ciśnienie na podłogę wywierasz, gdy stoisz na jednej nodze, ponieważ pole powierzchni jest wtedy najmniejsze. Kiedy leżysz, ciśnienie jest bardzo małe.')">
+                📢 Odtwórz Wykład 1 (Parcie i Ciśnienie)
+            </button>
+        </div>
+
+        <div class="theory-card">
+            <h3>2. Od czego zależy Ciśnienie Hydrostatyczne?</h3>
+            <img src="paradoks.jpg" class="theory-img" onerror="this.style.display='none'" alt="Paradoks hydrostatyczny">
             <div class="formula-box">p = d · g · h</div>
-            
-            <button class="btn-audio" onclick="speak('Lekcja pierwsza. Ciśnienie hydrostatyczne. Zależy ono od rodzaju cieczy i wysokości słupa cieczy. Ciśnienie hydrostatyczne zależy również od wartości przyspieszenia ziemskiego. Jest do tych trzech wielkości wprost proporcjonalne. Pamiętaj: ciśnienie to w ogóle nie zależy od kształtu naczynia ani od substancji, z której zbudowano naczynie.')">
-                📢 Posłuchaj Hani
+            <button class="btn-audio" onclick="speak('Lekcja druga. Niezwykle ważny wzór p = d razy g razy h. Ciśnienie wywierane przez ciecz jest wprost proporcjonalne do trzech rzeczy: gęstości cieczy d, przyspieszenia ziemskiego g oraz głębokości h. Zapamiętaj: ciśnienie hydrostatyczne zdecydowanie zależy od wartości przyspieszenia ziemskiego! A od czego nie zależy? Tutaj wkracza paradoks hydrostatyczny: ciśnienie w ogóle nie zależy od kształtu naczynia ani od materiału, z którego zrobiono to naczynie.')">
+                📢 Odtwórz Wykład 2 (Zależności hydrostatyczne)
             </button>
-            
-            <button class="btn-check" onclick="toggleCheck('c1')">👁️ Sprawdź się</button>
-            <div id="c1" class="check-content">
-                <strong>ZALEŻY OD:</strong> Rodzaju cieczy, wysokości słupa cieczy i przyspieszenia ziemskiego.<br>
-                <strong>NIE ZALEŻY OD:</strong> Kształtu naczynia i materiału naczynia.
-            </div>
         </div>
 
         <div class="theory-card">
-            <h3>2. Gazy i Ciśnienie Atmosferyczne</h3>
-            <div class="formula-box">Barometr</div>
-
-            <button class="btn-audio" onclick="speak('Lekcja druga. Ciśnienie w gazach i ciśnienie atmosferyczne. Zapamiętaj: ciśnienie w gazach jest przekazywane we wszystkich kierunkach tak samo. Natomiast do pomiaru ciśnienia atmosferycznego służy przyrząd o nazwie barometr.')">
-                📢 Posłuchaj Hani
+            <h3>3. Gazy, Pascal i Barometr</h3>
+            <img src="prawo_pascala.jpg" class="theory-img" onerror="this.style.display='none'" alt="Prawo Pascala">
+            <button class="btn-audio" onclick="speak('Lekcja trzecia. Prawo Pascala mówi jasno: ciśnienie w gazach i cieczach przekazywane jest we wszystkich kierunkach jednakowo. Na każdą ściankę napiera z taką samą siłą. Drugą rzeczą, o której musisz pamiętać, jest ciśnienie atmosferyczne, czyli nacisk powietrza. Przyrządem służącym do sprawdzania pomiaru ciśnienia atmosferycznego jest barometr.')">
+                📢 Odtwórz Wykład 3 (Prawo Pascala i Barometr)
             </button>
-
-            <button class="btn-check" onclick="toggleCheck('c2')">👁️ Sprawdź się</button>
-            <div id="c2" class="check-content">
-                <strong>Kierunki w gazach:</strong> We wszystkich kierunkach.<br>
-                <strong>Pomiar atmosferyczny:</strong> Barometr.
-            </div>
-        </div>
-
-        <div class="theory-card">
-            <h3>3. Wywieranie ciśnienia i Parcie</h3>
-            <div class="formula-box">Jednostka Parcia = Niuton (N)</div>
-
-            <button class="btn-audio" onclick="speak('Lekcja trzecia. Największe ciśnienie wywierasz na podłogę stojąc na jednej nodze, ponieważ powierzchnia styku jest wtedy najmniejsza. Z kolei leżąc, ciśnienie jest najmniejsze. Pamiętaj o ważnej różnicy: parcie to jest siła. Dlatego jednostką siły parcia jest Niuton, a nie Paskal.')">
-                📢 Posłuchaj Hani
-            </button>
-
-            <button class="btn-check" onclick="toggleCheck('c3')">👁️ Sprawdź się</button>
-            <div id="c3" class="check-content">
-                <strong>Największe ciśnienie:</strong> Stojąc na jednej nodze.<br>
-                <strong>Jednostka siły parcia:</strong> Niuton (N).
-            </div>
+            <img src="barometr.jpg" class="theory-img" onerror="this.style.display='none'" alt="Barometr">
         </div>
     </div>
 
     <div id="test-screen" class="section-view hidden">
         <button class="back-btn" onclick="showSection('menu')">⬅ Przerwij</button>
-        <div style="display:flex; justify-content:space-between; color:#888; margin-bottom:10px;">
-            <span>Test Fizyka</span>
+        <div style="display:flex; justify-content:space-between; color:#888; margin-bottom:10px; font-weight:bold;">
+            <span>Test Hydrostatyka</span>
             <span>Pytanie <span id="q-number">1</span> / 9</span>
         </div>
         
@@ -244,20 +113,22 @@
             <div id="quiz-progress" class="progress-bar"></div>
         </div>
         
-        <div class="theory-card" style="border-left-color: #c62828;">
+        <div class="theory-card" style="border-left-color: #c62828; padding: 25px;">
             <p id="q-text" class="quiz-question">...</p>
         </div>
 
         <div id="q-options" class="quiz-options"></div>
-        <div id="q-feedback" style="text-align: center; font-weight: bold; margin-top: 15px; min-height: 25px;"></div>
         
-        <button id="next-btn" class="nav-btn hidden" onclick="nextQuestion()" style="background: #c62828;">Następne Pytanie ➡</button>
+        <div id="q-feedback" class="feedback-box"></div>
+        
+        <button id="next-btn" class="nav-btn hidden" onclick="nextQuestion()" style="background: #c62828;">Rozumiem, Następne Pytanie ➡</button>
     </div>
 
     <div id="end-screen" class="section-view hidden">
-        <h2 style="text-align: center;">🎉 Koniec Testu!</h2>
-        <h2 id="final-score" style="text-align: center; color: #7b1fa2;">Wynik: 0/0</h2>
-        <button class="nav-btn" onclick="showSection('menu')">Wróć do Menu</button>
+        <h2 style="text-align: center; font-size: 40px; margin-bottom: 5px;">🎉</h2>
+        <h2 style="text-align: center; color: #7b1fa2; font-size: 30px;">Zakończono Trening!</h2>
+        <h3 id="final-score" style="text-align: center; color: #4a148c; font-size: 24px; background: #f3e5f5; padding: 20px; border-radius: 15px;">Wynik: 0/0</h3>
+        <button class="nav-btn" onclick="showSection('menu')">Wróć do Menu Głównego</button>
     </div>
 
 </div>
@@ -276,70 +147,58 @@
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(text);
         u.lang = 'pl-PL';
-        u.rate = 0.95;
         window.speechSynthesis.speak(u);
     }
 
-    function toggleCheck(id) {
-        const el = document.getElementById(id);
-        el.style.display = (el.style.display === 'block') ? 'none' : 'block';
-    }
-
-    // Pytania i wyjaśnienia wygenerowane stricte na podstawie skanu
+    // --- BAZA PYTAŃ ---
     const questions = [
         {
-            q: "Czy ciśnienie hydrostatyczne zależy od kształtu naczynia, w którym ciecz się znajduje?",
-            opts: ["Tak, kształt jest kluczowy", "Zależy, ale tylko w szerokich naczyniach", "Nie zależy od kształtu naczynia"],
+            q: "Kiedy wywierasz NAJWIĘKSZE ciśnienie na podłogę?",
+            opts: ["Leżąc płasko na brzuchu.", "Stojąc na dwóch nogach.", "Stojąc na jednej nodze.", "Siedząc po turecku."],
             ans: 2,
-            info: "Złe podejście. Zgodnie z paradoksem hydrostatycznym, ciśnienie hydrostatyczne w ogóle nie zależy od kształtu naczynia."
+            info: "Wzór to p = F/S. Siła (Twój ciężar) jest taka sama, ale stojąc na jednej nodze pole powierzchni (S) jest najmniejsze. Dzieląc przez najmniejszą powierzchnię, otrzymujemy największe ciśnienie."
         },
         {
-            q: "Czy ciśnienie hydrostatyczne zależy od rodzaju cieczy i wysokości słupa cieczy?",
-            opts: ["Nie zależy od żadnej z tych rzeczy", "Tak, zależy od rodzaju cieczy i wysokości słupa cieczy", "Zależy tylko od wysokości"],
+            q: "Jednostką CIŚNIENIA jest Paskal (Pa). A jaka jest jednostka SIŁY PARCIA?",
+            opts: ["Również Paskal (Pa)", "Niuton (N)", "Kilogram (kg)", "Dżul (J)"],
             ans: 1,
-            info: "Błąd. Ciśnienie to zależy od tych dwóch czynników (co widać we wzorze p = d·g·h)."
+            info: "Parcie to fizyczna SIŁA nacisku. Każdą siłę w fizyce mierzymy w Niutonach (N)."
         },
         {
-            q: "Czy ciśnienie hydrostatyczne wywierane na dno naczynia zależy od rodzaju substancji, z jakiej zbudowane jest naczynie?",
-            opts: ["Tak, szkło i plastik dają inne ciśnienie", "Nie zależy od rodzaju substancji naczynia", "Zależy tylko przy dużych głębokościach"],
-            ans: 1,
-            info: "Błąd. Materiał, z którego wykonano naczynie (szkło, plastik, metal), nie ma najmniejszego wpływu na ciśnienie wywierane przez ciecz na dno."
-        },
-        {
-            q: "Czy ciśnienie hydrostatyczne zależy od wartości przyspieszenia ziemskiego?",
-            opts: ["Nie, przyspieszenie ziemskie nie ma wpływu", "Tak, zależy od wartości przyspieszenia ziemskiego", "Fizyka tego nie wyjaśnia"],
-            ans: 1,
-            info: "Błąd! Pamiętaj o wzorze: p = d·g·h. Literka 'g' to przyspieszenie ziemskie, więc ciśnienie od niego zależy!"
-        },
-        {
-            q: "Do czego PROPORCJONALNE jest ciśnienie hydrostatyczne?",
-            opts: ["Do gęstości cieczy, wysokości słupa cieczy i przyspieszenia ziemskiego", "Do masy naczynia i kształtu dna", "Do temperatury cieczy i ciśnienia atmosferycznego"],
-            ans: 0,
-            info: "Zła odpowiedź. Ciśnienie hydrostatyczne jest proporcjonalne dokładnie do tych trzech wartości: gęstości, wysokości i przyspieszenia ziemskiego."
-        },
-        {
-            q: "Jakiego przyrządu używa się do sprawdzania pomiaru ciśnienia atmosferycznego?",
-            opts: ["Termometru", "Siłomierza", "Barometru"],
+            q: "Czy ciśnienie hydrostatyczne na dnie naczynia ZALEŻY od kształtu tego naczynia?",
+            opts: ["Tak, w szerokim naczyniu jest zawsze większe.", "Tak, ale tylko w naczyniach zwężających się ku górze.", "Nie, w ogóle nie zależy od kształtu naczynia."],
             ans: 2,
-            info: "Błąd. Narzędziem służącym do pomiaru ciśnienia atmosferycznego jest barometr."
+            info: "To zjawisko nazywamy paradoksem hydrostatycznym. Woda na danej głębokości naciska na dno z taką samą siłą, niezależnie od tego, czy naczynie jest cienką rurką, czy szerokim dzbankiem."
         },
         {
-            q: "W jakich kierunkach jest przekazywane ciśnienie w gazach?",
-            opts: ["Tylko pionowo w dół", "We wszystkich kierunkach", "Tylko w kierunku poziomym"],
+            q: "Czy ciśnienie hydrostatyczne wywierane na dno zależy od MATERIAŁU, z jakiego zbudowano naczynie (np. szkło czy plastik)?",
+            opts: ["Tak, szkło stawia większy opór.", "Nie, rodzaj substancji naczynia nie ma znaczenia.", "Zależy, ale tylko w słonej wodzie."],
             ans: 1,
-            info: "Zła odpowiedź. Według Prawa Pascala ciśnienie w gazach przekazywane jest we wszystkich kierunkach jednakowo."
+            info: "Materiał, z którego wykonano ściany naczynia (plastik, beton, metal, szkło), nie zmienia fizycznych właściwości cieczy, która w nim jest. Ciśnienie zależy od samej cieczy, a nie od opakowania."
         },
         {
-            q: "Kiedy wywierasz największe ciśnienie na podłogę?",
-            opts: ["Stojąc na jednej nodze", "Stojąc na dwóch nogach", "Leżąc płasko na podłodze"],
-            ans: 0,
-            info: "Błąd. Największe ciśnienie wywierasz, gdy stoisz na jednej nodze. Im mniejsza powierzchnia styku z podłożem, tym ciśnienie jest większe."
-        },
-        {
-            q: "Wymień jednostki siły parcia:",
-            opts: ["Paskal (Pa)", "Niuton (N)", "Kilogram (kg)"],
+            q: "Od jakich trzech zmiennych (do których jest wprost proporcjonalne) ZALEŻY ciśnienie hydrostatyczne?",
+            opts: ["Od objętości cieczy, temperatury i masy naczynia.", "Od gęstości cieczy, wysokości słupa cieczy i przyspieszenia ziemskiego.", "Od kształtu naczynia, grubości ścian i pola powierzchni dna."],
             ans: 1,
-            info: "Uwaga na pułapkę! Siła parcia to rodzaj SIŁY, dlatego mierzymy ją w Niutonach (N). Paskale to jednostki ciśnienia."
+            info: "Spójrz na wzór: p = d · g · h. 'd' to gęstość cieczy, 'g' to przyspieszenie ziemskie, a 'h' to wysokość (głębokość)."
+        },
+        {
+            q: "Pytanie podchwytliwe! Czy ciśnienie hydrostatyczne ZALEŻY od wartości przyspieszenia ziemskiego?",
+            opts: ["Nie, przyspieszenie ziemskie wpływa tylko na spadające przedmioty.", "Fizyka jeszcze tego nie udowodniła.", "Tak, zależy od wartości przyspieszenia ziemskiego."],
+            ans: 2,
+            info: "Oczywiście, że tak! Litera 'g' we wzorze (p = d·g·h) to właśnie przyspieszenie ziemskie (wynoszące około 10 m/s² na Ziemi). Na Księżycu ciśnienie wody w basenie byłoby mniejsze!"
+        },
+        {
+            q: "W jakich kierunkach jest przekazywane ciśnienie w gazach (oraz cieczach)?",
+            opts: ["Tylko pionowo w dół, zgodnie z grawitacją.", "We wszystkich kierunkach tak samo (jednakowo).", "Tylko w kierunku poziomym na ściany naczynia."],
+            ans: 1,
+            info: "Zgodnie z Prawem Pascala, jeśli napompujesz balon, ciśnienie powietrza w środku naciska na jego ścianki od wewnątrz we wszystkich kierunkach dokładnie z taką samą siłą."
+        },
+        {
+            q: "Jakiego przyrządu użyjesz do sprawdzenia pomiaru ciśnienia ATMOSFERYCZNEGO?",
+            opts: ["Siłomierza", "Termometru", "Barometru", "Higrometru"],
+            ans: 2,
+            info: "Do pomiaru ciśnienia atmosferycznego służy Barometr (od greckiego 'baros' oznaczającego ciężar, bo mierzy ciężar powietrza nad nami). Siłomierz z kolei mierzy siłę (np. parcie)."
         }
     ];
 
@@ -367,9 +226,12 @@
         const q = questions[qIndex];
         document.getElementById('q-number').innerText = qIndex + 1;
         document.getElementById('q-text').innerText = q.q;
-        document.getElementById('q-feedback').innerText = "";
-        document.getElementById('next-btn').classList.add('hidden');
         
+        const fb = document.getElementById('q-feedback');
+        fb.style.display = 'none';
+        fb.innerText = "";
+        
+        document.getElementById('next-btn').classList.add('hidden');
         document.getElementById('quiz-progress').style.width = ((qIndex) / questions.length * 100) + '%';
         
         const grid = document.getElementById('q-options');
@@ -388,16 +250,19 @@
         const allBtns = document.querySelectorAll('.quiz-btn');
         allBtns.forEach(b => b.onclick = null);
 
+        const fb = document.getElementById('q-feedback');
+        fb.style.display = 'block';
+
         if(selected === correct) {
             btn.classList.add('correct');
             score++;
-            document.getElementById('q-feedback').innerText = "✅ Poprawna odpowiedź!";
-            document.getElementById('q-feedback').style.color = "green";
+            fb.innerHTML = `<span style="color:#2e7d32; font-size:20px;">✅ IDEALNIE!</span><br><br>${info}`;
+            fb.style.borderLeftColor = "#4caf50";
         } else {
             btn.classList.add('wrong');
             allBtns[correct].classList.add('correct');
-            document.getElementById('q-feedback').innerText = "❌ " + info;
-            document.getElementById('q-feedback').style.color = "red";
+            fb.innerHTML = `<span style="color:#c62828; font-size:20px;">❌ BŁĄD! PRZECZYTAJ WYJAŚNIENIE:</span><br><br>${info}`;
+            fb.style.borderLeftColor = "#f44336";
         }
         document.getElementById('next-btn').classList.remove('hidden');
     }
