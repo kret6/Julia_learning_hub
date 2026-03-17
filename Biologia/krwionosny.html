@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biologia: Układ Krwionośny</title>
+    <style>
+        /* STYL GŁÓWNY - BIOLOGICZNA CZERWIEŃ */
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #ffebee; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding: 10px; color: #b71c1c; overflow-y: auto;}
+        #container { background-color: white; padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(183, 28, 28, 0.2); width: 100%; max-width: 800px; border: 4px solid #e53935; margin-bottom: 50px;}
+        h1 { margin: 10px 0 20px 0; font-size: 28px; color: #b71c1c; text-align: center; }
+        
+        .menu-grid { display: grid; grid-template-columns: 1fr; gap: 20px; width: 100%; margin-top: 20px; }
+        .btn-menu { border: none; padding: 25px; font-size: 20px; font-weight: bold; border-radius: 20px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: flex-start; box-shadow: 0 6px 0 rgba(0,0,0,0.1); color: white; position: relative; overflow: hidden; }
+        .btn-menu:active { transform: translateY(4px); box-shadow: none; }
+        .btn-menu .icon { font-size: 35px; margin-right: 15px; }
+        
+        .bg-theory { background: linear-gradient(45deg, #e53935, #c62828); }
+        .bg-test { background: linear-gradient(45deg, #4caf50, #2e7d32); }
+
+        .hidden { display: none !important; }
+        .section-view { width: 100%; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+        /* TEORIA */
+        .theory-card { background: #fff; border-left: 6px solid #e53935; padding: 20px; margin-bottom: 25px; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.08); text-align: left; }
+        .theory-card h3 { margin-top: 0; color: #c62828; border-bottom: 2px solid #ffebee; padding-bottom: 8px;}
+        
+        .btn-audio { background-color: #ef5350; color: white; border: none; padding: 12px 20px; border-radius: 20px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; box-shadow: 0 4px 0 #c62828; }
+        .btn-audio:active { transform: translateY(2px); box-shadow: none; }
+
+        /* QUIZ */
+        .quiz-question { font-size: 20px; font-weight: bold; margin-bottom: 20px; text-align: left; line-height: 1.4; color: #333;}
+        .quiz-options { display: grid; gap: 12px; }
+        .quiz-btn { background: #fff8e1; border: 2px solid #e53935; padding: 18px; border-radius: 15px; font-size: 16px; cursor: pointer; text-align: left; color: #b71c1c; font-weight: 500; transition: background 0.2s;}
+        .quiz-btn:hover { background: #ffcdd2; }
+        .quiz-btn.correct { background: #66bb6a !important; color: white !important; border-color: #2e7d32 !important; }
+        .quiz-btn.wrong { background: #ef5350 !important; color: white !important; border-color: #c62828 !important; }
+        
+        .feedback-box { background: #f5f5f5; padding: 15px; border-radius: 10px; margin-top: 20px; font-size: 16px; display: none; border-left: 5px solid #ccc; color: #333;}
+
+        .nav-btn { margin-top: 25px; padding: 15px 25px; background: #555; color: white; border: none; border-radius: 25px; cursor: pointer; font-size: 16px; width: 100%; font-weight: bold;}
+        .back-btn { background: #eee; color: #333; margin-bottom: 20px; padding: 10px 20px; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; display: inline-block;}
+        
+        /* Pasek Postępu */
+        .progress-container { width: 100%; background-color: #e0e0e0; border-radius: 10px; margin-bottom: 25px; height: 12px; overflow: hidden; }
+        .progress-bar { height: 100%; background-color: #e53935; width: 0%; transition: width 0.4s ease; }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    
+    <div id="menu-screen" class="section-view">
+        <h1>🩸 Układ Krwionośny</h1>
+        
+        <div class="menu-grid">
+            <button class="btn-menu bg-theory" onclick="showSection('theory')">
+                <div class="icon">🎧</div>
+                <div>Lekcje Audio<br><small>Hania i słowa klucze</small></div>
+            </button>
+
+            <button class="btn-menu bg-test" onclick="startQuiz()">
+                <div class="icon">📝</div>
+                <div>TEST Z UZASADNIENIAMI<br><small>20 bezlitosnych pytań</small></div>
+            </button>
+        </div>
+
+        <button class="nav-btn" onclick="window.history.back()" style="margin-top:40px;">🏠 Wróć do Pulpitu</button>
+    </div>
+
+    <div id="theory-screen" class="section-view hidden">
+        <button class="back-btn" onclick="showSection('menu')">⬅ Wróć do Menu</button>
+        <h2 style="text-align: center; color: #b71c1c;">Wykłady Audio (Słuchaj i powtarzaj)</h2>
+
+        <div class="theory-card">
+            <h3>1. Skład krwi</h3>
+            <button class="btn-audio" onclick="speak('Lekcja pierwsza. Skład krwi. Krew składa się w 55 procentach z osocza i w 45 procentach z krwinek. Krwinki czerwone, czyli erytrocyty, nie mają jądra i noszą tlen dzięki hemoglobinie. Powtórz... erytrocyty. Krwinki białe, czyli leukocyty, mają jądro i walczą z chorobami. Powtórz... leukocyty. Płytki krwi odpowiadają za krzepnięcie, tworząc skrzep. Konflikt serologiczny występuje, gdy matka ma Rh minus, a dziecko Rh plus. Powtórz... matka minus, dziecko plus.')">
+                📢 Odtwórz Lekcję 1 (Krew)
+            </button>
+        </div>
+
+        <div class="theory-card">
+            <h3>2. Naczynia krwionośne</h3>
+            <button class="btn-audio" onclick="speak('Lekcja druga. Naczynia. Tętnice wyprowadzają krew z serca, panuje w nich ogromne ciśnienie, dlatego mają grube ściany. Żyły wracają do serca, mają cienkie ściany i posiadają zastawki, żeby krew się nie cofała. Powtórz... żyły mają zastawki. Naczynia włosowate mają grubość jednej komórki i służą do wymiany gazów. Pamiętaj o wielkim wyjątku: w tętnicy płucnej płynie krew odtlenowana. Powtórz... tętnica płucna ma odtlenowaną.')">
+                📢 Odtwórz Lekcję 2 (Naczynia)
+            </button>
+        </div>
+
+        <div class="theory-card">
+            <h3>3. Serce i Choroby</h3>
+            <button class="btn-audio" onclick="speak('Lekcja trzecia. Serce. Lewa część serca jest zawsze utlenowana i ma grubsze ściany. Prawa część to krew odtlenowana. Krew nie miesza się dzięki szczelnej przegrodzie. Powtórz... przegroda. Choroby: Miażdżyca to zapychanie naczyń przez cholesterol. Anemia to brak żelaza i niski poziom czerwonych krwinek. Białaczka to złośliwa choroba szpiku kostnego. Powtórz... anemia to brak żelaza.')">
+                📢 Odtwórz Lekcję 3 (Serce i Choroby)
+            </button>
+        </div>
+    </div>
+
+    <div id="test-screen" class="section-view hidden">
+        <button class="back-btn" onclick="showSection('menu')">⬅ Przerwij</button>
+        <div style="display:flex; justify-content:space-between; color:#888; margin-bottom:10px; font-weight:bold;">
+            <span>Sprawdzian z Biologii</span>
+            <span>Pytanie <span id="q-number">1</span> / 20</span>
+        </div>
+        
+        <div class="progress-container">
+            <div id="quiz-progress" class="progress-bar"></div>
+        </div>
+        
+        <div class="theory-card" style="border-left-color: #4caf50; padding: 25px;">
+            <p id="q-text" class="quiz-question">...</p>
+        </div>
+
+        <div id="q-options" class="quiz-options"></div>
+        
+        <div id="q-feedback" class="feedback-box"></div>
+        
+        <button id="next-btn" class="nav-btn hidden" onclick="nextQuestion()" style="background: #4caf50;">Rozumiem, Następne Pytanie ➡</button>
+    </div>
+
+    <div id="end-screen" class="section-view hidden">
+        <h2 style="text-align: center; font-size: 40px; margin-bottom: 5px;">🎉</h2>
+        <h2 style="text-align: center; color: #b71c1c; font-size: 30px;">Klasówka zaliczona!</h2>
+        <h3 id="final-score" style="text-align: center; color: #fff; font-size: 24px; background: #4caf50; padding: 20px; border-radius: 15px;">Wynik: 0/0</h3>
+        <button class="nav-btn" onclick="showSection('menu')">Wróć do Menu Głównego</button>
+    </div>
+
+</div>
+
+<script>
+    function showSection(id) {
+        window.speechSynthesis.cancel();
+        document.querySelectorAll('.section-view').forEach(el => el.classList.add('hidden'));
+        if(id === 'menu') document.getElementById('menu-screen').classList.remove('hidden');
+        if(id === 'theory') document.getElementById('theory-screen').classList.remove('hidden');
+        if(id === 'none') return; 
+        window.scrollTo(0,0);
+    }
+
+    function speak(text) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'pl-PL';
+        u.rate = 0.85; 
+        window.speechSynthesis.speak(u);
+    }
+
+    // --- BAZA PYTAŃ ---
+    const questions = [
+        { q: "Do jakiego rodzaju tkanek zaliczamy krew?", opts: ["Do nabłonkowej", "Do tkanki łącznej płynnej", "Do tkanki mięśniowej"], ans: 1, info: "Krew jest płynną tkanką łączną." },
+        { q: "Krwinki czerwone (erytrocyty) są wyjątkowe pod jednym względem:", opts: ["Nie posiadają jądra komórkowego", "Mają aż trzy jądra komórkowe", "Mają zdolność ruchu pełzakowatego"], ans: 0, info: "Erytrocyty nie mają jądra, co pozwala im zmieścić więcej tlenu!" },
+        { q: "Zastawki w układzie krwionośnym występują WŁĄCZNIE w:", opts: ["Tętnicach", "Naczyniach włosowatych", "Żyłach"], ans: 2, info: "Tylko żyły mają zastawki, aby zapobiec cofaniu się krwi (bo ciśnienie w żyłach jest bardzo niskie)." },
+        { q: "Które naczynia krwionośne posiadają najgrubszą i najbardziej elastyczną warstwę mięśniową?", opts: ["Żyły", "Tętnice", "Naczynia włosowate"], ans: 1, info: "Tętnice muszą być bardzo grube i elastyczne, ponieważ wyrzucana z serca krew tworzy w nich ogromne ciśnienie." },
+        { q: "Konflikt serologiczny jest najgroźniejszy, gdy:", opts: ["Matka ma grupę Rh-, a dziecko Rh+", "Matka ma grupę Rh+, a dziecko Rh-", "Oboje mają grupę Rh-"], ans: 0, info: "Konflikt następuje, gdy organizm matki z minusem zaatakuje krew płodu z plusem (odziedziczonym po ojcu)." },
+        { q: "Lewa strona serca pompuje krew:", opts: ["Odtlenowaną", "Utlenowaną", "Mieszaną"], ans: 1, info: "Lewa strona (zarówno lewy przedsionek, jak i lewa komora) zawsze pompuje krew bogatą w tlen (utlenowaną)." },
+        { q: "Barwnikiem wiążącym tlen, obecnym w czerwonych krwinkach, jest:", opts: ["Fibrynogen", "Cholesterol", "Hemoglobina"], ans: 2, info: "Ten czerwony barwnik to hemoglobina." },
+        { q: "Jaką funkcję w organizmie pełnią leukocyty (białe krwinki)?", opts: ["Roznoszą tlen do tkanek", "Niszczą drobnoustroje chorobotwórcze", "Zmieniają fibrynogen w skrzep"], ans: 1, info: "Leukocyty to nasi strażnicy - zwalczają wirusy i bakterie oraz tworzą przeciwciała." },
+        { q: "Pytanie-pułapka! W tętnicy płucnej płynie krew:", opts: ["Utlenowana", "Odtlenowana"], ans: 1, info: "To JEDYNY WYJĄTEK! Zazwyczaj w tętnicach płynie krew z tlenem, ale tętnica płucna prowadzi brudną (odtlenowaną) krew z serca do płuc po nowy tlen." },
+        { q: "Serce jest podzielone na prawą i lewą część. Co zapobiega mieszaniu się krwi utlenowanej z odtlenowaną?", opts: ["Śródbłonek", "Przegroda", "Zastawki"], ans: 1, info: "Krew się nie miesza dzięki szczelnej, mięśniowej przegrodzie." },
+        { q: "Jaka choroba objawia się niedoborem żelaza, niskim poziomem hemoglobiny i ogólnym osłabieniem?", opts: ["Białaczka", "Miażdżyca", "Niedokrwistość (anemia)"], ans: 2, info: "To anemia (niedokrwistość)." },
+        { q: "Trombocyty, czyli płytki krwi, odpowiadają za:", opts: ["Przenoszenie dwutlenku węgla", "Tworzenie skrzepu (krzepnięcie)", "Obronę przed bakteriami"], ans: 1, info: "Płytki krwi zalepiają dziury w naczyniach, inicjując proces krzepnięcia." },
+        { q: "Gdzie zachodzi wymiana tlenu i składników odżywczych z komórkami ciała?", opts: ["Tylko w żyłach głównych", "Tylko w naczyniach włosowatych", "Tylko w aorcie"], ans: 1, info: "Naczynia włosowate mają ściany o grubości tylko jednej komórki, dlatego tlen łatwo przenika do ciała." },
+        { q: "Naczynia, które oplatają samo serce i dostarczają mu tlen do ciągłej pracy, to:", opts: ["Naczynia wieńcowe", "Tętnice płucne", "Żyły główne"], ans: 0, info: "Są to naczynia wieńcowe (ich zablokowanie prowadzi do zawału)." },
+        { q: "Choroba, w której na ściankach tętnic gromadzi się cholesterol zwężając ich światło, to:", opts: ["Białaczka", "Miażdżyca", "Niedokrwistość"], ans: 1, info: "Złogi tłuszczu i cholesterolu to blaszki miażdżycowe." },
+        { q: "Z czego składa się ludzkie serce?", opts: ["Z dwóch komór i jednego przedsionka", "Z dwóch przedsionków i dwóch komór", "Z jednego przedsionka i jednej komory"], ans: 1, info: "Mamy dwie jamy górne (przedsionki) i dwie dolne (komory)." },
+        { q: "Gdzie w organizmie człowieka powstają krwinki czerwone?", opts: ["W czerwonym szpiku kostnym", "W sercu i płucach", "W wątrobie i nerkach"], ans: 0, info: "Fabryką krwinek jest czerwony szpik kostny." },
+        { q: "Które elementy morfotyczne krwi SĄ wyposażone w jądro komórkowe?", opts: ["Płytki krwi", "Erytrocyty", "Leukocyty (białe)"], ans: 2, info: "Jądro mają wyłącznie leukocyty." },
+        { q: "Jeśli osoba nie ma na powierzchni erytrocytów ani antygenu A, ani antygenu B, to posiada grupę krwi:", opts: ["Grupę A", "Grupę AB", "Grupę 0"], ans: 2, info: "Brak jakichkolwiek antygenów to grupa zero (0)." },
+        { q: "Krwiobieg mały (płucny) rozpoczyna się w:", opts: ["Prawej komorze serca", "Lewej komorze serca", "Prawym przedsionku serca"], ans: 0, info: "Krwiobieg mały startuje z prawej komory, wyrzucając krew do płuc, aby nabrała tlenu." }
+    ];
+
+    let qIndex = 0;
+    let score = 0;
+
+    function startQuiz() {
+        showSection('none'); 
+        document.getElementById('test-screen').classList.remove('hidden');
+        qIndex = 0;
+        score = 0;
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        if(qIndex >= questions.length) {
+            document.getElementById('test-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.remove('hidden');
+            
+            const percent = Math.round(score / questions.length * 100);
+            document.getElementById('final-score').innerText = `Wynik: ${score} / ${questions.length} (${percent}%)`;
+            return;
+        }
+        
+        const q = questions[qIndex];
+        document.getElementById('q-number').innerText = qIndex + 1;
+        document.getElementById('q-text').innerText = q.q;
+        
+        const fb = document.getElementById('q-feedback');
+        fb.style.display = 'none';
+        fb.innerText = "";
+        
+        document.getElementById('next-btn').classList.add('hidden');
+        document.getElementById('quiz-progress').style.width = ((qIndex) / questions.length * 100) + '%';
+        
+        const grid = document.getElementById('q-options');
+        grid.innerHTML = "";
+        
+        q.opts.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-btn';
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(i, btn, q.ans, q.info);
+            grid.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(selected, btn, correct, info) {
+        const allBtns = document.querySelectorAll('.quiz-btn');
+        allBtns.forEach(b => b.onclick = null);
+
+        const fb = document.getElementById('q-feedback');
+        fb.style.display = 'block';
+
+        if(selected === correct) {
+            btn.classList.add('correct');
+            score++;
+            fb.innerHTML = `<span style="color:#2e7d32; font-size:20px;">✅ DOSKONALE!</span><br><br>${info}`;
+            fb.style.borderLeftColor = "#4caf50";
+        } else {
+            btn.classList.add('wrong');
+            allBtns[correct].classList.add('correct');
+            fb.innerHTML = `<span style="color:#c62828; font-size:20px;">❌ BŁĄD! ZAPAMIĘTAJ:</span><br><br>${info}`;
+            fb.style.borderLeftColor = "#f44336";
+        }
+        document.getElementById('next-btn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+        qIndex++;
+        loadQuestion();
+    }
+
+</script>
+
+</body>
+</html>
