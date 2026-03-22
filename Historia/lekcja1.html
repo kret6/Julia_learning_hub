@@ -3,360 +3,278 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historia: Protokół 3.0 (Głosy)</title>
+    <title>Historia: I Wojna Światowa (Wersja MAX)</title>
     <style>
-        /* STYL GŁÓWNY - MOTYW HISTORYCZNY */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #fdf5e6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            text-align: center;
-            color: #3e2723;
-        }
-
-        #container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 30px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-            width: 95%;
-            max-width: 800px;
-            border: 4px solid #8d6e63;
-            min-height: 600px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        h1 { margin: 0 0 20px 0; font-size: 32px; color: #5d4037; }
-        p { font-size: 20px; margin-bottom: 30px; line-height: 1.5; }
-
-        /* PRZYCISKI */
-        .btn-big {
-            background-color: #8d6e63;
-            color: white;
-            border: none;
-            padding: 20px 30px;
-            font-size: 22px;
-            font-weight: bold;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 6px 0 #5d4037;
-            transition: 0.2s;
-            margin: 10px;
-            width: 90%;
-            white-space: normal;
-        }
-        .btn-big:active { transform: translateY(4px); box-shadow: none; }
-        .btn-big:hover { background-color: #6d4c41; }
+        /* STYL GŁÓWNY - HISTORYCZNY BRĄZ/ZŁOTO - ZOPTYMALIZOWANY DLA GMFCS 4 */
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #fbe9e7; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding: 20px; color: #3e2723; overflow-y: auto;}
+        #container { background-color: white; padding: 40px 30px; border-radius: 30px; box-shadow: 0 10px 40px rgba(62, 39, 35, 0.2); width: 100%; max-width: 900px; border: 6px solid #5d4037; margin-bottom: 60px;}
+        h1 { margin: 10px 0 40px 0; font-size: 40px; color: #4e342e; text-align: center; line-height: 1.3; font-weight: 900;}
         
-        .btn-action { background-color: #ffb74d; box-shadow: 0 6px 0 #f57c00; color: #3e2723; }
-        .btn-action:hover { background-color: #ffa726; }
-
-        .btn-voice { background-color: #5d4037; font-size: 16px; padding: 15px 25px; width: auto; display: inline-block; }
-
-        /* FISZKI */
-        .flashcard-scene { width: 100%; height: 320px; perspective: 1000px; margin-bottom: 20px; cursor: pointer;}
-        .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s; }
-        .flashcard.flipped { transform: rotateY(180deg); }
-        .card-face {
-            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            border-radius: 20px; padding: 20px; box-sizing: border-box;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            border: 2px solid #8d6e63;
-        }
-        .front { background-color: #a1887f; color: white; }
-        .back { background-color: #efebe9; color: #3e2723; transform: rotateY(180deg); }
-        .term { font-size: 32px; font-weight: bold; }
-        .def { font-size: 22px; line-height: 1.4; }
-
-        /* QUIZ */
-        .quiz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
-        .quiz-btn {
-            background-color: #d7ccc8; border: none; padding: 15px;
-            font-size: 18px; border-radius: 15px; cursor: pointer; color: #3e2723; font-weight: 600;
-            box-shadow: 0 4px 0 #a1887f;
-        }
-        .quiz-btn:hover { background-color: #bcaaa4; }
-        .correct { background-color: #66bb6a !important; color: white; box-shadow: 0 4px 0 #2e7d32 !important;}
-        .wrong { background-color: #ef5350 !important; color: white; opacity: 0.5; }
+        .menu-grid { display: grid; grid-template-columns: 1fr; gap: 40px; width: 100%; margin-top: 30px; }
+        
+        /* GIGANTYCZNE KAFELKI */
+        .btn-menu { border: none; padding: 45px 30px; font-size: 32px; font-weight: bold; border-radius: 30px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: flex-start; box-shadow: 0 10px 0 rgba(0,0,0,0.15); color: white; position: relative; overflow: hidden; line-height: 1.4; text-align: left;}
+        .btn-menu:active { transform: translateY(8px); box-shadow: none; }
+        .btn-menu .icon { font-size: 60px; margin-right: 35px; }
+        
+        .bg-theory { background: linear-gradient(45deg, #795548, #5d4037); }
+        .bg-test { background: linear-gradient(45deg, #4caf50, #2e7d32); }
 
         .hidden { display: none !important; }
-        .small-btn { padding: 10px 20px; font-size: 16px; border-radius: 20px; background: #8d6e63; color: white; border: none; cursor: pointer; margin-top: 10px;}
+        .section-view { width: 100%; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
-        @media (max-width: 768px) {
-            .quiz-grid { grid-template-columns: 1fr; }
-        }
+        /* TEORIA - DUŻA CZCIONKA I ODSTĘPY */
+        .theory-card { background: #fff; border-left: 10px solid #795548; padding: 35px; margin-bottom: 45px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: left; }
+        .theory-card h3 { margin-top: 0; color: #4e342e; border-bottom: 4px solid #fbe9e7; padding-bottom: 15px; font-size: 34px;}
+        
+        .btn-audio { background-color: #8d6e63; color: white; border: none; padding: 30px 35px; border-radius: 25px; font-size: 26px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; box-shadow: 0 8px 0 #5d4037; text-align: center; display: block;}
+        .btn-audio:active { transform: translateY(6px); box-shadow: none; }
+
+        /* QUIZ - BEZPIECZNE STREFY DOTYKU */
+        .quiz-question { font-size: 34px; font-weight: 900; margin-bottom: 40px; text-align: left; line-height: 1.4; color: #212121;}
+        .quiz-options { display: grid; gap: 30px; }
+        
+        .quiz-btn { background: #efebe9; border: 4px solid #bcaaa4; padding: 35px; border-radius: 25px; font-size: 28px; cursor: pointer; text-align: left; color: #3e2723; font-weight: bold; transition: background 0.2s; line-height: 1.4;}
+        .quiz-btn:active { background: #d7ccc8; transform: scale(0.98);}
+        .quiz-btn.correct { background: #66bb6a !important; color: white !important; border-color: #2e7d32 !important; }
+        .quiz-btn.wrong { background: #ef5350 !important; color: white !important; border-color: #c62828 !important; }
+        
+        .feedback-box { background: #f5f5f5; padding: 35px; border-radius: 20px; margin-top: 40px; font-size: 28px; display: none; border-left: 10px solid #ccc; color: #212121; line-height: 1.5; font-weight: bold;}
+
+        .nav-btn { margin-top: 45px; padding: 35px; background: #555; color: white; border: none; border-radius: 30px; cursor: pointer; font-size: 28px; width: 100%; font-weight: bold; box-shadow: 0 8px 0 #333;}
+        .nav-btn:active { transform: translateY(6px); box-shadow: none;}
+        .back-btn { background: #e0e0e0; color: #333; margin-bottom: 35px; padding: 25px 35px; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; display: inline-block; font-size: 24px;}
+        
+        /* Pasek Postępu */
+        .progress-container { width: 100%; background-color: #d7ccc8; border-radius: 20px; margin-bottom: 45px; height: 24px; overflow: hidden; }
+        .progress-bar { height: 100%; background-color: #795548; width: 0%; transition: width 0.4s ease; }
     </style>
 </head>
 <body>
 
 <div id="container">
     
-    <div id="step-start">
-        <h1>Historia: Po Powstaniu 📜</h1>
-        <p>Polacy kontra zaborcy. Walka bez broni, czyli praca organiczna i spryt.</p>
+    <div id="menu-screen" class="section-view">
+        <h1>🌍 Historia:<br>I Wojna Światowa<br><span style="font-size:24px; color:#795548;">(Poziom Ekspert)</span></h1>
         
-        <button class="btn-big" onclick="playAudio('intro')">📢 Posłuchaj Wstępu</button>
-        <br>
-        <button class="btn-big btn-voice" onclick="toggleVoice()">🗣️ Zmień Głos (Klikaj aż trafisz)</button>
-        <div id="voice-info" style="font-size: 14px; margin-top: 5px; color: #8d6e63;"></div>
-        <br><br>
-        <button class="btn-big btn-action" onclick="goToFlashcards()">Przejdź do Nauki (Fiszki) ➡</button>
-    </div>
+        <div class="menu-grid">
+            <button class="btn-menu bg-theory" onclick="showSection('theory')">
+                <div class="icon">🎧</div>
+                <div>Lekcje Audio<br><small style="font-size: 22px; font-weight: normal;">Posłuchaj o sojuszach i bitwach</small></div>
+            </button>
 
-    <div id="step-flashcards" class="hidden">
-        <h2>Trening Pojęć</h2>
-        <p style="font-size: 16px; margin-bottom: 5px;">Kliknij kartę, aby obrócić i usłyszeć definicję.</p>
-        
-        <div class="flashcard-scene" onclick="flipCard()">
-            <div class="flashcard" id="card">
-                <div class="card-face front">
-                    <div class="term" id="fc-term">...</div>
-                    <div style="margin-top:20px; font-size: 30px;">🔄</div>
-                </div>
-                <div class="card-face back">
-                    <div class="def" id="fc-def">...</div>
-                </div>
-            </div>
+            <button class="btn-menu bg-test" onclick="startQuiz()">
+                <div class="icon">📝</div>
+                <div>TEST WIEDZY (40 pytań)<br><small style="font-size: 22px; font-weight: normal;">Duże przyciski i dokładne fakty</small></div>
+            </button>
         </div>
 
-        <button class="small-btn" onclick="nextCard()">Następne Pojęcie ➡</button>
-        <br><br>
-        <button class="btn-big btn-action" onclick="goToSummary()">Już umiem! Idę do Testu 📝</button>
+        <button class="nav-btn" onclick="window.history.back()" style="margin-top:60px;">🏠 Wróć do Pulpitu</button>
     </div>
 
-    <div id="step-summary" class="hidden">
-        <h1>Ostatnia prosta!</h1>
-        <p>Hania (lub Lektor) podsumuje teraz 3 zabory w pigułce.</p>
-        <button class="btn-big" onclick="playAudio('summary')">📢 Posłuchaj Podsumowania</button>
-        <br><br>
-        <button class="btn-big btn-action" onclick="startQuiz()">ROZPOCZNIJ QUIZ 🚀</button>
+    <div id="theory-screen" class="section-view hidden">
+        <button class="back-btn" onclick="showSection('menu')">⬅ Wróć do Menu</button>
+        <h2 style="text-align: center; color: #4e342e; font-size: 36px;">Wykłady Audio (Słuchaj uważnie)</h2>
+
+        <div class="theory-card">
+            <h3>1. Mocarstwa, Sojusze i Nowa Broń</h3>
+            <button class="btn-audio" onclick="speak('Lekcja pierwsza. Na przełomie wieków nowymi mocarstwami zostały Niemcy, Japonia i Stany Zjednoczone. Rozpoczął się wyścig zbrojeń i rywalizacja o kolonie. Wprowadzono nowe rodzaje broni: karabiny maszynowe, okręty podwodne, czyli u-booty, wielkie okręty zwane drednotami, czołgi, samoloty i gazy bojowe. Świat podzielił się na dwa obozy. Trójprzymierze z 1882 roku to Niemcy, Austro-Węgry i Włochy. Nazywano ich Państwami Centralnymi. Z kolei Trójporozumienie z 1907 roku to Rosja, Francja i Wielka Brytania. Nazywano ich Ententą.')">
+                📢 Odtwórz Lekcję 1
+            </button>
+        </div>
+
+        <div class="theory-card">
+            <h3>2. Wojny przed 1914 rokiem</h3>
+            <button class="btn-audio" onclick="speak('Lekcja druga. Azja i Bałkany. W 1904 roku wybuchła wojna rosyjsko-japońska o wpływy w Korei. Rosja poniosła sromotną klęskę, a jej flota została rozbita w 1905 roku pod Cuszimą. Z kolei w Europie, na Bałkanach sytuacja była tak napięta narodowościowo i religijnie, że region nazwano kotłem bałkańskim. W pierwszej wojnie bałkańskiej koalicja państw pokonała Turcję, która straciła ziemie i z której wydzieliła się Albania. W drugiej wojnie bałkańskiej w 1913 roku Bułgaria zaatakowała dawnych sojuszników i przegrała.')">
+                📢 Odtwórz Lekcję 2
+            </button>
+        </div>
+
+        <div class="theory-card">
+            <h3>3. Wybuch i Fronty I Wojny</h3>
+            <button class="btn-audio" onclick="speak('Lekcja trzecia. Wybuch wojny. 28 czerwca 1914 roku w Sarajewie serbski nacjonalista zastrzelił austriackiego następcę tronu. To była iskra. 28 lipca Austro-Węgry wypowiedziały wojnę Serbii. Na froncie zachodnim bitwa nad rzeką Marną zatrzymała Niemców i wojna błyskawiczna zamieniła się w okopową wojnę pozycyjną. To tam, pod Sommą, Brytyjczycy po raz pierwszy użyli czołgów. Z kolei na froncie wschodnim, na przykład pod Tannenbergiem, trwała wojna manewrowa. Przez ataki niemieckich okrętów podwodnych, w 1917 roku do wojny przystąpiły Stany Zjednoczone.')">
+                📢 Odtwórz Lekcję 3
+            </button>
+        </div>
+
+        <div class="theory-card">
+            <h3>4. Rewolucje w Rosji</h3>
+            <button class="btn-audio" onclick="speak('Lekcja czwarta. Upadek cara. Bieda i porażki doprowadziły w lutym 1917 roku do rewolucji lutowej i obalenia cara Mikołaja Drugiego. Rządził Rząd Tymczasowy, ale w październiku 1917 wybuchła rewolucja październikowa. Włodzimierz Lenin i jego partia, bolszewicy, zdobyli zbrojnie Pałac Zimowy i przejęli władzę. Powołali krwawą policję do zwalczania wrogów, czyli Czekę, na czele której stanął Feliks Dzierżyński. Bolszewicy wycofali Rosję z wojny podpisując pokój brzeski, a w 1922 roku po wojnie domowej utworzyli Związek Radziecki, czyli Z S R S.')">
+                📢 Odtwórz Lekcję 4
+            </button>
+        </div>
+        
+        <div class="theory-card">
+            <h3>5. Sprawa Polska</h3>
+            <button class="btn-audio" onclick="speak('Lekcja piąta. Odzyskanie niepodległości. Początkowo Polacy musieli walczyć bratobójczo w armiach zaborców. Józef Piłsudski stworzył Pierwszą Brygadę Legionów i walczył u boku Austrii. Po kryzysie przysięgowym w 1917 r. trafił do więzienia. Zaborcy w Akcie 5 listopada 1916 roku obiecali mgliście utworzenie Królestwa Polskiego. We Francji powstała polska Błękitna Armia dowodzona przez generała Józefa Hallera. Przełomem był 1918 rok, gdy prezydent USA Wilson w 13 punkcie orędzia zażądał niepodległej Polski. Wojna zakończyła się 11 listopada 1918 roku rozejmem w Compiègne [czyt. kąpjeń]. W Wersalu Polskę reprezentowali Roman Dmowski i Ignacy Paderewski.')">
+                📢 Odtwórz Lekcję 5
+            </button>
+        </div>
     </div>
 
-    <div id="step-quiz" class="hidden">
-        <div id="progress" style="font-weight:bold; color:#8d6e63;">Pytanie 1</div>
-        <h2 id="q-text" style="margin: 15px 0; min-height: 70px;">...</h2>
-        <div class="quiz-grid" id="q-options"></div>
-        <h3 id="feedback" style="min-height: 30px; margin-top:10px;"></h3>
-        <button id="next-q-btn" class="btn-big btn-action hidden" onclick="nextQuestion()">Dalej ➡</button>
+    <div id="test-screen" class="section-view hidden">
+        <button class="back-btn" onclick="showSection('menu')">⬅ Przerwij</button>
+        <div style="display:flex; justify-content:space-between; color:#757575; margin-bottom:20px; font-weight:bold; font-size: 26px;">
+            <span>Test Pełny</span>
+            <span>Pytanie <span id="q-number">1</span> / 40</span>
+        </div>
+        
+        <div class="progress-container">
+            <div id="quiz-progress" class="progress-bar"></div>
+        </div>
+        
+        <div class="theory-card" style="border-left-color: #4caf50; padding: 40px;">
+            <p id="q-text" class="quiz-question">...</p>
+        </div>
+
+        <div id="q-options" class="quiz-options"></div>
+        
+        <div id="q-feedback" class="feedback-box"></div>
+        
+        <button id="next-btn" class="nav-btn hidden" onclick="nextQuestion()" style="background: #4caf50;">Rozumiem, Następne Pytanie ➡</button>
     </div>
 
-    <div id="step-end" class="hidden">
-        <h1>Zwycięstwo! 🏆</h1>
-        <p>Przeszłaś przez rusyfikację i germanizację zwycięsko!</p>
-        <button class="btn-big" onclick="playAudio('outro')">📢 Posłuchaj na koniec</button>
-        <br><br>
-        <button class="small-btn" onclick="location.reload()">Powtórz od początku ↺</button>
+    <div id="end-screen" class="section-view hidden">
+        <h2 style="text-align: center; font-size: 80px; margin-bottom: 20px;">🎉</h2>
+        <h2 style="text-align: center; color: #4e342e; font-size: 50px;">Egzamin zakończony!</h2>
+        <h3 id="final-score" style="text-align: center; color: #fff; font-size: 40px; background: #4caf50; padding: 40px; border-radius: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">Wynik: 0/0</h3>
+        <button class="nav-btn" onclick="showSection('menu')" style="background: #5d4037;">Wróć do Menu Głównego</button>
     </div>
 
 </div>
 
 <script>
-    // --- DANE: FISZKI ---
-    const flashcards = [
-        { t: "RUSYFIKACJA", d: "Zmuszanie Polaków do mówienia po rosyjsku i przejmowania rosyjskiej kultury. Symbol: kurator Apuchtin." },
-        { t: "KULTURKAMPF", d: "Walka o kulturę w zaborze pruskim. Niemcy walczyli z Kościołem katolickim i polskością." },
-        { t: "AUTONOMIA GALICYJSKA", d: "Swoboda w zaborze austriackim. Polacy mieli swoje szkoły, urzędy i mogli mówić po polsku." },
-        { t: "KRAJ PRZYWIŚLAŃSKI", d: "Tak Rosjanie nazwali Polskę po powstaniu, żeby wymazać jej nazwę z mapy." },
-        { t: "PRACA ORGANICZNA", d: "Działanie dla dobra kraju poprzez rozwój gospodarki i rolnictwa, a nie przez walkę zbrojną." },
-        { t: "PRACA U PODSTAW", d: "Edukacja najbiedniejszych ludzi (chłopów), żeby naród był silniejszy." },
-        { t: "RUGI PRUSKIE", d: "Masowe wyrzucanie Polaków z ziemi przez Niemców, jeśli nie mieli obywatelstwa." },
-        { t: "STAŃCZYCY", d: "Politycy w Galicji, którzy byli lojalni wobec cesarza Austrii. Chcieli zgody, a nie powstań." },
-        { t: "KATORGA", d: "Ciężka praca fizyczna na zesłaniu (Syberia), kara dla powstańców." }
-    ];
+    function showSection(id) {
+        window.speechSynthesis.cancel();
+        document.querySelectorAll('.section-view').forEach(el => el.classList.add('hidden'));
+        if(id === 'menu') document.getElementById('menu-screen').classList.remove('hidden');
+        if(id === 'theory') document.getElementById('theory-screen').classList.remove('hidden');
+        if(id === 'none') return; 
+        window.scrollTo(0,0);
+    }
 
-    // --- DANE: TEST ---
+    function speak(text) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'pl-PL';
+        u.rate = 0.82; // Jeszcze wolniej dla maksymalnej czytelności
+        window.speechSynthesis.speak(u);
+    }
+
+    // --- BAZA PYTAŃ (Super Granularna, 40 pytań z testów i notatek) ---
     const questions = [
-        { q: "Jak Rosjanie nazwali Polskę po upadku powstania?", a: ["Kraj Przywiślański", "Nowa Rosja", "Królestwo Polskie", "Polonia"], c: 0 },
-        { q: "Kto był symbolem rusyfikacji w szkołach (zły kurator)?", a: ["Apuchtin", "Bismarck", "Traugutt", "Car Mikołaj"], c: 0 },
-        { q: "Co to jest KATORGA?", a: ["Ciężkie roboty na Syberii", "Wakacje w Rosji", "Rodzaj tańca", "Nazwa statku"], c: 0 },
-        { q: "Kim był Aleksander Sochaczewski?", a: ["Malarzem zesłańców syberyjskich", "Generałem", "Pisarzem", "Rolnikiem"], c: 0 },
-        { q: "Co to była 'Najdłuższa wojna nowoczesnej Europy'?", a: ["Walka gospodarcza Polaków z Niemcami", "Powstanie zbrojne", "I Wojna Światowa", "Wojna stuletnia"], c: 0 },
-        { q: "Kim był Hipolit Cegielski?", a: ["Przemysłowcem (fabryka maszyn w Poznaniu)", "Generałem", "Poetą", "Urzędnikiem"], c: 0 },
-        { q: "Co robiła Komisja Kolonizacyjna?", a: ["Wykupowała ziemię dla Niemców", "Budowała polskie szkoły", "Pomagała rolnikom", "Sadziła lasy"], c: 0 },
-        { q: "Kto ogłosił KULTURKAMPF?", a: ["Otto von Bismarck", "Cesarz Franciszek Józef", "Michał Drzymała", "Hipolit Cegielski"], c: 0 },
-        { q: "O co strajkowały dzieci we Wrześni (1901)?", a: ["O religię po polsku", "O dłuższe przerwy", "O darmowe obiady", "O nowe mundurki"], c: 0 },
-        { q: "Jak protestował Michał Drzymała?", a: ["Mieszkał w wozie cyrkowym", "Zorganizował powstanie", "Napisał wiersz", "Wyjechał do USA"], c: 0 },
-        { q: "Gdzie Polacy mieli AUTONOMIĘ (swobodę)?", a: ["W Galicji (Austrii)", "W Prusach", "W Rosji", "W Berlinie"], c: 0 },
-        { q: "Co to była 'Nędza Galicyjska'?", a: ["Wielka bieda na wsi w zaborze austriackim", "Bogactwo", "Nazwa potrawy", "Choroba"], c: 0 }
+        { q: "Które z tych państw NIE należało do światowych mocarstw przed wybuchem I wojny światowej?", opts: ["Niemcy", "Japonia", "Serbia", "Stany Zjednoczone (USA)"], ans: 2, info: "Serbia była małym państwem na Bałkanach. Mocarstwami w tym czasie stawały się Niemcy, Japonia, USA, Wielka Brytania i Francja." },
+        { q: "W którym roku zawarto Trójprzymierze (czyli sojusz Państw Centralnych)?", opts: ["W 1882 roku", "W 1907 roku", "W 1914 roku"], ans: 0, info: "Trójprzymierze zawarto dużo wcześniej, bo już w 1882 roku." },
+        { q: "Które państwa tworzyły Trójprzymierze (Państwa Centralne)?", opts: ["Wielka Brytania, Francja, Rosja", "Niemcy, Austro-Węgry, Włochy", "Niemcy, Japonia, Rosja"], ans: 1, info: "Trójprzymierze to: Niemcy, Austro-Węgry i Włochy." },
+        { q: "W którym roku ostatecznie zawiązano Trójporozumienie (zwane Ententą)?", opts: ["W 1882 roku", "W 1907 roku", "W 1914 roku"], ans: 1, info: "Ententa została ostatecznie uformowana w 1907 roku po porozumieniu Wielkiej Brytanii i Rosji." },
+        { q: "Jakie państwa wchodziły w skład Trójporozumienia (Ententy)?", opts: ["Niemcy, Austro-Węgry, Włochy", "Rosja, Francja, Wielka Brytania", "Stany Zjednoczone, Japonia, Rosja"], ans: 1, info: "Ententę tworzyły Rosja, Francja i Wielka Brytania." },
+        { q: "Jak nazywał się nowy, ogromny typ okrętu wojennego, wprowadzony przez Brytyjczyków przed I wojną światową?", opts: ["U-boot", "Drednot", "Niszczyciel"], ans: 1, info: "Drednoty to potężne okręty wojenne (pancerniki), którymi Brytyjczycy chcieli utrzymać panowanie na morzu." },
+        { q: "W latach 1904-1905 wybuchła wojna o wpływy w Korei. Kto ją wygrał?", opts: ["Japonia", "Rosja", "Chiny"], ans: 0, info: "Japonia odniosła spektakularne zwycięstwo, m.in. niszcząc flotę rosyjską." },
+        { q: "Jak nazywało się miejsce słynnej bitwy morskiej z 1905 r., gdzie Japonia rozbiła flotę rosyjską?", opts: ["Cieśnina Bosfor", "Zatoka Świń", "Cieśnina Cuszima"], ans: 2, info: "Bitwa pod Cuszimą (1905) była potężnym ciosem dla Rosji i obniżyła autorytet cara." },
+        { q: "Dlaczego przed I wojną światową Bałkany nazywano 'kotłem bałkańskim'?", opts: ["Z powodu upałów", "Ponieważ wydobywano tam dużo węgla", "Z powodu ogromnych napięć i konfliktów narodowościowo-religijnych"], ans: 2, info: "Ciągłe spory mocarstw i narodów bałkańskich sprawiły, że region był gotowy do wybuchu przy najmniejszej iskrze." },
+        { q: "Kto przegrał pierwszą wojnę bałkańską (1912-1913) i stracił większość europejskich ziem?", opts: ["Bułgaria", "Serbia", "Turcja (Imperium Osmańskie)"], ans: 2, info: "Koalicja państw bałkańskich pokonała Turcję, która musiała oddać większość ziem w Europie." },
+        { q: "Kto wywołał II wojnę bałkańską (w 1913 r.), atakując swoich dotychczasowych sojuszników?", opts: ["Turcja", "Grecja", "Bułgaria"], ans: 2, info: "Bułgaria była niezadowolona z podziału łupów, zaatakowała sojuszników, poniosła klęskę i straciła ziemie." },
+        { q: "Co było bezpośrednią iskrą do wybuchu I wojny światowej?", opts: ["Zatopienie statku", "Zamach w Sarajewie (28 czerwca 1914)", "Atak Niemiec na Polskę"], ans: 1, info: "Zastrzelenie arcyksięcia Franciszka Ferdynanda w Sarajewie doprowadziło do wypowiedzenia wojny." },
+        { q: "Jakie państwo jako pierwsze wypowiedziało wojnę swojemu sąsiadowi po zamachu w Sarajewie (28 lipca 1914)?", opts: ["Niemcy wypowiedziały wojnę Rosji", "Austro-Węgry wypowiedziały wojnę Serbii", "Rosja wypowiedziała wojnę Turcji"], ans: 1, info: "Austro-Węgry po postawieniu ultimatum zaatakowały Serbię." },
+        { q: "Gdzie toczyła się wojna pozycyjna, w której żołnierze miesiącami siedzieli w okopach i prawie nie przesuwali frontu?", opts: ["Na froncie wschodnim", "Na morzu", "Na froncie zachodnim (we Francji i Belgii)"], ans: 2, info: "Front zachodni po bitwie nad Marną utknął w okopach - to klasyczna wojna pozycyjna." },
+        { q: "Jak nazywała się rzeka, nad którą we wrześniu 1914 roku zatrzymano atak Niemców na Paryż (załamanie wojny błyskawicznej)?", opts: ["Somma", "Marna", "Wołga"], ans: 1, info: "Bitwa nad Marną uratowała Francję przed błyskawiczną przegraną." },
+        { q: "Podczas jakiej bitwy Brytyjczycy w 1916 roku po raz pierwszy w historii użyli CZOŁGÓW?", opts: ["Bitwa pod Verdun", "Bitwa pod Tannenbergiem", "Bitwa nad rzeką Sommą"], ans: 2, info: "Czołgi (tanks) zadebiutowały w wielkiej bitwie nad Sommą w 1916 roku." },
+        { q: "Co charakteryzowało front wschodni (np. walki Niemców z Rosjanami pod Tannenbergiem)?", opts: ["Była to wojna pozycyjna", "Była to wojna manewrowa", "Toczono tam tylko wojnę na morzu"], ans: 1, info: "Ze względu na ogromne odległości w Rosji toczyła się tam wojna manewrowa (duże ruchy wojsk, a nie siedzenie w okopach)." },
+        { q: "Co spowodowało przystąpienie Stanów Zjednoczonych (USA) do wojny w 1917 roku?", opts: ["Atak Austro-Węgier na Serbię", "Rewolucja w Rosji", "Nieograniczona wojna podwodna ogłoszona przez Niemcy (ataki na statki pasażerskie)"], ans: 2, info: "Zatapianie przez U-booty cywilnych i neutralnych statków zmusiło USA do wypowiedzenia wojny Niemcom." },
+        { q: "Które z nowych rodzajów broni były wykorzystywane podczas I wojny światowej?", opts: ["Miecze i kusze", "Czołgi, gazy bojowe, samoloty i okręty podwodne", "Broń atomowa i rakiety balistyczne"], ans: 1, info: "I wojna to narodziny nowoczesnej, przerażającej technologii wojskowej: czołgów, gazów (np. musztardowego) i samolotów." },
+        { q: "Z jakiego powodu wybuchła rewolucja lutowa w Rosji w 1917 roku?", opts: ["Kryzys gospodarczy, braki chleba, ogromne straty na froncie i niechęć do cara", "Bogactwo i chęć ataku na USA", "Działania polskich legionów"], ans: 0, info: "Głód, bieda, strajki i ciągłe klęski wojsk rosyjskich wywołały masowe bunty ludności." },
+        { q: "Kto stracił władzę (abdykował) w wyniku rewolucji lutowej w 1917 r.?", opts: ["Car Mikołaj II Romanow", "Włodzimierz Lenin", "Cesarz Wilhelm II"], ans: 0, info: "Rewolucja lutowa obaliła carat. Car Mikołaj II stracił koronę." },
+        { q: "Kto przejął w Rosji władzę zbrojnie po rewolucji październikowej (atakując Pałac Zimowy)?", opts: ["Rząd Tymczasowy (Aleksander Kiereński)", "Bolszewicy (pod wodzą Włodzimierza Lenina)", "Biała Gwardia"], ans: 1, info: "Rewolucja październikowa to brutalny zamach stanu dokonany przez komunistów - bolszewików Lenina." },
+        { q: "Jak nazywała się tajna organizacja bolszewików (kierowana przez Feliksa Dzierżyńskiego) do likwidowania wrogów rewolucji?", opts: ["Ententa", "Czeka", "Duma"], ans: 1, info: "Czeka to bolszewicki aparat terroru powołany do zwalczania oporu (tzw. kontrrewolucji)." },
+        { q: "Jaki traktat podpisała Rosja w 1918 r., wycofując się ostatecznie z I wojny światowej?", opts: ["Traktat w Wersalu", "Rozejm w Compiègne", "Traktat w Brześciu (pokój brzeski)"], ans: 2, info: "Bolszewicy, by utrzymać władzę, zawarli pokój w Brześciu z Państwami Centralnymi i wycofali się z wojny." },
+        { q: "Jak w 1922 roku komuniści (bolszewicy) nazwali swoje państwo po wygraniu wojny domowej?", opts: ["Cesarstwo Rosyjskie", "Związek Socjalistycznych Republik Sowieckich (ZSRS)", "Republika Piotrogrodzka"], ans: 1, info: "W 1922 r. oficjalnie powołano ZSRS (Związek Radziecki)." },
+        { q: "Jaka była tragiczna sytuacja Polaków zaraz po wybuchu wojny w 1914 roku?", opts: ["Wszyscy wyjechali do Ameryki", "Zostali wcieleni do 3 wrogich armii zaborców i strzelali do siebie w bratobójczej walce", "Nie brali w ogóle udziału w walkach"], ans: 1, info: "Ponad 3 miliony Polaków walczyło w obcych mundurach na rozkaz rosyjskiego cara oraz cesarzy Niemiec i Austrii." },
+        { q: "Kto dowodził Pierwszą Brygadą Legionów Polskich (u boku Austro-Węgier)?", opts: ["Roman Dmowski", "Józef Piłsudski", "Józef Haller"], ans: 1, info: "Józef Piłsudski uważał Rosję za największego wroga, dlatego stworzył Legiony przy boku Austro-Węgier." },
+        { q: "Czym był 'Kryzys Przysięgowy' w 1917 r.?", opts: ["Odmową złożenia przez I i III Brygadę Legionów (Piłsudskiego) przysięgi na wierność Niemcom", "Buntem we flocie rosyjskiej", "Problemami z dostawą amunicji dla Błękitnej Armii"], ans: 0, info: "Piłsudski uznał, że Państwa Centralne przegrywają, i zakazał składania im przysięgi, za co trafił do więzienia." },
+        { q: "Jak nazywało się polskie wojsko sformowane we Francji u boku Ententy (w 1917 r.)?", opts: ["Legion Puławski", "Kompania Kadrowa", "Błękitna Armia (dowodzona przez gen. J. Hallera)"], ans: 2, info: "Generał Józef Haller dowodził we Francji polskimi siłami, nazwanymi Błękitną Armią od koloru mundurów." },
+        { q: "Czym był wydany w 1916 roku Akt 5 listopada?", opts: ["Zakończeniem wojny", "Dokumentem cesarzy Niemiec i Austrii, mgliście obiecującym utworzenie Królestwa Polskiego, by zyskać rekrutów", "Kapitulacją Francji"], ans: 1, info: "Zaborcom brakowało wojska, więc wydali ten manifest, by zachęcić Polaków do walki. Sprawiło to, że sprawa polska stała się głośna." },
+        { q: "Z jakiego dokumentu pochodzą te słowa: 'Należy stworzyć niezawisłe państwo polskie... z dostępem do morza'?", opts: ["Z orędzia prezydenta USA, Thomasa W. Wilsona (1918 r., punkt 13)", "Z Aktu 5 listopada", "Z tajnego układu Lenina"], ans: 0, info: "Głos prezydenta USA (13 punkt jego orędzia pokojowego) miał ogromne znaczenie dla sprawy polskiej." },
+        { q: "Gdzie i kiedy podpisano rozejm kończący walki I wojny światowej na froncie zachodnim?", opts: ["W Wersalu, 28 czerwca 1919", "W Brześciu, 3 marca 1918", "W Compiègne, 11 listopada 1918"], ans: 2, info: "11 listopada 1918 roku w wagonie kolejowym w lesie Compiègne podpisano zawieszenie broni, kończące wojnę." },
+        { q: "Kto z polskiej strony podpisał traktat pokojowy w Wersalu w imieniu niepodległej Polski?", opts: ["Józef Piłsudski i Józef Haller", "Roman Dmowski i Ignacy Jan Paderewski", "Włodzimierz Lenin i Aleksander Kiereński"], ans: 1, info: "Sprawę Polską w Paryżu (Wersalu) doskonale reprezentowali Roman Dmowski i znany pianista Ignacy Jan Paderewski." },
+        { q: "Co Polska otrzymała w wyniku Traktatu Wersalskiego BEZ przeprowadzania plebiscytów?", opts: ["Górny Śląsk i Mazury", "Wielkopolskę i Pomorze Gdańskie", "Całą Litwę i Ukrainę"], ans: 1, info: "Wielkopolska i Pomorze Gdańskie (dostęp do morza) przypadły nam od razu. O Śląsk i Mazury trzeba było jeszcze walczyć/głosować." },
+        { q: "Co się stało z carską rodziną Romanowów (Mikołajem II, jego żoną i dziećmi) w lipcu 1918 r.?", opts: ["Wyemigrowali bezpiecznie do Wielkiej Brytanii", "Zostali brutalnie zamordowani przez bolszewików", "Zostali prezydentami ZSRS"], ans: 1, info: "Bolszewicy wymordowali całą carską rodzinę w piwnicy w Jekaterynburgu, obawiając się ich powrotu do władzy." },
+        { q: "Z jakich sił uformował się II Korpus Polski w Rosji po wybuchu tamtejszej rewolucji?", opts: ["Z oddziałów Błękitnej Armii", "Z rozwiązanej dawnej II Brygady Legionów dowodzonej przez gen. Hallera", "Z niemieckich jeńców"], ans: 1, info: "Gdy wybuchł kryzys przysięgowy, II Brygada Hallera przeszła w końcu na stronę rosyjską i z niej powstał II Korpus." },
+        { q: "Uporządkuj wydarzenia chronologicznie: wybuch I wojny, rewolucja lutowa, rozejm w Compiègne.", opts: ["Rozejm w Compiègne -> Rewolucja lutowa -> Wybuch I wojny", "Rewolucja lutowa -> Wybuch I wojny -> Rozejm w Compiègne", "Wybuch I wojny (1914) -> Rewolucja lutowa (1917) -> Rozejm w Compiègne (1918)"], ans: 2, info: "Najpierw wojna wybuchła (1914), potem obalono cara w Rosji (luty 1917), a na koniec Niemcy podpisały rozejm (listopad 1918)." },
+        { q: "Gdzie formowano polską formację zwaną Legionem Puławskim?", opts: ["We Francji, u boku rządu francuskiego", "W zaborze rosyjskim, u boku armii rosyjskiej", "W Galicji, u boku Austrii"], ans: 1, info: "Legion Puławski (od miejscowości Puławy) walczył u boku Rosji przeciwko państwom centralnym." },
+        { q: "Ułóż chronologicznie wielkie bitwy: Tannenberg, Verdun, Somma.", opts: ["Tannenberg (1914) -> Verdun (1916) -> Somma (1916 - pierwsza użycie czołgów)", "Somma -> Tannenberg -> Verdun", "Verdun -> Somma -> Tannenberg"], ans: 0, info: "Tannenberg to sam początek (sierpień 1914), a Verdun i Somma to wyniszczające bitwy okopowe z 1916 roku." },
+        { q: "Która ze stron poniosła większe straty w ludziach podczas I wojny światowej?", opts: ["Państwa Centralne (Niemcy, Austro-Węgry)", "Ententa (Rosja, Francja, Wielka Brytania)", "Obie strony miały dokładnie tyle samo poległych"], ans: 1, info: "Ententa poniosła znacznie większe straty, głównie dlatego, że Rosja i Francja wykrwawiały się w wielomilionowych starciach." }
     ];
 
-    // --- AUDIO SKRYPTY ---
-    const scripts = {
-        intro: "Cześć Juleczko! Dzisiaj lekcja historii, ale bez nudy. Cofniemy się do czasów, gdy Polski nie było na mapie. Zaborcy robili wszystko, żeby nas zniszczyć, ale Polacy mieli swoje sposoby. Najpierw nauczymy się pojęć, żebyś wiedziała, o co chodzi z tą pracą organiczną i kulturkampfem. Gotowa? Startujemy z fiszkami!",
-        
-        summary: "Świetnie Ci idzie! Zanim wejdziesz na ring testowy, zróbmy szybki przegląd mapy. W zaborze ROSYJSKIM był terror, rusyfikacja i zsyłki na Sybir (Katorga). W zaborze PRUSKIM (Niemcy) był Kulturkampf, czyli walka z Kościołem i wyrzucanie z ziemi (Rugi Pruskie), ale Polacy świetnie radzili sobie gospodarczo. W GALICJI (Austria) była bieda, ale za to wolność – polskie szkoły i urzędy. Pamiętaj: Pozytywiści budowali fabryki i uczyli biednych, zamiast walczyć karabinem.",
-        
-        outro: "Brawo Julia! Egzamin zdany celująco. Wiesz już, jak Polacy przetrwali najtrudniejsze czasy. Twoja wiedza historyczna jest teraz Twoją tarczą. Jestem z Ciebie dumna. Odpocznij!"
-    };
-
-    // --- LOGIKA GŁOSU ---
-    let voices = [];
-    let currentVoiceIndex = 0;
-
-    function initVoices() {
-        const allVoices = window.speechSynthesis.getVoices();
-        // Filtrujemy tylko polskie głosy
-        voices = allVoices.filter(v => v.lang.includes('pl') || v.lang.includes('PL'));
-        
-        if (voices.length === 0) {
-            document.getElementById('voice-info').innerText = "Wczytuję głosy... (lub brak polskich)";
-        } else {
-            // Próba znalezienia domyślnego Google
-            const googleIndex = voices.findIndex(v => v.name.includes('Google'));
-            if (googleIndex !== -1) currentVoiceIndex = googleIndex;
-            document.getElementById('voice-info').innerText = `Dostępnych głosów PL: ${voices.length}`;
-        }
-    }
-
-    // Ładowanie głosów (Android ładuje je asynchronicznie)
-    window.speechSynthesis.onvoiceschanged = initVoices;
-    // Wywołanie też od razu, na wypadek gdyby już były
-    initVoices();
-
-    function toggleVoice() {
-        if (voices.length <= 1) {
-            alert("Twój telefon ma tylko jeden polski głos. Sprawdź ustawienia Androida (Zamiana tekstu na mowę).");
-            return;
-        }
-        stopAudio();
-        currentVoiceIndex = (currentVoiceIndex + 1) % voices.length;
-        
-        const utterance = new SpeechSynthesisUtterance("Próba mikrofonu, raz, dwa, trzy.");
-        utterance.voice = voices[currentVoiceIndex];
-        utterance.lang = 'pl-PL';
-        window.speechSynthesis.speak(utterance);
-        
-        document.getElementById('voice-info').innerText = `Wybrano: ${voices[currentVoiceIndex].name}`;
-    }
-
-    // --- LOGIKA NAUKI ---
-    let fcIndex = 0;
     let qIndex = 0;
-    let shuffledQ = [];
+    let score = 0;
 
-    // Nawigacja
-    function goToFlashcards() {
-        stopAudio();
-        document.getElementById('step-start').classList.add('hidden');
-        document.getElementById('step-flashcards').classList.remove('hidden');
-        loadFlashcard();
-    }
-    function goToSummary() {
-        stopAudio();
-        document.getElementById('step-flashcards').classList.add('hidden');
-        document.getElementById('step-summary').classList.remove('hidden');
-    }
     function startQuiz() {
-        stopAudio();
-        document.getElementById('step-summary').classList.add('hidden');
-        document.getElementById('step-quiz').classList.remove('hidden');
-        shuffledQ = questions.sort(() => Math.random() - 0.5);
+        showSection('none'); 
+        document.getElementById('test-screen').classList.remove('hidden');
+        qIndex = 0;
+        score = 0;
         loadQuestion();
     }
-    function goToEnd() {
-        document.getElementById('step-quiz').classList.add('hidden');
-        document.getElementById('step-end').classList.remove('hidden');
-    }
 
-    // Audio Engine
-    function playAudio(type) {
-        stopAudio();
-        const text = scripts[type];
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'pl-PL';
-        utterance.rate = 1.0; 
-        
-        // Użyj wybranego głosu
-        if (voices.length > 0) {
-            utterance.voice = voices[currentVoiceIndex];
+    function loadQuestion() {
+        if(qIndex >= questions.length) {
+            document.getElementById('test-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.remove('hidden');
+            
+            const percent = Math.round(score / questions.length * 100);
+            document.getElementById('final-score').innerText = `Wynik: ${score} / ${questions.length} (${percent}%)`;
+            return;
         }
         
-        window.speechSynthesis.speak(utterance);
-    }
-    function stopAudio() { window.speechSynthesis.cancel(); }
-
-    // Fiszki
-    function loadFlashcard() {
-        const c = document.getElementById('card');
-        c.classList.remove('flipped');
-        setTimeout(() => {
-            document.getElementById('fc-term').innerText = flashcards[fcIndex].t;
-            document.getElementById('fc-def').innerText = flashcards[fcIndex].d;
-        }, 300);
-    }
-    function flipCard() {
-        document.getElementById('card').classList.toggle('flipped');
-        if(document.getElementById('card').classList.contains('flipped')) {
-            const u = new SpeechSynthesisUtterance(flashcards[fcIndex].d);
-            u.lang = 'pl-PL';
-            if (voices.length > 0) u.voice = voices[currentVoiceIndex];
-            window.speechSynthesis.speak(u);
-        } else { stopAudio(); }
-    }
-    function nextCard() {
-        stopAudio();
-        fcIndex = (fcIndex + 1) % flashcards.length;
-        loadFlashcard();
-    }
-
-    // Quiz
-    function loadQuestion() {
-        if(qIndex >= shuffledQ.length) { goToEnd(); return; }
-        
-        const q = shuffledQ[qIndex];
-        document.getElementById('progress').innerText = `Pytanie ${qIndex+1} z ${shuffledQ.length}`;
+        const q = questions[qIndex];
+        document.getElementById('q-number').innerText = qIndex + 1;
         document.getElementById('q-text').innerText = q.q;
-        document.getElementById('feedback').innerText = "";
-        document.getElementById('next-q-btn').classList.add('hidden');
-
+        
+        const fb = document.getElementById('q-feedback');
+        fb.style.display = 'none';
+        fb.innerText = "";
+        
+        document.getElementById('next-btn').classList.add('hidden');
+        document.getElementById('quiz-progress').style.width = ((qIndex) / questions.length * 100) + '%';
+        
         const grid = document.getElementById('q-options');
         grid.innerHTML = "";
         
-        const answers = q.a.map((txt, i) => ({txt, ok: i === q.c})).sort(() => Math.random() - 0.5);
-        
-        answers.forEach(ans => {
+        q.opts.forEach((opt, i) => {
             const btn = document.createElement('button');
             btn.className = 'quiz-btn';
-            btn.innerText = ans.txt;
-            btn.onclick = () => checkAnswer(ans.ok, btn, answers);
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(i, btn, q.ans, q.info);
             grid.appendChild(btn);
         });
     }
 
-    function checkAnswer(isOk, btn, allAnswers) {
-        const btns = document.querySelectorAll('.quiz-btn');
-        btns.forEach(b => b.onclick = null);
+    function checkAnswer(selected, btn, correct, info) {
+        const allBtns = document.querySelectorAll('.quiz-btn');
+        allBtns.forEach(b => b.onclick = null);
 
-        if(isOk) {
+        const fb = document.getElementById('q-feedback');
+        fb.style.display = 'block';
+
+        if(selected === correct) {
             btn.classList.add('correct');
-            document.getElementById('feedback').innerText = "Tak jest! Prawda historyczna! ✅";
-            document.getElementById('feedback').style.color = "green";
+            score++;
+            fb.innerHTML = `<span style="color:#2e7d32; font-size:32px; font-weight:900;">✅ ŚWIETNIE!</span><br><br>${info}`;
+            fb.style.borderLeftColor = "#4caf50";
         } else {
             btn.classList.add('wrong');
-            btns.forEach(b => {
-                if(allAnswers.find(a => a.txt === b.innerText).ok) b.classList.add('correct');
-            });
-            document.getElementById('feedback').innerText = "Niestety nie. Spójrz na zielone.";
-            document.getElementById('feedback').style.color = "#c62828";
+            allBtns[correct].classList.add('correct');
+            fb.innerHTML = `<span style="color:#c62828; font-size:32px; font-weight:900;">❌ ZAPAMIĘTAJ:</span><br><br>${info}`;
+            fb.style.borderLeftColor = "#f44336";
         }
-        document.getElementById('next-q-btn').classList.remove('hidden');
+        document.getElementById('next-btn').classList.remove('hidden');
     }
 
     function nextQuestion() {
         qIndex++;
         loadQuestion();
     }
-
-    // Init
-    loadFlashcard();
 
 </script>
 
