@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angielski: Sztuka i Tworzenie</title>
+    <style>
+        /* STYL GŁÓWNY - ANGIELSKI INDIGO/FIOLET - ZOPTYMALIZOWANY DLA EKRANÓW DOTYKOWYCH */
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #e8eaf6; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding: 20px; color: #1a237e; overflow-y: auto;}
+        #container { background-color: white; padding: 40px 30px; border-radius: 30px; box-shadow: 0 10px 40px rgba(26, 35, 126, 0.2); width: 100%; max-width: 900px; border: 6px solid #3f51b5; margin-bottom: 60px;}
+        h1 { margin: 10px 0 40px 0; font-size: 40px; color: #283593; text-align: center; line-height: 1.3; font-weight: 900;}
+        
+        .menu-grid { display: grid; grid-template-columns: 1fr; gap: 40px; width: 100%; margin-top: 30px; }
+        
+        /* GIGANTYCZNE KAFELKI */
+        .btn-menu { border: none; padding: 45px 30px; font-size: 32px; font-weight: bold; border-radius: 30px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: flex-start; box-shadow: 0 10px 0 rgba(0,0,0,0.15); color: white; position: relative; overflow: hidden; line-height: 1.4; text-align: left;}
+        .btn-menu:active { transform: translateY(8px); box-shadow: none; }
+        .btn-menu .icon { font-size: 60px; margin-right: 35px; }
+        
+        .bg-theory { background: linear-gradient(45deg, #5c6bc0, #303f9f); }
+        .bg-test { background: linear-gradient(45deg, #4caf50, #2e7d32); }
+
+        .hidden { display: none !important; }
+        .section-view { width: 100%; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+        /* TEORIA - DUŻA CZCIONKA I ODSTĘPY */
+        .theory-card { background: #fff; border-left: 10px solid #5c6bc0; padding: 35px; margin-bottom: 45px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: left; }
+        .theory-card h3 { margin-top: 0; color: #283593; border-bottom: 4px solid #e8eaf6; padding-bottom: 15px; font-size: 34px;}
+        
+        .btn-audio { background-color: #7986cb; color: white; border: none; padding: 30px 35px; border-radius: 25px; font-size: 26px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; box-shadow: 0 8px 0 #3f51b5; text-align: center; display: block;}
+        .btn-audio:active { transform: translateY(6px); box-shadow: none; }
+
+        /* QUIZ (PISANIE) - BEZPIECZNE STREFY DOTYKU */
+        .quiz-question { font-size: 34px; font-weight: 900; margin-bottom: 30px; text-align: center; line-height: 1.4; color: #212121;}
+        
+        .typing-input { width: 100%; padding: 25px; font-size: 32px; border: 4px solid #9fa8da; border-radius: 20px; box-sizing: border-box; outline: none; color: #1a237e; font-weight: bold; text-align: center; transition: 0.2s;}
+        .typing-input:focus { border-color: #3f51b5; box-shadow: 0 0 15px rgba(63, 81, 181, 0.3); }
+        .typing-input:disabled { background-color: #f5f5f5; border-color: #e0e0e0; color: #999; }
+
+        .feedback-box { background: #f5f5f5; padding: 35px; border-radius: 20px; margin-top: 40px; font-size: 28px; display: none; border-left: 10px solid #ccc; color: #212121; line-height: 1.5; font-weight: bold; text-align: center;}
+
+        .nav-btn { margin-top: 45px; padding: 35px; background: #555; color: white; border: none; border-radius: 30px; cursor: pointer; font-size: 28px; width: 100%; font-weight: bold; box-shadow: 0 8px 0 #333;}
+        .nav-btn:active { transform: translateY(6px); box-shadow: none;}
+        .back-btn { background: #e0e0e0; color: #333; margin-bottom: 35px; padding: 25px 35px; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; display: inline-block; font-size: 24px;}
+        
+        /* Pasek Postępu */
+        .progress-container { width: 100%; background-color: #c5cae9; border-radius: 20px; margin-bottom: 45px; height: 24px; overflow: hidden; }
+        .progress-bar { height: 100%; background-color: #3f51b5; width: 0%; transition: width 0.4s ease; }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    
+    <div id="menu-screen" class="section-view">
+        <h1>🇬🇧 Angielski:<br>Sztuka i Wynalazki</h1>
+        
+        <div class="menu-grid">
+            <button class="btn-menu bg-theory" onclick="showSection('theory')">
+                <div class="icon">🎧</div>
+                <div>Lekcje Audio<br><small style="font-size: 22px; font-weight: normal;">Posłuchaj wymowy słówek</small></div>
+            </button>
+
+            <button class="btn-menu bg-test" onclick="startQuiz()">
+                <div class="icon">⌨️</div>
+                <div>TRENING PISANIA (31 pytań)<br><small style="font-size: 22px; font-weight: normal;">Wpisz poprawnie z klawiatury</small></div>
+            </button>
+        </div>
+
+        <button class="nav-btn" onclick="window.history.back()" style="margin-top:60px;">🏠 Wróć do Pulpitu</button>
+    </div>
+
+    <div id="theory-screen" class="section-view hidden">
+        <button class="back-btn" onclick="showSection('menu')">⬅ Wróć do Menu</button>
+        <h2 style="text-align: center; color: #283593; font-size: 36px;">Wykłady Audio (Słuchaj uważnie)</h2>
+
+        <div class="theory-card">
+            <h3>1. Słowotwórstwo (Czasownik i Rzeczownik)</h3>
+            <button class="btn-audio" onclick="speak('Lekcja pierwsza. Zwróć uwagę na pary słów. Create, to znaczy tworzyć. Creation, to dzieło. Design, to projektować, albo projekt. Discover, to odkryć. Discovery, to odkrycie. Exhibit, to wystawiać. Exhibition, to wystawa. Improve, to polepszyć. Improvement, to ulepszenie. Install, to zainstalować. Installation, to instalacja. Invent, to wynaleźć. Invention, to wynalazek. Produce, to produkować. Production, to produkcja.')">
+                📢 Odtwórz Lekcję 1
+            </button>
+        </div>
+
+        <div class="theory-card">
+            <h3>2. Na wystawie i Sztuki Wizualne</h3>
+            <button class="btn-audio" onclick="speak('Lekcja druga. Na wystawie. Model, to model. Painting, to obraz. Photograph, to zdjęcie. Sculpture, to rzeźba. Treasure, to skarb. Sztuki wizualne: Architect, to architekt. Architecture, to architektura. Art gallery, to galeria sztuki. Fashion design, to projektowanie mody.')">
+                📢 Odtwórz Lekcję 2
+            </button>
+        </div>
+
+        <div class="theory-card">
+            <h3>3. Reagowanie (Okrzyki)</h3>
+            <button class="btn-audio" onclick="speak('Lekcja trzecia. Emocje i okrzyki. How amazing, znaczy: Ale niezwykłe! How awful, znaczy: Ale to straszne! How cool, to: Ale fajne! What a bad idea, to: Co za beznadziejny pomysł! What a great achievement, to: Cóż za wspaniałe osiągnięcie! What an amazing idea, to: Ale świetny pomysł!')">
+                📢 Odtwórz Lekcję 3
+            </button>
+        </div>
+    </div>
+
+    <div id="test-screen" class="section-view hidden">
+        <button class="back-btn" onclick="showSection('menu')">⬅ Przerwij</button>
+        <div style="display:flex; justify-content:space-between; color:#757575; margin-bottom:20px; font-weight:bold; font-size: 26px;">
+            <span>Trening Pisowni</span>
+            <span>Słówko <span id="q-number">1</span> / 31</span>
+        </div>
+        
+        <div class="progress-container">
+            <div id="quiz-progress" class="progress-bar"></div>
+        </div>
+        
+        <div class="theory-card" style="border-left-color: #4caf50; padding: 40px;">
+            <p style="text-align: center; color: #555; font-size: 24px; margin-bottom: 10px;">Przetłumacz na angielski:</p>
+            <p id="q-text" class="quiz-question">...</p>
+            <input type="text" id="answer-input" class="typing-input" placeholder="Wpisz po angielsku..." autocomplete="off">
+            <button id="check-btn" class="nav-btn" style="background: #2e7d32;" onclick="checkTypedAnswer()">Sprawdź</button>
+        </div>
+
+        <div id="q-feedback" class="feedback-box"></div>
+        
+        <button id="next-btn" class="nav-btn hidden" onclick="nextQuestion()" style="background: #3f51b5;">Rozumiem, Następne Słówko ➡</button>
+    </div>
+
+    <div id="end-screen" class="section-view hidden">
+        <h2 style="text-align: center; font-size: 80px; margin-bottom: 20px;">🎉</h2>
+        <h2 style="text-align: center; color: #283593; font-size: 50px;">Trening zakończony!</h2>
+        <h3 id="final-score" style="text-align: center; color: #fff; font-size: 40px; background: #4caf50; padding: 40px; border-radius: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">Wynik: 0/0</h3>
+        <button class="nav-btn" onclick="showSection('menu')" style="background: #5c6bc0;">Wróć do Menu Głównego</button>
+    </div>
+
+</div>
+
+<script>
+    function showSection(id) {
+        window.speechSynthesis.cancel();
+        document.querySelectorAll('.section-view').forEach(el => el.classList.add('hidden'));
+        if(id === 'menu') document.getElementById('menu-screen').classList.remove('hidden');
+        if(id === 'theory') document.getElementById('theory-screen').classList.remove('hidden');
+        if(id === 'none') return; 
+        window.scrollTo(0,0);
+    }
+
+    function speak(text) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'pl-PL';
+        u.rate = 0.85; 
+        window.speechSynthesis.speak(u);
+    }
+
+    // Obsługa klawisza Enter
+    document.getElementById('answer-input').addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            if(!document.getElementById('check-btn').classList.contains('hidden')) {
+                checkTypedAnswer();
+            } else if(!document.getElementById('next-btn').classList.contains('hidden')) {
+                nextQuestion();
+            }
+        }
+    });
+
+    // --- BAZA SŁÓWEK DO WPISYWANIA ---
+    const questions = [
+        { q: "tworzyć", ans: ["create"], info: "tworzyć to create" },
+        { q: "dzieło, stworzenie", ans: ["creation"], info: "dzieło to creation" },
+        { q: "projektować / projekt", ans: ["design"], info: "projekt / projektować to design" },
+        { q: "odkryć", ans: ["discover"], info: "odkryć to discover" },
+        { q: "odkrycie", ans: ["discovery"], info: "odkrycie to discovery" },
+        { q: "wystawiać (np. obrazy)", ans: ["exhibit"], info: "wystawiać to exhibit" },
+        { q: "wystawa", ans: ["exhibition"], info: "wystawa to exhibition" },
+        { q: "polepszyć", ans: ["improve"], info: "polepszyć to improve" },
+        { q: "ulepszenie", ans: ["improvement"], info: "ulepszenie to improvement" },
+        { q: "zainstalować", ans: ["install"], info: "zainstalować to install" },
+        { q: "instalacja", ans: ["installation"], info: "instalacja to installation" },
+        { q: "wynaleźć", ans: ["invent"], info: "wynaleźć to invent" },
+        { q: "wynalazek", ans: ["invention"], info: "wynalazek to invention" },
+        { q: "produkować", ans: ["produce"], info: "produkować to produce" },
+        { q: "produkcja", ans: ["production"], info: "produkcja to production" },
+        
+        { q: "model", ans: ["model"], info: "model to po angielsku po prostu model" },
+        { q: "obraz", ans: ["painting"], info: "obraz (namalowany) to painting" },
+        { q: "zdjęcie", ans: ["photograph", "photo"], info: "zdjęcie to photograph (lub photo)" },
+        { q: "rzeźba", ans: ["sculpture"], info: "rzeźba to sculpture" },
+        { q: "skarb", ans: ["treasure"], info: "skarb to treasure" },
+        
+        { q: "Ale niezwykłe!", ans: ["how amazing"], info: "Ale niezwykłe! -> How amazing!" },
+        { q: "Ale to straszne!", ans: ["how awful"], info: "Ale to straszne! -> How awful!" },
+        { q: "Ale fajne!", ans: ["how cool"], info: "Ale fajne! -> How cool!" },
+        { q: "Co za beznadziejny pomysł!", ans: ["what a bad idea"], info: "Co za beznadziejny pomysł! -> What a bad idea!" },
+        { q: "Cóż za wspaniałe osiągnięcie!", ans: ["what a great achievement"], info: "Cóż za wspaniałe osiągnięcie! -> What a great achievement!" },
+        { q: "Ale świetny pomysł!", ans: ["what an amazing idea"], info: "Ale świetny pomysł! -> What an amazing idea!" },
+        
+        { q: "architekt", ans: ["architect"], info: "architekt to architect" },
+        { q: "architektura", ans: ["architecture"], info: "architektura to architecture" },
+        { q: "galeria sztuki", ans: ["art gallery"], info: "galeria sztuki to art gallery" },
+        { q: "projektowanie mody", ans: ["fashion design"], info: "projektowanie mody to fashion design" }
+    ];
+
+    let qIndex = 0;
+    let score = 0;
+    let currentQuestions = [];
+
+    // Tasowanie pytań, żeby nie uczyć się ich na pamięć w tej samej kolejności
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function startQuiz() {
+        showSection('none'); 
+        document.getElementById('test-screen').classList.remove('hidden');
+        qIndex = 0;
+        score = 0;
+        currentQuestions = shuffleArray([...questions]);
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        if(qIndex >= currentQuestions.length) {
+            document.getElementById('test-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.remove('hidden');
+            
+            const percent = Math.round(score / currentQuestions.length * 100);
+            document.getElementById('final-score').innerText = `Wynik: ${score} / ${currentQuestions.length} (${percent}%)`;
+            return;
+        }
+        
+        const q = currentQuestions[qIndex];
+        document.getElementById('q-number').innerText = qIndex + 1;
+        document.getElementById('q-text').innerText = q.q;
+        
+        const inputField = document.getElementById('answer-input');
+        inputField.value = "";
+        inputField.disabled = false;
+        
+        setTimeout(() => inputField.focus(), 100);
+        
+        const fb = document.getElementById('q-feedback');
+        fb.style.display = 'none';
+        fb.innerText = "";
+        
+        document.getElementById('check-btn').classList.remove('hidden');
+        document.getElementById('next-btn').classList.add('hidden');
+        document.getElementById('quiz-progress').style.width = ((qIndex) / currentQuestions.length * 100) + '%';
+    }
+
+    // Funkcja czyszcząca tekst z wielkich liter i znaków interpunkcyjnych (żeby wykrzykniki nie psuły oceny)
+    function normalizeText(text) {
+        return text.trim().toLowerCase().replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ");
+    }
+
+    function checkTypedAnswer() {
+        const q = currentQuestions[qIndex];
+        const inputField = document.getElementById('answer-input');
+        const userInput = normalizeText(inputField.value);
+        
+        // Jeśli pole jest puste
+        if(userInput === "") {
+            inputField.focus();
+            return;
+        }
+
+        inputField.disabled = true;
+        document.getElementById('check-btn').classList.add('hidden');
+
+        // Sprawdzamy czy znormalizowany tekst pasuje do którejś z poprawnych odpowiedzi
+        const validAnswers = q.ans.map(a => normalizeText(a));
+        const isCorrect = validAnswers.includes(userInput);
+
+        const fb = document.getElementById('q-feedback');
+        fb.style.display = 'block';
+
+        if(isCorrect) {
+            score++;
+            inputField.style.borderColor = "#4caf50";
+            inputField.style.color = "#2e7d32";
+            fb.innerHTML = `<span style="color:#2e7d32; font-size:32px;">✅ PERFECT!</span>`;
+            fb.style.borderLeftColor = "#4caf50";
+        } else {
+            inputField.style.borderColor = "#ef5350";
+            inputField.style.color = "#c62828";
+            fb.innerHTML = `<span style="color:#c62828; font-size:28px;">❌ BŁĄD!</span><br><br>Poprawna pisownia to:<br><strong style="font-size: 34px;">${q.ans[0]}</strong>`;
+            fb.style.borderLeftColor = "#f44336";
+        }
+        document.getElementById('next-btn').classList.remove('hidden');
+        document.getElementById('next-btn').focus();
+    }
+
+    function nextQuestion() {
+        const inputField = document.getElementById('answer-input');
+        inputField.style.borderColor = "#9fa8da";
+        inputField.style.color = "#1a237e";
+        
+        qIndex++;
+        loadQuestion();
+    }
+
+</script>
+
+</body>
+</html>
