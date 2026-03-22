@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia: I Wojna Światowa (Pełny Zakres)</title>
+    <style>
+        /* STYL GŁÓWNY - HISTORYCZNY BRĄZ/ZŁOTO - DOSTOSOWANY DO EKRANÓW DOTYKOWYCH */
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #fbe9e7; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding: 15px; color: #3e2723; overflow-y: auto;}
+        #container { background-color: white; padding: 30px 20px; border-radius: 25px; box-shadow: 0 10px 30px rgba(62, 39, 35, 0.2); width: 100%; max-width: 800px; border: 5px solid #5d4037; margin-bottom: 50px;}
+        h1 { margin: 10px 0 30px 0; font-size: 32px; color: #4e342e; text-align: center; line-height: 1.3; }
+        
+        .menu-grid { display: grid; grid-template-columns: 1fr; gap: 30px; width: 100%; margin-top: 20px; }
+        
+        /* GIGANTYCZNE KAFELKI DLA ŁATWEJ OBSŁUGI DOTYKOWEJ */
+        .btn-menu { border: none; padding: 35px 25px; font-size: 24px; font-weight: bold; border-radius: 25px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: flex-start; box-shadow: 0 8px 0 rgba(0,0,0,0.15); color: white; position: relative; overflow: hidden; line-height: 1.4; }
+        .btn-menu:active { transform: translateY(6px); box-shadow: none; }
+        .btn-menu .icon { font-size: 45px; margin-right: 25px; }
+        
+        .bg-theory { background: linear-gradient(45deg, #795548, #5d4037); }
+        .bg-test { background: linear-gradient(45deg, #4caf50, #2e7d32); }
+
+        .hidden { display: none !important; }
+        .section-view { width: 100%; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+        /* TEORIA */
+        .theory-card { background: #fff; border-left: 8px solid #795548; padding: 25px; margin-bottom: 35px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); text-align: left; }
+        .theory-card h3 { margin-top: 0; color: #4e342e; border-bottom: 3px solid #fbe9e7; padding-bottom: 12px; font-size: 24px;}
+        
+        .btn-audio { background-color: #8d6e63; color: white; border: none; padding: 20px 25px; border-radius: 20px; font-size: 20px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 15px; box-shadow: 0 6px 0 #5d4037; }
+        .btn-audio:active { transform: translateY(4px); box-shadow: none; }
+
+        /* QUIZ - POWIĘKSZONE PRZYCISKI I ODSTĘPY */
+        .quiz-question { font-size: 26px; font-weight: bold; margin-bottom: 30px; text-align: left; line-height: 1.5; color: #212121;}
+        .quiz-options { display: grid; gap: 20px; }
+        
+        .quiz-btn { background: #efebe9; border: 3px solid #bcaaa4; padding: 25px; border-radius: 20px; font-size: 22px; cursor: pointer; text-align: left; color: #3e2723; font-weight: bold; transition: background 0.2s; line-height: 1.4;}
+        .quiz-btn:hover { background: #d7ccc8; }
+        .quiz-btn.correct { background: #66bb6a !important; color: white !important; border-color: #2e7d32 !important; }
+        .quiz-btn.wrong { background: #ef5350 !important; color: white !important; border-color: #c62828 !important; }
+        
+        .feedback-box { background: #f5f5f5; padding: 25px; border-radius: 15px; margin-top: 30px; font-size: 22px; display: none; border-left: 8px solid #ccc; color: #212121; line-height: 1.5;}
+
+        .nav-btn { margin-top: 35px; padding: 25px; background: #555; color: white; border: none; border-radius: 25px; cursor: pointer; font-size: 22px; width: 100%; font-weight: bold; box-shadow: 0 6px 0 #333;}
+        .nav-btn:active { transform: translateY(4px); box-shadow: none;}
+        .back-btn { background: #e0e0e0; color: #333; margin-bottom: 25px; padding: 15px 25px; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; display: inline-block; font-size: 18px;}
+        
+        /* Pasek Postępu */
+        .progress-container { width: 100%; background-color: #d7ccc8; border-radius: 15px; margin-bottom: 35px; height: 16px; overflow: hidden; }
+        .progress-bar { height: 100%; background-color: #795548; width: 0%; transition: width 0.4s ease; }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    
+    <div id="menu-screen" class="section-view">
+        <h1>🌍 Historia:<br>I Wojna Światowa</h1>
+        
+        <div class="menu-grid">
+            <button class="btn-menu bg-theory" onclick="showSection('theory')">
+                <div class="icon">🎧</div>
+                <div>Lekcje Audio<br><small style="font-size: 18px; font-weight: normal;">Zrozum przyczyny i przebieg</small></div>
+            </button>
+
+            <button class="btn-menu bg-test" onclick="startQuiz()">
+                <div class="icon">📝</div>
+                <div>TEST WIEDZY (30 pytań)<br><small style="font-size: 18px; font-weight: normal;">Duże przyciski, zero stresu</small></div>
+            </button>
+        </div>
+
+        <button class="nav-btn" onclick="window.history.back()" style="margin-top:50px;">🏠 Wróć do Pulpitu</button>
+    </div>
+
+    <div id="theory-screen" class="section-view hidden">
+        <button class="back-btn" onclick="showSection('menu')">⬅ Wróć do Menu</button>
+        <h2 style="text-align: center; color: #4e342e; font-size: 28px;">Wykłady Audio (Słuchaj uważnie)</h2>
+
+        <div class="theory-card">
+            <h3>1. Świat na drodze ku wojnie</h3>
+            <button class="btn-audio" onclick="speak('Lekcja pierwsza. Droga do wojny. W Europie narastały konflikty o wpływy i kolonie[cite: 8581]. Powstały dwa wielkie sojusze. Trójprzymierze z 1882 roku, czyli państwa centralne: Niemcy, Austro-Węgry i Włochy[cite: 8612, 8613]. Drugi sojusz to trójporozumienie z 1907 roku, czyli ententa: Wielka Brytania, Francja i Rosja[cite: 8616, 8617]. Bałkany nazywano kotłem bałkańskim z powodu wielu konfliktów na tle narodowościowym i religijnym[cite: 8728, 8729]. Bezpośrednią iskrą do wojny był zamach w Sarajewie 28 czerwca 1914 roku na austriackiego następcę tronu Franciszka Ferdynanda[cite: 8774, 8775].')">
+                📢 Odtwórz Lekcję 1
+            </button>
+        </div>
+
+        <div class="theory-card">
+            <h3>2. Na frontach I wojny</h3>
+            <button class="btn-audio" onclick="speak('Lekcja druga. Na frontach. Na froncie zachodnim po bitwie nad rzeką Marną walki zamieniły się w wojnę pozycyjną[cite: 8803, 8804, 8809, 8810]. Żołnierze siedzieli w okopach i użyli nowych rodzajów broni: czołgów, samolotów i gazów bojowych[cite: 8919, 8920, 8927, 8931]. Na froncie wschodnim, na przykład pod Tannenbergiem, trwała wojna manewrowa[cite: 8898, 8899, 8910]. Na morzach Niemcy ogłosiły nieograniczoną wojnę podwodną używając U-bootów, co było powodem przystąpienia do wojny Stanów Zjednoczonych w 1917 roku[cite: 8792, 8793, 8794]. Działania wojenne na zachodzie zakończył rozejm w Compiègne [czyt: kąpjeń] 11 listopada 1918 roku[cite: 8973, 8974].')">
+                📢 Odtwórz Lekcję 2
+            </button>
+        </div>
+
+        <div class="theory-card">
+            <h3>3. Rewolucje w Rosji</h3>
+            <button class="btn-audio" onclick="speak('Lekcja trzecia. Rosja. Bieda i klęski na froncie doprowadziły w 1917 roku najpierw do rewolucji lutowej, która obaliła cara Mikołaja Drugiego[cite: 9097]. Następnie, w nocy z 24 na 25 października według ich kalendarza, wybuchła rewolucja październikowa[cite: 9135, 9137]. Do władzy doszli radykalni komuniści zwani bolszewikami, na czele z Włodzimierzem Leninem[cite: 9111, 9138, 9139]. Rosja wycofała się z wojny podpisując w 1918 roku traktat w Brześciu z państwami centralnymi[cite: 8961, 8962]. Po wojnie domowej, w 1922 roku bolszewicy utworzyli Związek Socjalistycznych Republik Sowieckich, w skrócie Z S R S[cite: 9170, 9171].')">
+                📢 Odtwórz Lekcję 3
+            </button>
+        </div>
+        
+        <div class="theory-card">
+            <h3>4. Sprawa polska</h3>
+            <button class="btn-audio" onclick="speak('Lekcja czwarta. Sprawa polska. Polacy musieli walczyć w armiach zaborców[cite: 9309, 9310]. Józef Piłsudski najpierw utworzył Kompanię Kadrową, a potem dowodził I Brygadą Legionów Polskich u boku Austrii[cite: 9313, 9332, 9333, 9334]. W 1916 r. zaborcy wydali Akt 5 listopada, obiecując mgliście Królestwo Polskie, co nagłośniło sprawę polską na świecie[cite: 9441, 9443, 9446]. Kluczowe było orędzie prezydenta USA Wilsona z 1918 roku, gdzie w punkcie 13 zażądał on niepodległej Polski z dostępem do morza[cite: 9466, 9469]. Na konferencji w Paryżu Polskę reprezentowali Roman Dmowski i Ignacy Jan Paderewski[cite: 9474, 9475, 9476]. Ostatecznie Polska odzyskała niepodległość 11 listopada 1918 r.')">
+                📢 Odtwórz Lekcję 4
+            </button>
+        </div>
+    </div>
+
+    <div id="test-screen" class="section-view hidden">
+        <button class="back-btn" onclick="showSection('menu')">⬅ Przerwij</button>
+        <div style="display:flex; justify-content:space-between; color:#757575; margin-bottom:15px; font-weight:bold; font-size: 20px;">
+            <span>Test Wyczerpujący</span>
+            <span>Pytanie <span id="q-number">1</span> / 30</span>
+        </div>
+        
+        <div class="progress-container">
+            <div id="quiz-progress" class="progress-bar"></div>
+        </div>
+        
+        <div class="theory-card" style="border-left-color: #4caf50; padding: 30px;">
+            <p id="q-text" class="quiz-question">...</p>
+        </div>
+
+        <div id="q-options" class="quiz-options"></div>
+        
+        <div id="q-feedback" class="feedback-box"></div>
+        
+        <button id="next-btn" class="nav-btn hidden" onclick="nextQuestion()" style="background: #4caf50;">Rozumiem, Następne Pytanie ➡</button>
+    </div>
+
+    <div id="end-screen" class="section-view hidden">
+        <h2 style="text-align: center; font-size: 60px; margin-bottom: 10px;">🎉</h2>
+        <h2 style="text-align: center; color: #4e342e; font-size: 36px;">Klasówka zaliczona!</h2>
+        <h3 id="final-score" style="text-align: center; color: #fff; font-size: 32px; background: #4caf50; padding: 30px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">Wynik: 0/0</h3>
+        <button class="nav-btn" onclick="showSection('menu')" style="background: #5d4037;">Wróć do Menu Głównego</button>
+    </div>
+
+</div>
+
+<script>
+    function showSection(id) {
+        window.speechSynthesis.cancel();
+        document.querySelectorAll('.section-view').forEach(el => el.classList.add('hidden'));
+        if(id === 'menu') document.getElementById('menu-screen').classList.remove('hidden');
+        if(id === 'theory') document.getElementById('theory-screen').classList.remove('hidden');
+        if(id === 'none') return; 
+        window.scrollTo(0,0);
+    }
+
+    function speak(text) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'pl-PL';
+        u.rate = 0.85; 
+        window.speechSynthesis.speak(u);
+    }
+
+    // --- BAZA PYTAŃ (Skonstruowana na bazie kluczy Nowej Ery i Filtra Agi) ---
+    const questions = [
+        { q: "Jakie państwa tworzyły zawiązane w 1882 r. trójprzymierze (państwa centralne)?", opts: ["Włochy, Niemcy, Austro-Węgry", "Wielka Brytania, Francja, Rosja", "Niemcy, Rosja, Turcja"], ans: 0, info: "Trójprzymierze (państwa centralne) to: Włochy, Niemcy i Austro-Węgry." },
+        { q: "Które z państw zawiązały w 1907 r. trójporozumienie (ententę)?", opts: ["Niemcy, Austro-Węgry i Włochy", "Francja, Niemcy, Japonia", "Wielka Brytania, Francja, Rosja"], ans: 2, info: "Trójporozumienie (ententa) to: Wielka Brytania, Francja i Rosja." },
+        { q: "Co było bezpośrednią przyczyną wybuchu I wojny światowej?", opts: ["Atak Niemiec na Francję", "Zamach w Sarajewie na arcyksięcia Franciszka Ferdynanda", "Rewolucja w Rosji"], ans: 1, info: "Bezpośrednią iskrą był zamach w Sarajewie, do którego doszło 28 czerwca 1914 roku." },
+        { q: "Przed wybuchem wojny na Bałkanach sytuacja była tak napięta, że region ten określano jako:", opts: ["Kocioł bałkański", "Trójprzymierze", "Kolebka pokoju"], ans: 0, info: "Z powodu konfliktów narodowościowych i religijnych mówiono o 'kotle bałkańskim'." },
+        { q: "W jakim państwie obalono carską władzę Mikołaja II w lutym 1917 r.?", opts: ["W Austro-Węgrzech", "W Rosji", "We Francji"], ans: 1, info: "Rewolucja lutowa z 1917 r. doprowadziła do abdykacji cara Mikołaja II w Rosji." },
+        { q: "Jaką funkcję na początku I wojny światowej pełnił Józef Piłsudski?", opts: ["Był carskim generałem", "Dowodził I Brygadą Legionów Polskich", "Był premierem polskiego rządu w Paryżu"], ans: 1, info: "Piłsudski zainicjował powstanie Kompanii Kadrowej, a potem dowodził I Brygadą Legionów Polskich." },
+        { q: "Kto stał na czele radykalnej partii bolszewickiej i przejął władzę w wyniku rewolucji październikowej?", opts: ["Aleksander Kiereński", "Włodzimierz Lenin", "Roman Dmowski"], ans: 1, info: "Na czele bolszewików stał Włodzimierz Lenin." },
+        { q: "Prowadzona przez Niemcy na morzach 'nieograniczona wojna podwodna' (ataki u-bootów na statki) spowodowała:", opts: ["Wycofanie się Wielkiej Brytanii z wojny", "Przystąpienie Stanów Zjednoczonych do wojny po stronie ententy", "Kapitulację floty rosyjskiej"], ans: 1, info: "Zatapianie statków neutralnych i pasażerskich przez U-booty oburzyło świat i wciągnęło USA do wojny w 1917 r." },
+        { q: "Który z polityków wygłosił w styczniu 1918 roku słynne 'orędzie', w którym w 13. punkcie domagał się utworzenia niepodległego państwa polskiego?", opts: ["Prezydent USA Thomas Woodrow Wilson", "Generał Józef Haller", "Cesarz Wilhelm II"], ans: 0, info: "To program pokojowy amerykańskiego prezydenta Thomasa Woodrowa Wilsona odegrał ogromną rolę dla niepodległości Polski." },
+        { q: "Jak nazywała się armia polska uformowana we Francji w 1917 r., którą dowodził generał Józef Haller?", opts: ["Legion Puławski", "Armia Czerwona", "Błękitna Armia"], ans: 2, info: "Od koloru francuskich mundurów oddziały te nazwano Błękitną Armią." },
+        { q: "Zaznacz poprawne ułożenie chronologiczne wydarzeń z frontu zachodniego:", opts: ["Rozejm w Compiègne, bitwa pod Verdun, bitwa nad Marną", "Bitwa nad Marną (1914), bitwa pod Verdun (1916), rozejm w Compiègne (1918)", "Bitwa nad Sommą, wybuch wojny, pokój w Brześciu"], ans: 1, info: "Bitwa nad Marną powstrzymała atak na Paryż w 1914 r., walki pod Verdun to rok 1916, a rozejm w Compiègne to zakończenie wojny w 1918 r." },
+        { q: "Walki na froncie zachodnim, gdzie żołnierze miesiącami siedzieli w okopach i przesuwali front jedynie o kilkaset metrów, to przykład:", opts: ["Wojny błyskawicznej", "Wojny manewrowej", "Wojny pozycyjnej"], ans: 2, info: "Brak ruchów wojsk i trwanie na silnie umocnionych pozycjach (okopach) to wojna pozycyjna." },
+        { q: "Jakiego dokumentu, wydanego 5 listopada 1916 r. przez cesarzy Niemiec i Austro-Węgier, dotyczy ten opis: 'Ziemie polskie wydarte rosyjskiemu panowaniu... postanowili utworzyć państwo samodzielne z dziedziczną monarchią'?", opts: ["Akt 5 listopada", "Traktat Wersalski", "Orędzie Wilsona"], ans: 0, info: "To Akt 5 listopada wydany przez zaborców w celu pozyskania polskich żołnierzy do swoich armii." },
+        { q: "Polska delegacja reprezentująca nasz kraj na konferencji pokojowej w Paryżu (Wersalu) składała się m.in. z:", opts: ["Józefa Piłsudskiego i Józefa Hallera", "Romana Dmowskiego i Ignacego Jana Paderewskiego", "Włodzimierza Lenina i Lwa Trockiego"], ans: 1, info: "Na konferencji w Paryżu sprawę polską świetnie bronili Roman Dmowski i Ignacy Jan Paderewski (wspierani przez Władysława Grabskiego)." },
+        { q: "Traktat pokojowy zawarty przez Rosję (bolszewików) z państwami centralnymi w 1918 r., który kończył walki na froncie wschodnim, to:", opts: ["Traktat wersalski", "Traktat w Brześciu (pokój brzeski)", "Rozejm w Compiègne"], ans: 1, info: "Po rewolucji Rosja wycofała się z wojny podpisując traktat brzeski (w Brześciu nad Bugiem)." },
+        { q: "Co charakteryzowało walki na froncie wschodnim w czasie I wojny światowej (np. bitwa pod Tannenbergiem)?", opts: ["Wojna pozycyjna (okopy)", "Wojna manewrowa", "Wojna tylko na morzu"], ans: 1, info: "W przeciwieństwie do zachodu, na rozległym froncie wschodnim toczyła się wojna manewrowa (częste przemieszczanie wojsk)." },
+        { q: "Z jakim wydarzeniem ściśle łączy się data 11 listopada 1918 r.?", opts: ["Z wybuchem rewolucji lutowej w Rosji", "Z podpisaniem rozejmu w Compiègne i odzyskaniem przez Polskę niepodległości", "Z zatopieniem statków przez u-booty"], ans: 1, info: "11 listopada to koniec wojny na zachodzie i symboliczna data odzyskania niepodległości przez Polskę." },
+        { q: "Kto stał na czele powołanej przez bolszewików złowrogiej 'Czeki' (Nadzwyczajnej Komisji do Walki z Kontrrewolucją)?", opts: ["Feliks Dzierżyński", "Mikołaj II Romanow", "Aleksander Kiereński"], ans: 0, info: "Na czele Czeki stał polski komunista Feliks Dzierżyński." },
+        { q: "Jaki był tragiczny los Polaków mieszkających pod zaborami na początku I wojny światowej w 1914 roku?", opts: ["Zostali masowo przesiedleni do Francji", "Byli wcielani do armii trzech państw zaborczych i musieli walczyć w bratobójczej walce", "Nie brali w ogóle udziału w wojnie"], ans: 1, info: "Niestety, ponad 3 miliony Polaków musiało służyć w obcych, zaborczych armiach i strzelać do siebie nawzajem." },
+        { q: "Które z wymienionych broni wprowadzono na pole bitwy po raz pierwszy podczas I wojny światowej?", opts: ["Broń palna i armaty", "Czołgi, gazy bojowe i samoloty bojowe", "Łuki i katapulty"], ans: 1, info: "Czołgi (użyte przez Brytyjczyków nad Sommą), samoloty i broń chemiczna to potworne nowości Wielkiej Wojny." },
+        { q: "Dlaczego Niemcy pod koniec 1914 roku zatrzymali ofensywę na Zachodzie i nie zdołali zająć Paryża (załamanie wojny błyskawicznej)?", opts: ["Ponieważ powstrzymała ich bitwa nad rzeką Marną", "Ponieważ użyli błędnych map", "Ponieważ Paryż skapitulował bez walki"], ans: 0, info: "Kluczowym momentem, który zamienił wojnę błyskawiczną w pozycyjną, była bitwa nad rzeką Marną." },
+        { q: "Jaką formę organizacyjną przyjęło państwo rosyjskie w 1922 roku po wygranej przez bolszewików wojnie domowej?", opts: ["Związek Socjalistycznych Republik Sowieckich (ZSRS)", "Cesarstwo Rosyjskie", "Republika Piotrogrodzka"], ans: 0, info: "W 1922 roku ogłoszono powstanie ZSRS (potocznie Związek Radziecki)." },
+        { q: "Co się wydarzyło w wyniku rewolucji październikowej (listopad 1917 wg naszego kalendarza) w Rosji?", opts: ["Obalono Rząd Tymczasowy a władzę przejęli zbrojnie bolszewicy", "Koronowano nowego cara", "Polska natychmiast odzyskała niepodległość"], ans: 0, info: "Bolszewicy obalili Rząd Tymczasowy Kiereńskiego zdobywając Pałac Zimowy w Piotrogrodzie." },
+        { q: "Co oznacza termin 'ententa' w języku polskim?", opts: ["Państwa Centralne", "Serdeczne Porozumienie", "Wielka Armia"], ans: 1, info: "Ententa to z francuskiego 'entente cordiale' czyli serdeczne porozumienie." },
+        { q: "O co głównie rywalizowały mocarstwa przed I wojną światową (w tym m.in. Niemcy, Wielka Brytania i Francja)?", opts: ["Tylko o dostęp do ropy w Ameryce", "O kolonie, nowe rynki zbytu oraz panowanie na morzach", "O dostęp do kosmosu"], ans: 1, info: "Rywalizacja o nowe kolonie w Afryce i Azji napędzała ogromny wyścig zbrojeń." },
+        { q: "Gdzie formowano polskie jednostki przy armii rosyjskiej (m.in. Legion Puławski)?", opts: ["W Krakowie", "W Puławach", "W Paryżu"], ans: 1, info: "Legion Puławski formowano w Puławach (w zaborze rosyjskim)." },
+        { q: "Po wybuchu wojny rosyjsko-japońskiej (1904-1905) wojnę zwyciężyła:", opts: ["Rosja", "Japonia", "Nikt nie zwyciężył, podpisano pakt bez warunków"], ans: 1, info: "Japonia zadała druzgocącą klęskę armii carskiej (np. rozbiła flotę rosyjską w cieśninie Cuszima)." },
+        { q: "Po czyjej stronie stanęły początkowo Legiony Polskie pod dowództwem Józefa Piłsudskiego?", opts: ["Po stronie Rosji i Ententy", "Po stronie Austro-Węgier (Państw Centralnych)", "Po stronie Francji"], ans: 1, info: "Piłsudski uważał Rosję za głównego wroga, więc Legiony walczyły początkowo u boku Austro-Węgier." },
+        { q: "Czym był tzw. 'Kryzys przysięgowy' w 1917 r.?", opts: ["Odmową złożenia przysięgi przez legionistów Piłsudskiego na wierność armiom Niemiec i Austrii", "Buntem rosyjskich żołnierzy przeciw Leninowi", "Ucieczką armii Hallera"], ans: 0, info: "Piłsudski i legioniści odmówili złożenia przysięgi, za co większość z nich uwięziono (m.in. w Magdeburgu)." },
+        { q: "Które ziemie, według zapisów traktatu wersalskiego, Polska otrzymała bez plebiscytów na zachodzie?", opts: ["Górny Śląsk i Mazury", "Wielkopolskę i Pomorze Gdańskie", "Zaolzie"], ans: 1, info: "Zgodnie z ustaleniami z Wersalu Polska odzyskała Wielkopolskę oraz Pomorze Gdańskie." }
+    ];
+
+    let qIndex = 0;
+    let score = 0;
+
+    function startQuiz() {
+        showSection('none'); 
+        document.getElementById('test-screen').classList.remove('hidden');
+        qIndex = 0;
+        score = 0;
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        if(qIndex >= questions.length) {
+            document.getElementById('test-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.remove('hidden');
+            
+            const percent = Math.round(score / questions.length * 100);
+            document.getElementById('final-score').innerText = `Wynik: ${score} / ${questions.length} (${percent}%)`;
+            return;
+        }
+        
+        const q = questions[qIndex];
+        document.getElementById('q-number').innerText = qIndex + 1;
+        document.getElementById('q-text').innerText = q.q;
+        
+        const fb = document.getElementById('q-feedback');
+        fb.style.display = 'none';
+        fb.innerText = "";
+        
+        document.getElementById('next-btn').classList.add('hidden');
+        document.getElementById('quiz-progress').style.width = ((qIndex) / questions.length * 100) + '%';
+        
+        const grid = document.getElementById('q-options');
+        grid.innerHTML = "";
+        
+        q.opts.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-btn';
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(i, btn, q.ans, q.info);
+            grid.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(selected, btn, correct, info) {
+        const allBtns = document.querySelectorAll('.quiz-btn');
+        allBtns.forEach(b => b.onclick = null);
+
+        const fb = document.getElementById('q-feedback');
+        fb.style.display = 'block';
+
+        if(selected === correct) {
+            btn.classList.add('correct');
+            score++;
+            fb.innerHTML = `<span style="color:#2e7d32; font-size:26px; font-weight:bold;">✅ BARDZO DOBRZE!</span><br><br>${info}`;
+            fb.style.borderLeftColor = "#4caf50";
+        } else {
+            btn.classList.add('wrong');
+            allBtns[correct].classList.add('correct');
+            fb.innerHTML = `<span style="color:#c62828; font-size:26px; font-weight:bold;">❌ BŁĄD! ZAPAMIĘTAJ:</span><br><br>${info}`;
+            fb.style.borderLeftColor = "#f44336";
+        }
+        document.getElementById('next-btn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+        qIndex++;
+        loadQuestion();
+    }
+
+</script>
+
+</body>
+</html>
