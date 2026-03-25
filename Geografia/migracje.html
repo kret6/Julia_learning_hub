@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geografia: Ludność i Migracje</title>
+    <style>
+        /* STYL GŁÓWNY - GEOGRAFICZNA ZIELEŃ - ZOPTYMALIZOWANY DLA EKRANÓW PIONOWYCH (GMFCS 4) */
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #e8f5e9; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding: 20px; color: #1b5e20; overflow-y: auto;}
+        #container { background-color: white; padding: 40px 30px; border-radius: 30px; box-shadow: 0 10px 40px rgba(27, 94, 32, 0.2); width: 100%; max-width: 900px; border: 6px solid #4caf50; margin-bottom: 60px;}
+        h1 { margin: 10px 0 40px 0; font-size: 40px; color: #2e7d32; text-align: center; line-height: 1.3; font-weight: 900;}
+        
+        .menu-grid { display: grid; grid-template-columns: 1fr; gap: 40px; width: 100%; margin-top: 30px; }
+        
+        /* GIGANTYCZNE KAFELKI MENU */
+        .btn-menu { border: none; padding: 45px 30px; font-size: 32px; font-weight: bold; border-radius: 30px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: flex-start; box-shadow: 0 10px 0 rgba(0,0,0,0.15); color: white; position: relative; overflow: hidden; line-height: 1.4; text-align: left;}
+        .btn-menu:active { transform: translateY(8px); box-shadow: none; }
+        .btn-menu .icon { font-size: 60px; margin-right: 35px; }
+        
+        .bg-theory { background: linear-gradient(45deg, #66bb6a, #388e3c); }
+        .bg-test { background: linear-gradient(45deg, #ffa726, #f57c00); }
+
+        .hidden { display: none !important; }
+        .section-view { width: 100%; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+        /* TEORIA - DUŻA CZCIONKA I ODSTĘPY */
+        .theory-card { background: #fff; border-left: 10px solid #66bb6a; padding: 35px; margin-bottom: 45px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: left; }
+        .theory-card h3 { margin-top: 0; color: #2e7d32; border-bottom: 4px solid #e8f5e9; padding-bottom: 15px; font-size: 34px;}
+        
+        .btn-audio { background-color: #81c784; color: white; border: none; padding: 30px 35px; border-radius: 25px; font-size: 26px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; box-shadow: 0 8px 0 #388e3c; text-align: center; display: block;}
+        .btn-audio:active { transform: translateY(6px); box-shadow: none; }
+
+        /* QUIZ (A, B, C) - BEZPIECZNE STREFY DOTYKU */
+        .quiz-question { font-size: 34px; font-weight: 900; margin-bottom: 40px; text-align: left; line-height: 1.4; color: #212121;}
+        .quiz-options { display: grid; gap: 30px; }
+        
+        .quiz-btn { background: #fff8e1; border: 4px solid #ffe082; padding: 35px; border-radius: 25px; font-size: 28px; cursor: pointer; text-align: left; color: #e65100; font-weight: bold; transition: background 0.2s; line-height: 1.4;}
+        .quiz-btn:active { background: #ffecb3; transform: scale(0.98);}
+        .quiz-btn.correct { background: #66bb6a !important; color: white !important; border-color: #2e7d32 !important; }
+        .quiz-btn.wrong { background: #ef5350 !important; color: white !important; border-color: #c62828 !important; }
+        
+        .feedback-box { background: #f5f5f5; padding: 35px; border-radius: 20px; margin-top: 40px; font-size: 28px; display: none; border-left: 10px solid #ccc; color: #212121; line-height: 1.5; font-weight: bold;}
+
+        .nav-btn { margin-top: 45px; padding: 35px; background: #555; color: white; border: none; border-radius: 30px; cursor: pointer; font-size: 28px; width: 100%; font-weight: bold; box-shadow: 0 8px 0 #333;}
+        .nav-btn:active { transform: translateY(6px); box-shadow: none;}
+        .back-btn { background: #e0e0e0; color: #333; margin-bottom: 35px; padding: 25px 35px; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; display: inline-block; font-size: 24px;}
+        
+        /* Pasek Postępu */
+        .progress-container { width: 100%; background-color: #c8e6c9; border-radius: 20px; margin-bottom: 45px; height: 24px; overflow: hidden; }
+        .progress-bar { height: 100%; background-color: #4caf50; width: 0%; transition: width 0.4s ease; }
+
+        /* ========================================= */
+        /* OPTYMALIZACJA DLA EKRANÓW PIONOWYCH (TEL) */
+        /* ========================================= */
+        @media (max-width: 600px) {
+            #container { padding: 20px 15px; border-width: 4px; border-radius: 20px;}
+            h1 { font-size: 32px; margin-bottom: 25px;}
+            
+            /* Przebudowa menu głównego - ikona nad tekstem */
+            .btn-menu { flex-direction: column; text-align: center; justify-content: center; padding: 30px 15px; gap: 15px;}
+            .btn-menu .icon { margin-right: 0; font-size: 55px; }
+            .btn-menu div { font-size: 26px; }
+            .btn-menu small { font-size: 18px !important; }
+
+            /* Mniejsze paddingi w kartach nauki */
+            .theory-card { padding: 20px; margin-bottom: 25px; border-left-width: 6px;}
+            .theory-card h3 { font-size: 26px; }
+            .btn-audio { width: 100%; padding: 20px; font-size: 24px; }
+
+            /* Pytania i opcje zoptymalizowane pod wąski ekran */
+            .quiz-question { font-size: 26px; margin-bottom: 25px; }
+            .quiz-btn { font-size: 22px; padding: 25px 20px; border-radius: 20px; border-width: 3px; }
+            
+            .feedback-box { font-size: 22px; padding: 20px; }
+            .back-btn { font-size: 18px; padding: 15px 25px; width: 100%; text-align: center; margin-bottom: 25px;}
+            .nav-btn { font-size: 22px; padding: 25px; border-radius: 20px;}
+            
+            .progress-container { height: 16px; margin-bottom: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    
+    <div id="menu-screen" class="section-view">
+        <h1>🇵🇱 Geografia:<br>Ludność i Migracje</h1>
+        
+        <div class="menu-grid">
+            <button class="btn-menu bg-theory" onclick="showSection('theory')">
+                <div class="icon">🎧</div>
+                <div>Lekcje Audio<br><small style="font-size: 22px; font-weight: normal;">Posłuchaj wykładów Hani</small></div>
+            </button>
+
+            <button class="btn-menu bg-test" onclick="startQuiz()">
+                <div class="icon">📝</div>
+                <div>TEST WIEDZY (15 pytań)<br><small style="font-size: 22px; font-weight: normal;">Duże przyciski (A, B, C)</small></div>
+            </button>
+        </div>
+
+        <button class="nav-btn" onclick="window.history.back()" style="margin-top:60px;">🏠 Wróć do Pulpitu</button>
+    </div>
+
+    <div id="theory-screen" class="section-view hidden">
+        <button class="back-btn" onclick="showSection('menu')">⬅ Wróć do Menu</button>
+        <h2 style="text-align: center; color: #2e7d32; font-size: 36px;">Wykłady Audio (Słuchaj uważnie)</h2>
+
+        <div class="theory-card">
+            <h3>1. Rozmieszczenie ludności</h3>
+            <button class="btn-audio" onclick="speak('Zacznijmy od rozmieszczenia ludności w Polsce. Średnia gęstość zaludnienia w naszym kraju w dwa tysiące dwudziestym pierwszym roku wynosiła sto dwadzieścia jeden osób na jeden kilometr kwadratowy. Najgęściej zaludnione jest województwo śląskie, gdzie przypada aż trzysta pięćdziesiąt siedem osób na kilometr kwadratowy. Z kolei najrzadziej zaludnione są województwa warmińsko-mazurskie i podlaskie. Na to, gdzie mieszkają ludzie, wpływają czynniki przyrodnicze, społeczno-ekonomiczne oraz historyczne, takie jak zmiany granic po drugiej wojnie światowej.')">
+                📢 Odtwórz Lekcję 1
+            </button>
+        </div>
+
+        <div class="theory-card">
+            <h3>2. Rodzaje migracji</h3>
+            <button class="btn-audio" onclick="speak('Migracje to zmiany miejsca zamieszkania. Imigracja to napływ ludności, a emigracja to wyjazd. Kiedyś w Polsce ludzie przenosili się ze wsi do miast. Od początku dwudziestego pierwszego wieku przeważa wyprowadzka z dużych miast na spokojniejsze tereny podmiejskie. Polacy emigrują za granicę głównie ze względów finansowych. Poza Polską żyje ponad 18 milionów osób polskiego pochodzenia, czyli Polonia. Największym ośrodkiem Polonii jest Chicago w USA. Do Polski z kolei najczęściej imigrują obywatele Ukrainy.')">
+                📢 Odtwórz Lekcję 2
+            </button>
+        </div>
+
+        <div class="theory-card">
+            <h3>3. Skutki migracji zagranicznych</h3>
+            <button class="btn-audio" onclick="speak('Pozytywne skutki imigracji do Polski to wypełnianie luk na rynku pracy, na przykład w rolnictwie czy budownictwie. Z kolei negatywne skutki emigracji Polaków to niedobór wykwalifikowanych pracowników, ponieważ specjaliści wyjeżdżają. To także szybsze starzenie się społeczeństwa, straty finansowe państwa, które zapłaciło za edukację tych specjalistów, a także rozłąka z rodziną.')">
+                📢 Odtwórz Lekcję 3
+            </button>
+        </div>
+
+        <div class="theory-card">
+            <h3>4. Wzory i wpływ na wieś</h3>
+            <button class="btn-audio" onclick="speak('Ważne pojęcia! Saldo migracji to różnica między imigracją a emigracją. Przyrost rzeczywisty to przyrost naturalny plus saldo migracji. Podajemy go w promilach. Jak migracje wpływają na wieś? Wsie oddalone od miast mają ujemne saldo migracji i ich społeczeństwo się starzeje, bo młodzi wyjeżdżają. Wsie blisko miast mają dodatnie saldo, bo wprowadzają się tam ludzie z miast.')">
+                📢 Odtwórz Lekcję 4
+            </button>
+        </div>
+    </div>
+
+    <div id="test-screen" class="section-view hidden">
+        <button class="back-btn" onclick="showSection('menu')">⬅ Przerwij</button>
+        <div style="display:flex; justify-content:space-between; color:#757575; margin-bottom:20px; font-weight:bold; font-size: 26px;">
+            <span>Quiz Geograficzny</span>
+            <span>Pytanie <span id="q-number">1</span> / 15</span>
+        </div>
+        
+        <div class="progress-container">
+            <div id="quiz-progress" class="progress-bar"></div>
+        </div>
+        
+        <div class="theory-card" style="border-left-color: #f57c00; padding: 40px;">
+            <p id="q-text" class="quiz-question">...</p>
+        </div>
+
+        <div id="q-options" class="quiz-options"></div>
+        
+        <div id="q-feedback" class="feedback-box"></div>
+        
+        <button id="next-btn" class="nav-btn hidden" onclick="nextQuestion()" style="background: #f57c00;">Rozumiem, Następne Pytanie ➡</button>
+    </div>
+
+    <div id="end-screen" class="section-view hidden">
+        <h2 style="text-align: center; font-size: 80px; margin-bottom: 20px;">🎉</h2>
+        <h2 style="text-align: center; color: #2e7d32; font-size: 50px;">Quiz zakończony!</h2>
+        <h3 id="final-score" style="text-align: center; color: #fff; font-size: 40px; background: #f57c00; padding: 40px; border-radius: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">Wynik: 0/0</h3>
+        <button class="nav-btn" onclick="showSection('menu')" style="background: #66bb6a;">Wróć do Menu Głównego</button>
+    </div>
+
+</div>
+
+<script>
+    function showSection(id) {
+        window.speechSynthesis.cancel();
+        document.querySelectorAll('.section-view').forEach(el => el.classList.add('hidden'));
+        if(id === 'menu') document.getElementById('menu-screen').classList.remove('hidden');
+        if(id === 'theory') document.getElementById('theory-screen').classList.remove('hidden');
+        if(id === 'none') return; 
+        window.scrollTo(0,0);
+    }
+
+    // TTS do awaryjnego odtwarzania, jeśli nie podepniesz ElevenLabs
+    function speak(text) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'pl-PL';
+        u.rate = 0.85; 
+        window.speechSynthesis.speak(u);
+    }
+
+    // --- BAZA PYTAŃ (Pobrana prosto z transkryptu) ---
+    const questions = [
+        {
+            q: "Ile wynosiła średnia gęstość zaludnienia w Polsce w 2021 roku?",
+            opts: ["57 osób na kilometr kwadratowy", "121 osób na kilometr kwadratowy", "357 osób na kilometr kwadratowy"],
+            ans: 1,
+            info: "Prawidłowa odpowiedź to B: 121 osób na kilometr kwadratowy."
+        },
+        {
+            q: "Które polskie województwo odznacza się największą gęstością zaludnienia?",
+            opts: ["Województwo śląskie", "Województwo mazowieckie", "Województwo podlaskie"],
+            ans: 0,
+            info: "Województwo śląskie, ze względu na duży rozwój przemysłu."
+        },
+        {
+            q: "Z jakiego powodu po drugiej wojnie światowej nastąpiły ogromne przemieszczenia ludności w Polsce?",
+            opts: ["Z powodu nagłej zmiany klimatu", "Z powodu odkrycia nowych złóż surowców", "Z powodu zmiany granic państwowych"],
+            ans: 2,
+            info: "Zmiana granic państwowych była głównym powodem przymusowych przesiedleń."
+        },
+        {
+            q: "Jak nazywamy napływ ludności na dane terytorium?",
+            opts: ["Emigracja", "Imigracja", "Saldo migracji"],
+            ans: 1,
+            info: "Imigracja oznacza przyjazd i osiedlenie się w nowym miejscu."
+        },
+        {
+            q: "Skąd dokąd najczęściej przenoszą się ludzie w Polsce na początku dwudziestego pierwszego wieku?",
+            opts: ["Ze wsi do dużych miast", "Z miast na tereny podmiejskie", "Z południa na północ kraju"],
+            ans: 1,
+            info: "W XXI wieku przeważa wyprowadzka z miast na tereny podmiejskie."
+        },
+        {
+            q: "Z jakiego powodu Polacy najczęściej wyjeżdżają obecnie za granicę?",
+            opts: ["Ze względów finansowych, czyli chęci lepszego zarobku", "Ze względu na prześladowania polityczne", "Ze względu na chęć nauki nowych języków"],
+            ans: 0,
+            info: "Polacy wyjeżdżają głównie ze względów finansowych."
+        },
+        {
+            q: "Gdzie znajduje się największe na świecie skupisko Polonii?",
+            opts: ["W Londynie w Wielkiej Brytanii", "W Berlinie w Niemczech", "W Chicago w Stanach Zjednoczonych"],
+            ans: 2,
+            info: "W Chicago żyje około miliona osób polskiego pochodzenia."
+        },
+        {
+            q: "Kto obecnie stanowi największą grupę imigrantów, którzy osiedlają się w Polsce?",
+            opts: ["Obywatele Niemiec", "Obywatele Ukrainy", "Obywatele Wielkiej Brytanii"],
+            ans: 1,
+            info: "Największą grupę imigrantów w Polsce stanowią obywatele Ukrainy."
+        },
+        {
+            q: "Co jest jednym z pozytywnych skutków napływu imigrantów do Polski?",
+            opts: ["Wypełnianie luk na rynku pracy, na przykład w budownictwie", "Zwiększenie liczby tak zwanych eurosierot", "Niedobór wykwalifikowanych pracowników"],
+            ans: 0,
+            info: "Imigranci wypełniają luki na rynku pracy, dzięki czemu polskie firmy mogą funkcjonować."
+        },
+        {
+            q: "Jak nazywa się różnica matematyczna pomiędzy imigracją, a emigracją?",
+            opts: ["Przyrost naturalny", "Gęstość zaludnienia", "Saldo migracji"],
+            ans: 2,
+            info: "Różnica ta to Saldo migracji."
+        },
+        {
+            q: "Jak obliczamy przyrost rzeczywisty w danym państwie?",
+            opts: ["Dodając przyrost naturalny do salda migracji", "Odejmując liczbę zgonów od liczby emigrantów", "Mnożąc gęstość zaludnienia przez powierzchnię kraju"],
+            ans: 0,
+            info: "Przyrost rzeczywisty to przyrost naturalny dodany do salda migracji."
+        },
+        {
+            q: "W jakich jednostkach najczęściej wyrażamy współczynnik przyrostu rzeczywistego na tysiąc mieszkańców?",
+            opts: ["W procentach", "W promilach", "W stopniach"],
+            ans: 1,
+            info: "Współczynnik ten podajemy w przeliczeniu na 1000 osób, czyli w promilach."
+        },
+        {
+            q: "Co się dzieje ze społeczeństwem na wsiach oddalonych od miast, gdy młodzi ludzie wyjeżdżają?",
+            opts: ["Społeczeństwo to gwałtownie młodnieje", "Społeczeństwo to się starzeje", "Struktura wieku nie ulega zmianie"],
+            ans: 1,
+            info: "Z powodu wyjazdów młodych ludzi, społeczeństwo takich wsi się starzeje."
+        },
+        {
+            q: "Który z tych czynników jest negatywnym skutkiem wyjazdów Polaków za granicę?",
+            opts: ["Poprawa sytuacji materialnej rodzin w Polsce", "Podniesienie znajomości języków obcych", "Straty państwa z powodu wyjazdu wykształconych specjalistów, na przykład lekarzy"],
+            ans: 2,
+            info: "Polska ponosi straty państwa z powodu wyjazdu specjalistów, których wykształcenie kosztowało."
+        },
+        {
+            q: "Jakie saldo migracji występuje na terenach wiejskich położonych tuż obok dużych miast?",
+            opts: ["Dodatnie saldo migracji", "Ujemne saldo migracji", "Zerowe saldo migracji"],
+            ans: 0,
+            info: "Występuje tam dodatnie saldo migracji, ponieważ wprowadza się tam wielu ludzi uciekających z centrów miast."
+        }
+    ];
+
+    let qIndex = 0;
+    let score = 0;
+
+    function startQuiz() {
+        showSection('none'); 
+        document.getElementById('test-screen').classList.remove('hidden');
+        qIndex = 0;
+        score = 0;
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        if(qIndex >= questions.length) {
+            document.getElementById('test-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.remove('hidden');
+            
+            const percent = Math.round(score / questions.length * 100);
+            document.getElementById('final-score').innerText = `Wynik: ${score} / ${questions.length} (${percent}%)`;
+            return;
+        }
+        
+        const q = questions[qIndex];
+        document.getElementById('q-number').innerText = qIndex + 1;
+        document.getElementById('q-text').innerText = q.q;
+        
+        const fb = document.getElementById('q-feedback');
+        fb.style.display = 'none';
+        fb.innerText = "";
+        
+        document.getElementById('next-btn').classList.add('hidden');
+        document.getElementById('quiz-progress').style.width = ((qIndex) / questions.length * 100) + '%';
+        
+        const grid = document.getElementById('q-options');
+        grid.innerHTML = "";
+        
+        // Dynamiczne generowanie przycisków
+        const letters = ["A.", "B.", "C."];
+        q.opts.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-btn';
+            btn.innerHTML = `<strong>${letters[i]}</strong> ${opt}`;
+            btn.onclick = () => checkAnswer(i, btn, q.ans, q.info);
+            grid.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(selected, btn, correct, info) {
+        const allBtns = document.querySelectorAll('.quiz-btn');
+        allBtns.forEach(b => b.onclick = null);
+
+        const fb = document.getElementById('q-feedback');
+        fb.style.display = 'block';
+
+        if(selected === correct) {
+            btn.classList.add('correct');
+            score++;
+            fb.innerHTML = `<span style="color:#2e7d32; font-size:32px; font-weight:900;">✅ BARDZO DOBRZE!</span><br><br>${info}`;
+            fb.style.borderLeftColor = "#4caf50";
+        } else {
+            btn.classList.add('wrong');
+            allBtns[correct].classList.add('correct');
+            fb.innerHTML = `<span style="color:#c62828; font-size:32px; font-weight:900;">❌ BŁĄD!</span><br><br>${info}`;
+            fb.style.borderLeftColor = "#f44336";
+        }
+        document.getElementById('next-btn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+        qIndex++;
+        loadQuestion();
+    }
+
+</script>
+
+</body>
+</html>
