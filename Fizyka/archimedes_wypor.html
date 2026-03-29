@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fizyka: Prawo Archimedesa</title>
+    <style>
+        /* STYL GŁÓWNY - FIZYCZNY BŁĘKIT (ZOPTYMALIZOWANY POD GMFCS 4 I PIONOWE EKRANY) */
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #e3f2fd; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding: 20px; color: #0d47a1; overflow-y: auto;}
+        #container { background-color: white; padding: 40px 30px; border-radius: 30px; box-shadow: 0 10px 40px rgba(13, 71, 161, 0.2); width: 100%; max-width: 900px; border: 6px solid #1976d2; margin-bottom: 60px;}
+        h1 { margin: 10px 0 40px 0; font-size: 40px; color: #1565c0; text-align: center; font-weight: 900;}
+        
+        .menu-grid { display: grid; grid-template-columns: 1fr; gap: 40px; width: 100%; margin-top: 30px; }
+        
+        .btn-menu { border: none; padding: 45px 30px; font-size: 32px; font-weight: bold; border-radius: 30px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: flex-start; box-shadow: 0 10px 0 rgba(0,0,0,0.15); color: white; position: relative; overflow: hidden; line-height: 1.4; text-align: left;}
+        .btn-menu:active { transform: translateY(8px); box-shadow: none; }
+        .btn-menu .icon { font-size: 60px; margin-right: 35px; }
+        
+        .bg-theory { background: linear-gradient(45deg, #2196f3, #1565c0); }
+        .bg-test { background: linear-gradient(45deg, #4caf50, #2e7d32); }
+
+        .hidden { display: none !important; }
+        .section-view { width: 100%; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+        /* TEORIA */
+        .theory-card { background: #fff; border-left: 10px solid #1976d2; padding: 35px; margin-bottom: 45px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: left; }
+        .theory-card h3 { margin-top: 0; color: #0d47a1; border-bottom: 4px solid #e3f2fd; padding-bottom: 15px; font-size: 34px;}
+        .theory-img { width: 100%; max-width: 500px; display: block; margin: 25px auto; border-radius: 15px; border: 2px solid #bbdefb; box-shadow: 0 5px 15px rgba(0,0,0,0.1);}
+        
+        .btn-audio { background-color: #42a5f5; color: white; border: none; padding: 30px 35px; border-radius: 25px; font-size: 26px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; box-shadow: 0 8px 0 #1565c0; text-align: center; display: block;}
+        .btn-audio:active { transform: translateY(6px); box-shadow: none; }
+
+        /* QUIZ */
+        .quiz-question { font-size: 34px; font-weight: 900; margin-bottom: 40px; text-align: left; line-height: 1.4; color: #212121;}
+        .quiz-options { display: grid; gap: 30px; }
+        
+        .quiz-btn { background: #e3f2fd; border: 4px solid #90caf9; padding: 35px; border-radius: 25px; font-size: 28px; cursor: pointer; text-align: left; color: #0d47a1; font-weight: bold; transition: background 0.2s; line-height: 1.4;}
+        .quiz-btn:active { background: #bbdefb; transform: scale(0.98);}
+        .quiz-btn.correct { background: #66bb6a !important; color: white !important; border-color: #2e7d32 !important; }
+        .quiz-btn.wrong { background: #ef5350 !important; color: white !important; border-color: #c62828 !important; }
+        
+        .feedback-box { background: #f5f5f5; padding: 35px; border-radius: 20px; margin-top: 40px; font-size: 28px; display: none; border-left: 10px solid #ccc; color: #212121; line-height: 1.5; font-weight: bold;}
+
+        .nav-btn { margin-top: 45px; padding: 35px; background: #555; color: white; border: none; border-radius: 30px; cursor: pointer; font-size: 28px; width: 100%; font-weight: bold; box-shadow: 0 8px 0 #333;}
+        .nav-btn:active { transform: translateY(6px); box-shadow: none;}
+        .back-btn { background: #e0e0e0; color: #333; margin-bottom: 35px; padding: 25px 35px; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; display: inline-block; font-size: 24px;}
+        
+        .progress-container { width: 100%; background-color: #bbdefb; border-radius: 20px; margin-bottom: 45px; height: 24px; overflow: hidden; }
+        .progress-bar { height: 100%; background-color: #1976d2; width: 0%; transition: width 0.4s ease; }
+
+        /* OPTYMALIZACJA PIONOWA (TELEFONY) */
+        @media (max-width: 600px) {
+            #container { padding: 20px 15px; border-width: 4px; border-radius: 20px;}
+            h1 { font-size: 32px; margin-bottom: 25px;}
+            
+            .btn-menu { flex-direction: column; text-align: center; justify-content: center; padding: 30px 15px; gap: 15px;}
+            .btn-menu .icon { margin-right: 0; font-size: 55px; }
+            .btn-menu div { font-size: 26px; }
+            .btn-menu small { font-size: 18px !important; }
+
+            .theory-card { padding: 20px; margin-bottom: 25px; border-left-width: 6px;}
+            .theory-card h3 { font-size: 26px; }
+            .btn-audio { width: 100%; padding: 20px; font-size: 24px; }
+
+            .quiz-question { font-size: 26px; margin-bottom: 25px; }
+            .quiz-btn { font-size: 22px; padding: 25px 20px; border-radius: 20px; border-width: 3px; }
+            
+            .feedback-box { font-size: 22px; padding: 20px; }
+            .back-btn { font-size: 18px; padding: 15px 25px; width: 100%; text-align: center; margin-bottom: 25px;}
+            .nav-btn { font-size: 22px; padding: 25px; border-radius: 20px;}
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    
+    <div id="menu-screen" class="section-view">
+        <h1>⚓ Prawo Archimedesa</h1>
+        
+        <div class="menu-grid">
+            <button class="btn-menu bg-theory" onclick="showSection('theory')">
+                <div class="icon">📖</div>
+                <div>Lekcje i Rymowanka<br><small style="font-size: 22px; font-weight: normal;">Posłuchaj i zrozum siły</small></div>
+            </button>
+
+            <button class="btn-menu bg-test" onclick="startQuiz()">
+                <div class="icon">📝</div>
+                <div>TEST WIEDZY (8 pytań)<br><small style="font-size: 22px; font-weight: normal;">Błędy wracają do puli!</small></div>
+            </button>
+        </div>
+
+        <button class="nav-btn" onclick="window.history.back()" style="margin-top:60px;">🏠 Wróć do Pulpitu</button>
+    </div>
+
+    <div id="theory-screen" class="section-view hidden">
+        <button class="back-btn" onclick="showSection('menu')">⬅ Wróć do Menu</button>
+        <h2 style="text-align: center; color: #1565c0; font-size: 36px;">Wykłady Audio</h2>
+
+        <div class="theory-card">
+            <h3>1. Pozorna utrata ciężaru</h3>
+            <img src="archimedes_sily.jpg" class="theory-img" onerror="this.style.display='none'" alt="Siłomierz w wodzie">
+            <button class="btn-audio" onclick="speak('Lekcja pierwsza. Spójrz na obrazek z siłomierzem. Kiedy wkładamy ciężarek do wody, siłomierz pokazuje mniejszą wartość. Dlaczego? Bo woda pomaga nam go trzymać! Pcha go do góry. Zjawisko to nazywamy pozorną utratą ciężaru. Ciało zanurzone w cieczy traci na ciężarze dokładnie tyle, ile waży wyparta przez to ciało woda. To właśnie jest siła wyporu.')">
+                📢 Odtwórz Lekcję 1
+            </button>
+        </div>
+
+        <div class="theory-card">
+            <h3>2. Warunki pływania ciał</h3>
+            <img src="plywanie_warunki.jpg" class="theory-img" onerror="this.style.display='none'" alt="Warunki pływania">
+            <button class="btn-audio" onclick="speak('Lekcja druga. Spójrz na wektory, czyli strzałki sił na rysunku. Czerwona strzałka w górę to siła wyporu. Zielona w dół to siła ciężkości, czyli ciężar ciała. Kto wygra? Jeżeli zielona strzałka w dół jest dłuższa, to ciało opadnie na dno i zatonie. Jeżeli czerwona strzałka w górę jest dłuższa, to ciało wypłynie na powierzchnię. Jeśli obie są równe, ciało będzie swobodnie pływać całkowicie zanurzone.')">
+                📢 Odtwórz Lekcję 2
+            </button>
+        </div>
+
+        <div class="theory-card">
+            <h3>3. Wesoła Rymowanka</h3>
+            <button class="btn-audio" onclick="speak('Gdy Juleczka do wanny wskakuje, To woda zaraz się buntuje. Ucieka na boki, poziom jej rośnie, A Juleczka krzyczy radośnie: Ojej! To moja objętość cała, tę wodę właśnie wypychała! Ciężar tej wody wypartej w bok, to siła wyporu. Ona w górę Cię pcha, lekkość Ci daje. Im większe ciało zanurzone, tym mocniej w górę wypchnięte zostanie!')">
+                🎵 Odtwórz Rymowankę
+            </button>
+        </div>
+    </div>
+
+    <div id="test-screen" class="section-view hidden">
+        <button class="back-btn" onclick="showSection('menu')">⬅ Przerwij</button>
+        <div style="display:flex; justify-content:space-between; color:#888; margin-bottom:20px; font-weight:bold; font-size: 26px;">
+            <span>Trening Wyporu</span>
+            <span>W kolejce: <span id="q-number">8</span></span>
+        </div>
+        
+        <div class="progress-container">
+            <div id="quiz-progress" class="progress-bar"></div>
+        </div>
+        
+        <div class="theory-card" style="border-left-color: #4caf50; padding: 40px;">
+            <p id="q-text" class="quiz-question">...</p>
+        </div>
+
+        <div id="q-options" class="quiz-options"></div>
+        
+        <div id="q-feedback" class="feedback-box"></div>
+        
+        <button id="next-btn" class="nav-btn hidden" onclick="nextQuestion()" style="background: #2e7d32;">Rozumiem, Następne Pytanie ➡</button>
+    </div>
+
+    <div id="end-screen" class="section-view hidden">
+        <h2 style="text-align: center; font-size: 80px; margin-bottom: 20px;">🎉</h2>
+        <h2 style="text-align: center; color: #1565c0; font-size: 50px;">Znakomicie!</h2>
+        <h3 style="text-align: center; color: #fff; font-size: 32px; background: #4caf50; padding: 40px; border-radius: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">Wszystko opanowane w 100%!</h3>
+        <button class="nav-btn" onclick="showSection('menu')" style="background: #1976d2;">Wróć do Menu Głównego</button>
+    </div>
+
+</div>
+
+<script>
+    function showSection(id) {
+        window.speechSynthesis.cancel();
+        document.querySelectorAll('.section-view').forEach(el => el.classList.add('hidden'));
+        if(id === 'menu') document.getElementById('menu-screen').classList.remove('hidden');
+        if(id === 'theory') document.getElementById('theory-screen').classList.remove('hidden');
+        if(id === 'test') document.getElementById('test-screen').classList.remove('hidden');
+        if(id === 'none') return; 
+        window.scrollTo(0,0);
+    }
+
+    function speak(text) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'pl-PL';
+        u.rate = 0.8; // ZWOLNIONE TEMPO
+        window.speechSynthesis.speak(u);
+    }
+
+    const questions = [
+        {
+            q: "Od czego zależy wartość siły wyporu działającej na ciało zanurzone w wodzie?",
+            opts: ["Od gęstości cieczy i objętości zanurzonej części ciała.", "Od materiału, z którego wykonane jest ciało.", "Od głębokości (np. 1 m czy 10 m pod wodą)."],
+            ans: 0,
+            info: "Siła wyporu zależy tylko od tego, w jakiej cieczy się znajdujemy (gęstość) i ile tej cieczy wypchnęliśmy (objętość)."
+        },
+        {
+            q: "Co jest przykładem wykorzystania prawa Archimedesa w praktyce?",
+            opts: ["Samochód wyścigowy i pociąg.", "Szybowiec (który szybuje dzięki skrzydłom).", "Statek m morskimi i balon na ogrzane powietrze."],
+            ans: 2,
+            info: "Zarówno statki na wodzie, jak i balony w powietrzu, unoszą się dzięki sile wyporu opisanej przez Archimedesa."
+        },
+        {
+            q: "Co się stanie z siłą wyporu po CAŁKOWITYM zanurzeniu klocka, jeśli będziemy pchać go jeszcze głębiej?",
+            opts: ["Będzie cały czas rosła.", "Przestanie rosnąć i pozostanie stała.", "Zacznie gwałtownie maleć."],
+            ans: 1,
+            info: "Skoro cały klocek jest już pod wodą, to nie może wyprzeć więcej wody. Objętość się nie zmienia, więc siła wyporu pozostaje stała."
+        },
+        {
+            q: "Rysunek przedstawia wektory (strzałki) sił działających na klocek w wodzie. Jeśli strzałka skierowana W GÓRĘ (siła wyporu) jest DŁUŻSZA niż strzałka W DÓŁ (ciężar), to co stanie się z klockiem po puszczeniu go?",
+            opts: ["Klocek utonie i opadnie na dno.", "Klocek zostanie dokładnie w tym samym miejscu.", "Klocek wypłynie na powierzchnię."],
+            ans: 2,
+            info: "Siła skierowana w górę jest większa, więc wygrywa! Klocek zostanie wypchnięty na powierzchnię."
+        },
+        {
+            q: "Czy to zdanie jest prawdziwe: „Siła wyporu jest równa MASIE wypartej cieczy”?",
+            opts: ["Tak, masa to to samo co siła.", "Nie, siła wyporu jest równa CIĘŻAROWI wypartej cieczy.", "Zależy, czy to woda słodka czy słona."],
+            ans: 1,
+            info: "To częsta pułapka! Masa to kilogramy, a ciężar to siła (w Niutonach). Prawo Archimedesa mówi o ciężarze wypartej cieczy."
+        },
+        {
+            q: "Dokończ zdanie: Im większa objętość ciała zanurzonego w cieczy, tym...",
+            opts: ["...mniejsza wartość siły wyporu.", "...większa wartość siły wyporu.", "...siła ciężkości maleje."],
+            ans: 1,
+            info: "Im więcej wody wypchniesz (wyprzesz), tym mocniej woda będzie Cię pchała do góry."
+        },
+        {
+            q: "Dokończ zdanie: Ciało zanurzone w cieczy pozornie traci na ciężarze tyle, ile...",
+            opts: ["...wynosi jego własny ciężar początkowy.", "...waży woda, którą wyparło (wypchnęło) to ciało.", "...wynosi ciśnienie na dnie naczynia."],
+            ans: 1,
+            info: "To klasyczna definicja pozornej utraty ciężaru z Prawa Archimedesa."
+        },
+        {
+            q: "Wartość siły wyporu w słonej wodzie morskiej (która jest gęstsza od zwykłej wody) jest...",
+            opts: ["...mniejsza niż w wodzie z kranu.", "...taka sama jak w wodzie z kranu.", "...większa niż w wodzie z kranu."],
+            ans: 2,
+            info: "Im gęstsza ciecz, tym większa siła wyporu. Dlatego w morzu pływa nam się łatwiej (woda nas mocniej wypycha)!"
+        }
+    ];
+
+    let testQueue = [];
+    let initialCount = 0;
+
+    function startQuiz() {
+        showSection('none'); 
+        document.getElementById('test-screen').classList.remove('hidden');
+        testQueue = [...questions]; 
+        initialCount = testQueue.length;
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        if(testQueue.length === 0) {
+            document.getElementById('test-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.remove('hidden');
+            return;
+        }
+        
+        const q = testQueue[0];
+        document.getElementById('q-number').innerText = testQueue.length;
+        document.getElementById('q-text').innerText = q.q;
+        
+        const fb = document.getElementById('q-feedback');
+        fb.style.display = 'none';
+        fb.innerText = "";
+        
+        document.getElementById('next-btn').classList.add('hidden');
+        
+        const progress = ((initialCount - testQueue.length) / initialCount) * 100;
+        document.getElementById('quiz-progress').style.width = progress + '%';
+        
+        const grid = document.getElementById('q-options');
+        grid.innerHTML = "";
+        
+        const letters = ["A.", "B.", "C."];
+        q.opts.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-btn';
+            btn.innerHTML = `<strong>${letters[i]}</strong> ${opt}`;
+            btn.onclick = () => checkAnswer(i, btn, q.ans, q.info);
+            grid.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(selected, btn, correct, info) {
+        const allBtns = document.querySelectorAll('.quiz-btn');
+        allBtns.forEach(b => b.onclick = null);
+
+        const fb = document.getElementById('q-feedback');
+        fb.style.display = 'block';
+
+        if(selected === correct) {
+            btn.classList.add('correct');
+            fb.innerHTML = `<span style="color:#2e7d32; font-size:32px; font-weight:900;">✅ BARDZO DOBRZE!</span><br><br>${info}`;
+            fb.style.borderLeftColor = "#4caf50";
+            
+            testQueue.shift(); 
+        } else {
+            btn.classList.add('wrong');
+            allBtns[correct].classList.add('correct');
+            fb.innerHTML = `<span style="color:#c62828; font-size:32px; font-weight:900;">❌ BŁĄD!</span><br><br>${info}<br><br><span style="font-weight:bold; color:#d32f2f; font-size: 24px;">To pytanie wróci na koniec kolejki!</span>`;
+            fb.style.borderLeftColor = "#f44336";
+            
+            let currentQ = testQueue.shift();
+            testQueue.push(currentQ);
+        }
+        document.getElementById('next-btn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+        loadQuestion();
+    }
+
+</script>
+
+</body>
+</html>
