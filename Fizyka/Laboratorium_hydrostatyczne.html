@@ -8,12 +8,12 @@
         /* STYL GŁÓWNY - FIZYCZNY FIOLET */
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f3e5f5; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding: 10px; color: #4a148c; overflow-y: auto;}
         #container { background-color: white; padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(74, 20, 140, 0.2); width: 100%; max-width: 800px; border: 4px solid #ab47bc; margin-bottom: 50px;}
-        h1 { margin: 10px 0 20px 0; font-size: 28px; color: #7b1fa2; text-align: center; }
+        h1 { margin: 10px 0 20px 0; font-size: 32px; color: #7b1fa2; text-align: center; font-weight: 900;}
         
         .menu-grid { display: grid; grid-template-columns: 1fr; gap: 20px; width: 100%; margin-top: 20px; }
-        .btn-menu { border: none; padding: 25px; font-size: 20px; font-weight: bold; border-radius: 20px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: flex-start; box-shadow: 0 6px 0 rgba(0,0,0,0.1); color: white; position: relative; overflow: hidden; }
+        .btn-menu { border: none; padding: 30px 25px; font-size: 24px; font-weight: bold; border-radius: 20px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: flex-start; box-shadow: 0 6px 0 rgba(0,0,0,0.15); color: white; position: relative; overflow: hidden; line-height: 1.4;}
         .btn-menu:active { transform: translateY(4px); box-shadow: none; }
-        .btn-menu .icon { font-size: 35px; margin-right: 15px; }
+        .btn-menu .icon { font-size: 45px; margin-right: 20px; }
         
         .bg-theory { background: linear-gradient(45deg, #ab47bc, #7b1fa2); }
         .bg-test { background: linear-gradient(45deg, #ef5350, #c62828); }
@@ -23,29 +23,57 @@
         @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
         /* TEORIA */
-        .theory-card { background: #fff; border-left: 6px solid #ab47bc; padding: 20px; margin-bottom: 25px; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.08); text-align: left; }
-        .theory-card h3 { margin-top: 0; color: #6a1b9a; border-bottom: 2px solid #f3e5f5; padding-bottom: 8px;}
+        .theory-card { background: #fff; border-left: 8px solid #ab47bc; padding: 25px; margin-bottom: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); text-align: left; }
+        .theory-card h3 { margin-top: 0; color: #6a1b9a; border-bottom: 3px solid #f3e5f5; padding-bottom: 10px; font-size: 26px;}
         .theory-img { width: 100%; max-width: 400px; display: block; margin: 15px auto; border-radius: 10px; border: 1px solid #ddd; }
         
-        .formula-box { background: #f3e5f5; padding: 15px; border-radius: 8px; font-family: monospace; font-weight: bold; text-align: center; font-size: 22px; margin: 15px 0; border: 2px dashed #ab47bc; color: #4a148c; letter-spacing: 2px;}
-        .btn-audio { background-color: #ba68c8; color: white; border: none; padding: 12px 20px; border-radius: 20px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; box-shadow: 0 4px 0 #8e24aa; }
-        .btn-audio:active { transform: translateY(2px); box-shadow: none; }
+        .formula-box { background: #f3e5f5; padding: 20px; border-radius: 12px; font-family: monospace; font-weight: bold; text-align: center; font-size: 26px; margin: 20px 0; border: 3px dashed #ab47bc; color: #4a148c; letter-spacing: 2px;}
+        .btn-audio { background-color: #ba68c8; color: white; border: none; padding: 20px; border-radius: 20px; font-size: 20px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 15px; box-shadow: 0 6px 0 #8e24aa; }
+        .btn-audio:active { transform: translateY(4px); box-shadow: none; }
 
         /* QUIZ */
-        .quiz-question { font-size: 20px; font-weight: bold; margin-bottom: 20px; text-align: left; line-height: 1.4;}
-        .quiz-options { display: grid; gap: 12px; }
-        .quiz-btn { background: #f3e5f5; border: 2px solid #ce93d8; padding: 18px; border-radius: 15px; font-size: 16px; cursor: pointer; text-align: left; color: #4a148c; font-weight: 500; transition: background 0.2s;}
-        .quiz-btn:hover { background: #e1bee7; }
+        .quiz-question { font-size: 24px; font-weight: bold; margin-bottom: 25px; text-align: left; line-height: 1.4;}
+        .quiz-options { display: grid; gap: 15px; }
+        .quiz-btn { background: #f3e5f5; border: 3px solid #ce93d8; padding: 25px; border-radius: 20px; font-size: 20px; cursor: pointer; text-align: left; color: #4a148c; font-weight: bold; transition: background 0.2s; line-height: 1.4;}
+        .quiz-btn:active { background: #e1bee7; transform: scale(0.98);}
         .quiz-btn.correct { background: #66bb6a !important; color: white !important; border-color: #2e7d32 !important; }
         .quiz-btn.wrong { background: #ef5350 !important; color: white !important; border-color: #c62828 !important; }
         
-        .feedback-box { background: #f5f5f5; padding: 15px; border-radius: 10px; margin-top: 20px; font-size: 16px; display: none; border-left: 5px solid #ccc;}
+        .feedback-box { background: #f5f5f5; padding: 25px; border-radius: 15px; margin-top: 25px; font-size: 22px; display: none; border-left: 8px solid #ccc; line-height: 1.4;}
 
-        .nav-btn { margin-top: 25px; padding: 15px 25px; background: #555; color: white; border: none; border-radius: 25px; cursor: pointer; font-size: 16px; width: 100%; font-weight: bold;}
-        .back-btn { background: #eee; color: #333; margin-bottom: 20px; padding: 10px 20px; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; display: inline-block;}
+        .nav-btn { margin-top: 30px; padding: 25px; background: #555; color: white; border: none; border-radius: 25px; cursor: pointer; font-size: 22px; width: 100%; font-weight: bold; box-shadow: 0 6px 0 #333;}
+        .nav-btn:active { transform: translateY(4px); box-shadow: none;}
+        .back-btn { background: #eee; color: #333; margin-bottom: 25px; padding: 15px 25px; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; display: inline-block; font-size: 18px;}
         
-        .progress-container { width: 100%; background-color: #e0e0e0; border-radius: 10px; margin-bottom: 25px; height: 12px; overflow: hidden; }
+        .progress-container { width: 100%; background-color: #e0e0e0; border-radius: 15px; margin-bottom: 30px; height: 16px; overflow: hidden; }
         .progress-bar { height: 100%; background-color: #ab47bc; width: 0%; transition: width 0.4s ease; }
+
+        /* ========================================= */
+        /* OPTYMALIZACJA DLA EKRANÓW PIONOWYCH (TEL) */
+        /* ========================================= */
+        @media (max-width: 600px) {
+            #container { padding: 15px; border-width: 4px; border-radius: 20px;}
+            h1 { font-size: 28px; margin-bottom: 20px;}
+            
+            /* Przebudowa menu głównego - ikona nad tekstem */
+            .btn-menu { flex-direction: column; text-align: center; justify-content: center; padding: 25px 15px; gap: 15px;}
+            .btn-menu .icon { margin-right: 0; font-size: 50px; }
+            .btn-menu div { font-size: 22px; }
+            .btn-menu small { font-size: 16px !important; }
+
+            .theory-card { padding: 20px; margin-bottom: 20px; border-left-width: 6px;}
+            .theory-card h3 { font-size: 22px; }
+            .btn-audio { padding: 15px; font-size: 18px; }
+            .formula-box { font-size: 22px; padding: 15px;}
+
+            /* Pytania i opcje zoptymalizowane pod wąski ekran */
+            .quiz-question { font-size: 22px; margin-bottom: 20px; }
+            .quiz-btn { font-size: 18px; padding: 20px 15px; border-radius: 15px; border-width: 3px; }
+            
+            .feedback-box { font-size: 18px; padding: 15px; }
+            .back-btn { font-size: 16px; padding: 12px 20px; width: 100%; text-align: center; margin-bottom: 20px;}
+            .nav-btn { font-size: 20px; padding: 20px; border-radius: 20px;}
+        }
     </style>
 </head>
 <body>
@@ -53,7 +81,7 @@
 <div id="container">
     
     <div id="menu-screen" class="section-view">
-        <h1>⚛️ Fizyka: Hydrostatyka (Master Class)</h1>
+        <h1>⚛️ Fizyka: Hydrostatyka<br>(Master Class)</h1>
         
         <div class="menu-grid">
             <button class="btn-menu bg-theory" onclick="showSection('theory')">
@@ -63,7 +91,7 @@
 
             <button class="btn-menu bg-test" onclick="startQuiz()">
                 <div class="icon">📝</div>
-                <div>TEST Z UZASADNIENIAMI<br><small>Ćwiczenia z wyjaśnieniami</small></div>
+                <div>TEST WIEDZY<br><small>Błędne pytania wracają do puli!</small></div>
             </button>
         </div>
 
@@ -72,23 +100,23 @@
 
     <div id="theory-screen" class="section-view hidden">
         <button class="back-btn" onclick="showSection('menu')">⬅ Wróć do Menu</button>
-        <h2 style="text-align: center; color: #7b1fa2;">Pełne Wykłady (Słuchaj uważnie)</h2>
+        <h2 style="text-align: center; color: #7b1fa2; font-size: 28px;">Pełne Wykłady (Słuchaj uważnie)</h2>
 
         <div class="theory-card">
             <h3>1. Parcie to SIŁA, Ciśnienie to WYNIK</h3>
             <img src="cisnienie_stopy.jpg" class="theory-img" onerror="this.style.display='none'" alt="Nacisk stóp">
             <div class="formula-box">p = F / S</div>
             <button class="btn-audio" onclick="speak('Lekcja pierwsza. Zrozum różnicę między parciem a ciśnieniem. Parcie, oznaczane we wzorze literą F, to siła nacisku. Jak każdą siłę w fizyce, mierzymy ją w Niutonach. Z kolei ciśnienie, oznaczane literą p, mówi o tym, jak ta siła rozkłada się na daną powierzchnię S. Ciśnienie mierzymy w Paskalach. Największe ciśnienie na podłogę wywierasz, gdy stoisz na jednej nodze, ponieważ pole powierzchni jest wtedy najmniejsze. Kiedy leżysz, ciśnienie jest bardzo małe.')">
-                📢 Odtwórz Wykład 1 (Parcie i Ciśnienie)
+                📢 Odtwórz Wykład 1
             </button>
         </div>
 
         <div class="theory-card">
-            <h3>2. Od czego zależy Ciśnienie Hydrostatyczne?</h3>
+            <h3>2. Ciśnienie Hydrostatyczne</h3>
             <img src="paradoks.jpg" class="theory-img" onerror="this.style.display='none'" alt="Paradoks hydrostatyczny">
             <div class="formula-box">p = d · g · h</div>
             <button class="btn-audio" onclick="speak('Lekcja druga. Niezwykle ważny wzór p = d razy g razy h. Ciśnienie wywierane przez ciecz jest wprost proporcjonalne do trzech rzeczy: gęstości cieczy d, przyspieszenia ziemskiego g oraz głębokości h. Zapamiętaj: ciśnienie hydrostatyczne zdecydowanie zależy od wartości przyspieszenia ziemskiego! A od czego nie zależy? Tutaj wkracza paradoks hydrostatyczny: ciśnienie w ogóle nie zależy od kształtu naczynia ani od materiału, z którego zrobiono to naczynie.')">
-                📢 Odtwórz Wykład 2 (Zależności hydrostatyczne)
+                📢 Odtwórz Wykład 2
             </button>
         </div>
 
@@ -96,7 +124,7 @@
             <h3>3. Gazy, Pascal i Barometr</h3>
             <img src="prawo_pascala.jpg" class="theory-img" onerror="this.style.display='none'" alt="Prawo Pascala">
             <button class="btn-audio" onclick="speak('Lekcja trzecia. Prawo Pascala mówi jasno: ciśnienie w gazach i cieczach przekazywane jest we wszystkich kierunkach jednakowo. Na każdą ściankę napiera z taką samą siłą. Drugą rzeczą, o której musisz pamiętać, jest ciśnienie atmosferyczne, czyli nacisk powietrza. Przyrządem służącym do sprawdzania pomiaru ciśnienia atmosferycznego jest barometr.')">
-                📢 Odtwórz Wykład 3 (Prawo Pascala i Barometr)
+                📢 Odtwórz Wykład 3
             </button>
             <img src="barometr.jpg" class="theory-img" onerror="this.style.display='none'" alt="Barometr">
         </div>
@@ -104,16 +132,16 @@
 
     <div id="test-screen" class="section-view hidden">
         <button class="back-btn" onclick="showSection('menu')">⬅ Przerwij</button>
-        <div style="display:flex; justify-content:space-between; color:#888; margin-bottom:10px; font-weight:bold;">
+        <div style="display:flex; justify-content:space-between; color:#888; margin-bottom:15px; font-weight:bold; font-size: 20px;">
             <span>Test Hydrostatyka</span>
-            <span>Pytanie <span id="q-number">1</span> / 9</span>
+            <span>Pozostało w kolejce: <span id="q-number">9</span></span>
         </div>
         
         <div class="progress-container">
             <div id="quiz-progress" class="progress-bar"></div>
         </div>
         
-        <div class="theory-card" style="border-left-color: #c62828; padding: 25px;">
+        <div class="theory-card" style="border-left-color: #c62828; padding: 30px;">
             <p id="q-text" class="quiz-question">...</p>
         </div>
 
@@ -125,9 +153,9 @@
     </div>
 
     <div id="end-screen" class="section-view hidden">
-        <h2 style="text-align: center; font-size: 40px; margin-bottom: 5px;">🎉</h2>
-        <h2 style="text-align: center; color: #7b1fa2; font-size: 30px;">Zakończono Trening!</h2>
-        <h3 id="final-score" style="text-align: center; color: #4a148c; font-size: 24px; background: #f3e5f5; padding: 20px; border-radius: 15px;">Wynik: 0/0</h3>
+        <h2 style="text-align: center; font-size: 60px; margin-bottom: 10px;">🎉</h2>
+        <h2 style="text-align: center; color: #7b1fa2; font-size: 36px;">Klasówka gotowa!</h2>
+        <h3 style="text-align: center; color: #fff; font-size: 26px; background: #ab47bc; padding: 30px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">Wszystkie zagadnienia zostały opanowane.</h3>
         <button class="nav-btn" onclick="showSection('menu')">Wróć do Menu Głównego</button>
     </div>
 
@@ -147,10 +175,11 @@
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(text);
         u.lang = 'pl-PL';
+        // ZWOLNIONE TEMPO LEKTORA (zgodnie z prośbą)
+        u.rate = 0.8; 
         window.speechSynthesis.speak(u);
     }
 
-    // --- BAZA PYTAŃ ---
     const questions = [
         {
             q: "Kiedy wywierasz NAJWIĘKSZE ciśnienie na podłogę?",
@@ -202,29 +231,26 @@
         }
     ];
 
-    let qIndex = 0;
-    let score = 0;
+    let testQueue = [];
+    let initialCount = 0;
 
     function startQuiz() {
         showSection('none'); 
         document.getElementById('test-screen').classList.remove('hidden');
-        qIndex = 0;
-        score = 0;
+        testQueue = [...questions]; 
+        initialCount = testQueue.length;
         loadQuestion();
     }
 
     function loadQuestion() {
-        if(qIndex >= questions.length) {
+        if(testQueue.length === 0) {
             document.getElementById('test-screen').classList.add('hidden');
             document.getElementById('end-screen').classList.remove('hidden');
-            
-            const percent = Math.round(score / questions.length * 100);
-            document.getElementById('final-score').innerText = `Wynik: ${score} / ${questions.length} (${percent}%)`;
             return;
         }
         
-        const q = questions[qIndex];
-        document.getElementById('q-number').innerText = qIndex + 1;
+        const q = testQueue[0];
+        document.getElementById('q-number').innerText = testQueue.length;
         document.getElementById('q-text').innerText = q.q;
         
         const fb = document.getElementById('q-feedback');
@@ -232,7 +258,9 @@
         fb.innerText = "";
         
         document.getElementById('next-btn').classList.add('hidden');
-        document.getElementById('quiz-progress').style.width = ((qIndex) / questions.length * 100) + '%';
+        
+        const progress = ((initialCount - testQueue.length) / initialCount) * 100;
+        document.getElementById('quiz-progress').style.width = progress + '%';
         
         const grid = document.getElementById('q-options');
         grid.innerHTML = "";
@@ -255,20 +283,24 @@
 
         if(selected === correct) {
             btn.classList.add('correct');
-            score++;
-            fb.innerHTML = `<span style="color:#2e7d32; font-size:20px;">✅ IDEALNIE!</span><br><br>${info}`;
+            fb.innerHTML = `<span style="color:#2e7d32; font-size:24px; font-weight:bold;">✅ IDEALNIE!</span><br><br>${info}`;
             fb.style.borderLeftColor = "#4caf50";
+            
+            testQueue.shift(); // Usuwamy pytanie z kolejki trwale
         } else {
             btn.classList.add('wrong');
             allBtns[correct].classList.add('correct');
-            fb.innerHTML = `<span style="color:#c62828; font-size:20px;">❌ BŁĄD! PRZECZYTAJ WYJAŚNIENIE:</span><br><br>${info}`;
+            fb.innerHTML = `<span style="color:#c62828; font-size:24px; font-weight:bold;">❌ BŁĄD! PRZECZYTAJ WYJAŚNIENIE:</span><br><br>${info}<br><br><span style="font-weight:bold; color:#d32f2f;">Pytanie wróci na koniec kolejki!</span>`;
             fb.style.borderLeftColor = "#f44336";
+            
+            // Przesuwamy błędne pytanie na sam koniec
+            let currentQ = testQueue.shift();
+            testQueue.push(currentQ);
         }
         document.getElementById('next-btn').classList.remove('hidden');
     }
 
     function nextQuestion() {
-        qIndex++;
         loadQuestion();
     }
 
