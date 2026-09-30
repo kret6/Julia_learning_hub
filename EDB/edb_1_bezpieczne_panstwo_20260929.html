@@ -42,6 +42,7 @@ h1{font-size:24px;color:#2e7d32;margin-bottom:2px}
 .pod{text-align:center;font-size:19px;margin-bottom:22px}
 .glos{background:none;border:2px solid #c8e0c9;border-radius:12px;font-size:17px;padding:8px 14px;
   color:#2e7d32;font-weight:700;margin-top:14px;cursor:pointer;min-height:48px}
+.opcja.wybrana{background:#dcefdc;border-color:#2e7d32;font-weight:700}
 </style>
 </head>
 <body>
@@ -51,11 +52,13 @@ h1{font-size:24px;color:#2e7d32;margin-bottom:2px}
 <!-- START -->
 <div class="ekran aktywny" id="start">
   <div class="karta" style="min-height:0">
-    <div class="tekst">Edukacja dla bezpieczeństwa, podręcznik str. 56–62. Najpierw <b>ucz się</b> — 16 kart z najważniejszymi rzeczami.
-    Potem <b>sprawdź się</b> — 26 pytań, stukasz w dobrą odpowiedź.</div>
+    <div class="tekst">Edukacja dla bezpieczeństwa, podręcznik str. 56–62. Najpierw <b>ucz się</b> — na początku 4 pytania z kartkówki z odpowiedziami, potem reszta materiału.
+    Potem <b>sprawdź się</b> — dokładnie te 4 pytania, które będą na kartkówce.</div>
   </div>
   <div class="karta" style="min-height:0;margin-top:14px">
-    <div class="tekst"><b>🎧 Posłuchaj powtórki</b> — Zofia i Marek, ok. 5 minut. Na końcu quiz: odpowiadaj na głos.</div>
+    <div class="tekst"><b>🎯 Pytania z kartkówki</b> — posłuchaj i odpowiadaj na głos, zanim padnie odpowiedź.</div>
+    <audio controls preload="none" src="edb_podcast_kartkowka.mp3" style="width:100%;margin-top:10px"></audio>
+    <div class="tekst" style="margin-top:14px"><b>🎧 Powtórka całego tematu</b> — Zofia i Marek, ok. 5 minut.</div>
     <audio controls preload="none" src="edb_podcast_1.mp3" style="width:100%;margin-top:10px"></audio>
   </div>
   <button class="btn glowny" onclick="startNauki()">📖 Ucz się</button>
@@ -104,7 +107,11 @@ function postResult(score,total){
 }
 
 var KARTY=[
- {s:"BEZPIECZEŃSTWO", t:"Bezpieczeństwo to brak zagrożeń. To stan, w którym komuś lub czemuś — człowiekowi, rodzinie, państwu — nic nie grozi. Łacińskie słowo securitas znaczy: brak obaw."},
+ {s:"NA KARTKÓWKĘ — PYTANIE 1 z 4", t:"Co daje Polsce bezpieczeństwo? Zaznacz poprawną odpowiedź. ODPOWIEDŹ: Bezpieczeństwo daje Polsce udział w sojuszach i organizacjach międzynarodowych, np. w NATO."},
+ {s:"NA KARTKÓWKĘ — PYTANIE 2 z 4", t:"Do jakiej organizacji wojskowej należy Polska? ODPOWIEDŹ: Polska należy do NATO, czyli Paktu Północnoatlantyckiego. PCK, PAH i UNICEF to organizacje pomocowe, nie wojskowe."},
+ {s:"NA KARTKÓWKĘ — PYTANIE 3 z 4", t:"Czym jest bezpieczeństwo dla człowieka? ODPOWIEDŹ: Bezpieczeństwo jest podstawą wszelkiego rozwoju i funkcjonowania człowieka."},
+ {s:"NA KARTKÓWKĘ — PYTANIE 4 z 4", t:"Kto dba o bezpieczeństwo naszego państwa i obywateli? Zaznacz 2 punkty. ODPOWIEDŹ: O bezpieczeństwo dbają: prezydent i parlament oraz premier i wojewoda. Dwie odpowiedzi: A i D."},
+ {s:"BEZPIECZEŃSTWO", t:"Bezpieczeństwo to brak zagrożeń. To stan, w którym komuś lub czemuś — człowiekowi, rodzinie, państwu — nic nie grozi. Dla człowieka bezpieczeństwo to podstawa wszelkiego rozwoju i funkcjonowania. Łacińskie słowo securitas znaczy: brak obaw."},
  {s:"KOGO DOTYCZY?", t:"Bezpieczeństwo osobiste — dotyczy jednego człowieka. Bezpieczeństwo zbiorowe — dotyczy grupy ludzi: narodu, kilku państw albo całego świata."},
  {s:"CZEGO DOTYCZY?", t:"Pięć rodzajów: militarne (wojskowe), ekologiczne, społeczne, polityczne i gospodarcze."},
  {s:"PRZYKŁADY ZAGROŻEŃ", t:"Militarne: wojna, agresja zbrojna. Ekologiczne: smog, kwaśne deszcze. Społeczne: bieda, bezrobocie. Polityczne: niedemokratyczna władza, protesty. Gospodarcze: zagrożenia energetyczne i ekonomiczne."},
@@ -123,32 +130,10 @@ var KARTY=[
 ];
 
 var ZADANIA=[
- {typ:"x", pytanie:"Bezpieczeństwo to:", dobra:"brak zagrożeń", inne:["dużo wojska","dużo pieniędzy"]},
- {typ:"x", pytanie:"Łacińskie słowo securitas znaczy:", dobra:"brak obaw", inne:["silne państwo","dobra armia"]},
- {typ:"x", pytanie:"Bezpieczeństwo jednego człowieka to bezpieczeństwo:", dobra:"osobiste", inne:["zbiorowe"]},
- {typ:"x", pytanie:"Bezpieczeństwo narodu lub kilku państw to bezpieczeństwo:", dobra:"zbiorowe", inne:["osobiste"]},
- {typ:"x", pytanie:"Smog i kwaśne deszcze to zagrożenie bezpieczeństwa:", dobra:"ekologicznego", inne:["militarnego","politycznego"]},
- {typ:"x", pytanie:"Wojna i agresja zbrojna to zagrożenie bezpieczeństwa:", dobra:"militarnego", inne:["ekologicznego","społecznego"]},
- {typ:"x", pytanie:"Bieda i bezrobocie to zagrożenie bezpieczeństwa:", dobra:"społecznego", inne:["militarnego","ekologicznego"]},
- {typ:"x", pytanie:"Niedemokratyczna władza i protesty to zagrożenie bezpieczeństwa:", dobra:"politycznego", inne:["ekologicznego","militarnego"]},
- {typ:"x", pytanie:"Zagrożenia energetyczne i ekonomiczne dotyczą bezpieczeństwa:", dobra:"gospodarczego", inne:["ekologicznego","osobistego"]},
- {typ:"x", pytanie:"Które z nich to współczesne zagrożenie na świecie?", dobra:"cyberprzestępczość", inne:["turystyka","sport"]},
- {typ:"x", pytanie:"Bezpieczeństwo państwa to stan, w którym:", dobra:"istnienie państwa nie jest zagrożone", inne:["państwo ma dużo pieniędzy","nie ma wyborów"]},
- {typ:"x", pytanie:"Zagrożenia spoza granic kraju to bezpieczeństwo:", dobra:"zewnętrzne", inne:["wewnętrzne"]},
- {typ:"x", pytanie:"Trzy dziedziny bezpieczeństwa państwa to:", dobra:"obrona narodowa, ochrona, bezpieczeństwo społeczno-gospodarcze", inne:["sport, kultura, nauka"]},
- {typ:"x", pytanie:"Zwierzchnikiem Sił Zbrojnych RP jest:", dobra:"Prezydent", inne:["Premier","Marszałek Sejmu"]},
- {typ:"x", pytanie:"Ustawy o obronności uchwala:", dobra:"Parlament", inne:["Policja","Prezydent"]},
- {typ:"x", pytanie:"Ochrona ludzi i porządek publiczny to zadanie:", dobra:"Policji", inne:["Parlamentu","Dyplomacji"]},
- {typ:"x", pytanie:"Pomoc osobie w nagłym zagrożeniu życia daje:", dobra:"Państwowe Ratownictwo Medyczne", inne:["Parlament","Straż Graniczna"]},
- {typ:"x", pytanie:"Najważniejszy akt prawny w Polsce to:", dobra:"Konstytucja RP z 2 kwietnia 1997 r.", inne:["Ustawa o NATO"]},
- {typ:"x", pytanie:"Polska sąsiaduje z dwoma silnymi państwami:", dobra:"Niemcami i Rosją", inne:["Francją i Hiszpanią","Włochami i Grecją"]},
- {typ:"x", pytanie:"NATO to sojusz:", dobra:"wojskowo-polityczny", inne:["sportowy","tylko gospodarczy"]},
- {typ:"x", pytanie:"Polska jest w NATO od roku:", dobra:"1999", inne:["2004","1989"]},
- {typ:"x", pytanie:"Polska jest w Unii Europejskiej od roku:", dobra:"2004", inne:["1999","2015"]},
- {typ:"x", pytanie:"Unia Europejska to związek:", dobra:"gospodarczo-polityczny", inne:["wojskowy","sportowy"]},
- {typ:"x", pytanie:"Najważniejszą rolę w NATO odgrywają:", dobra:"Stany Zjednoczone", inne:["Niemcy","Polska"]},
- {typ:"x", pytanie:"Grupa Wyszehradzka to:", dobra:"Polska, Czechy, Słowacja, Węgry", inne:["Polska, Niemcy, Francja"]},
- {typ:"x", pytanie:"ONZ skupia:", dobra:"ponad 190 państw", inne:["27 państw","4 państwa"]}
+ {typ:"test", pytanie:"Co daje Polsce bezpieczeństwo? Zaznacz poprawną odpowiedź.", opcje:["udział w sojuszach i organizacjach międzynarodowych (np. NATO)","duży udział w handlu zagranicznym","wysokie dochody obywateli","działania mające na celu powstrzymanie zmian klimatycznych"], dobre:[0], ile:1},
+ {typ:"test", pytanie:"Do jakiej organizacji wojskowej należy Polska?", opcje:["Pakt Północnoatlantycki (NATO)","Międzynarodowy Komitet Czerwonego Krzyża (PCK)","Polska Akcja Humanitarna (PAH)","UNICEF"], dobre:[0], ile:1},
+ {typ:"test", pytanie:"Czym jest bezpieczeństwo dla człowieka?", opcje:["mało ważnym warunkiem rozwoju i funkcjonowania człowieka","jedną z mniej ważnych potrzeb człowieka","podstawą wszelkiego rozwoju i funkcjonowania człowieka","stanem, który należy zapewnić wybranym grupom obywateli"], dobre:[2], ile:1},
+ {typ:"test", pytanie:"Kto dba o bezpieczeństwo naszego państwa i obywateli? Zaznacz 2 punkty.", opcje:["prezydent, parlament","instytuty naukowo-badawcze","instytucje oświatowe","premier, wojewoda"], dobre:[0,3], ile:2}
 ];
 
 function pokaz(id){ document.querySelectorAll('.ekran').forEach(function(e){e.classList.remove('aktywny');});
@@ -205,6 +190,8 @@ function rysujZadanie(){
     document.getElementById('t-polecenie').textContent='Uzupełnij lukę';
     document.getElementById('t-pytanie').innerHTML=z.przed+' <span class="luka" id="luka">&nbsp;?&nbsp;</span> '+z.po;
     potasuj([z.dobra].concat(z.inne)).forEach(function(o){ odp.appendChild(przycisk(o, z.dobra)); });
+  } else if(z.typ==='test'){
+    rysujTest(z, odp);
   } else if(z.typ==='x'){
     document.getElementById('t-polecenie').textContent='Wybierz poprawną odpowiedź';
     document.getElementById('t-pytanie').textContent=z.pytanie;
@@ -224,6 +211,39 @@ function rysujZadanie(){
     var cof=document.createElement('button'); cof.className='btn drugi'; cof.textContent='⌫ Cofnij literę'; cof.id='cofnij';
     cof.onclick=function(){ var o=ulozone.pop(); if(o){ o.b.disabled=false; odswiezOkienka(); } };
     odp.appendChild(cof);
+  }
+}
+
+
+function rysujTest(z, odp){
+  document.getElementById('t-polecenie').textContent = z.ile>1 ? 'Zaznacz '+z.ile+' odpowiedzi, potem stuknij Sprawdź' : 'Zaznacz poprawną odpowiedź';
+  document.getElementById('t-pytanie').textContent=z.pytanie;
+  var wyb=[], spr=document.createElement('button');
+  function lit(i){ return String.fromCharCode(65+i); }
+  function zakoncz(w){
+    document.querySelectorAll('#t-odp .opcja').forEach(function(x,i){
+      x.disabled=true; x.classList.remove('wybrana');
+      if(z.dobre.indexOf(i)>-1) x.classList.add('dobrze'); else if(w.indexOf(i)>-1) x.classList.add('zle'); });
+    var ok = w.length===z.dobre.length && w.every(function(i){ return z.dobre.indexOf(i)>-1; });
+    if(ok){ punkty++; ocena(true,''); }
+    else ocena(false,'Poprawnie: '+z.dobre.map(function(i){ return lit(i)+'. '+z.opcje[i]; }).join(' oraz '));
+  }
+  z.opcje.forEach(function(o,i){
+    var b=document.createElement('button'); b.className='btn opcja'; b.textContent=lit(i)+'. '+o;
+    b.onclick=function(){
+      if(b.disabled) return;
+      if(z.ile===1){ zakoncz([i]); return; }
+      var k=wyb.indexOf(i);
+      if(k>-1){ wyb.splice(k,1); b.classList.remove('wybrana'); }
+      else if(wyb.length<z.ile){ wyb.push(i); b.classList.add('wybrana'); }
+      spr.style.display = wyb.length===z.ile ? 'block' : 'none';
+    };
+    odp.appendChild(b);
+  });
+  if(z.ile>1){
+    spr.className='btn glowny'; spr.textContent='✓ Sprawdź'; spr.style.display='none';
+    spr.onclick=function(){ spr.style.display='none'; zakoncz(wyb); };
+    odp.appendChild(spr);
   }
 }
 
