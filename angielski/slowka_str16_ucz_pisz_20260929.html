@@ -82,12 +82,12 @@ input:focus{outline:none;border-color:#6a1b9a}
 <script>
 var RESULTS_URL="https://julia-hub-161045418771.europe-west1.run.app/results",RESULTS_TOKEN="XW09DH2_fs8SdHh7B9pGMoCZuDVwAHSQ";
 var SLOWKA=[
+  {pl:"głośnik Bluetooth", pokaz:"Bluetooth speaker"},
   {pl:"naładować baterię", pokaz:"charge your battery"},
-  {pl:"połączyć się z Wi-Fi", pokaz:"connect to Wi-Fi"},
-  {pl:"wydrukować", pokaz:"print out"},
-  {pl:"udostępnić", pokaz:"share"},
-  {pl:"kabel USB", pokaz:"USB cable"},
-  {pl:"słuchawki", pokaz:"earphones"}
+  {pl:"połączyć się z Wi-Fi", pokaz:"connect to WiFi"},
+  {pl:"zawiesić się (o komputerze)", pokaz:"crash"},
+  {pl:"słuchawki", pokaz:"earphones"},
+  {pl:"szybki internet", pokaz:"high-speed internet"}
 ];
 function norm(s){ return (s||"").toLowerCase().replace(/[^a-z0-9]/g,""); }
 function pokaz(id){ document.querySelectorAll('.ekran').forEach(function(e){e.classList.remove('aktywny');});
