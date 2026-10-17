@@ -85,8 +85,6 @@ input[readonly]{cursor:default}
 <body>
 
 <div class="pasek">
-  <button id="bNauka" onclick="tryb('nauka')">📖 Ucz się — z odpowiedziami</button>
-  <button id="bTest" onclick="tryb('test')">✍️ Rozwiąż jak na sprawdzianie</button>
   <div class="seria" id="seria"></div>
 </div>
 <div class="info" id="info"></div>
@@ -185,7 +183,7 @@ var MAX={1:4,2:1,3:1,4:1,5:2,6:1};
 function pusty(){ return {z1:['','','',''],z2:[false,false,false],z3:-1,z4:'',z5:[-1,-1],z6:['','','']}; }
 var stan;
 try{ stan=JSON.parse(localStorage.getItem(PAMIEC)||'null'); }catch(e){ stan=null; }
-if(!stan||!stan.odp) stan={tryb:'nauka',odp:pusty(),spr:false,czysta:true,seria:0,proby:0,dziesiatki:0};
+if(!stan||!stan.odp) stan={odp:pusty(),spr:false,czysta:true,seria:0,proby:0,dziesiatki:0};
 function zapamietaj(){ try{ localStorage.setItem(PAMIEC,JSON.stringify(stan)); }catch(e){} }
 
 function $$(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); }
@@ -212,21 +210,13 @@ function ocen(o){
   return {p:p,pola:pola,suma:suma};
 }
 
-function nauka(){ return stan.tryb==='nauka'; }
-function zablokowane(){ return nauka()||stan.spr; }
-function wartosci(){
-  if(!nauka()) return stan.odp;
-  return {z1:KLUCZ.z1.slice(),z2:KLUCZ.z2.slice(),z3:KLUCZ.z3,z4:KLUCZ.z4,z5:KLUCZ.z5.slice(),z6:KLUCZ.z6.slice()};
-}
+function zablokowane(){ return stan.spr; }
 
 function rysuj(){
-  var o=wartosci(), ocena=(!nauka()&&stan.spr)?ocen(o):null, blok=zablokowane();
-  document.getElementById('bNauka').className=nauka()?'wl':'';
-  document.getElementById('bTest').className=nauka()?'':'wl';
-  document.getElementById('info').innerHTML=nauka()
-    ? '📖 <b>Tryb nauki:</b> kartka z poprawnymi odpowiedziami. Przeczytaj każde zadanie razem z odpowiedzią i wyjaśnieniem 💡. Kiedy będziesz gotowa, kliknij <b>„Rozwiąż jak na sprawdzianie”</b>.'
-    : (stan.spr ? '✍️ Kartka sprawdzona. Zielone = dobrze, czerwone = źle, zielona przerywana kreska = to trzeba było podkreślić.'
-               : '✍️ <b>Sprawdzian:</b> litery i cyfry wpisz w kratki z klawiatury (<b>Tab</b> = następne pole). Żeby <b>podkreślić</b> zdanie, kliknij je. Ponowne kliknięcie zmazuje kreskę.');
+  var o=stan.odp, ocena=stan.spr?ocen(o):null, blok=zablokowane();
+  document.getElementById('info').innerHTML=stan.spr
+    ? '✍️ Kartka sprawdzona. Zielone = dobrze, czerwone = źle, zielona przerywana kreska = to trzeba było podkreślić.'
+    : '✍️ Litery i cyfry wpisz w kratki z klawiatury (<b>Tab</b> = następne pole). Żeby <b>podkreślić</b> zdanie, kliknij je. Ponowne kliknięcie zmazuje kreskę. Na końcu kliknij <b>„Oddaję kartkę”</b>.';
   // pola tekstowe
   $$('input[data-pole]').forEach(function(inp){
     var pole=inp.getAttribute('data-pole'), i=inp.getAttribute('data-i');
@@ -235,7 +225,6 @@ function rysuj(){
     inp.readOnly=blok;
     var klucz=i===null?pole:pole+'-'+i;
     inp.classList.remove('dobrze','zle');
-    if(nauka()) inp.classList.add('dobrze');
     if(ocena) inp.classList.add(ocena.pola[klucz]?'dobrze':'zle');
   });
   // poprawki pod blednymi polami
@@ -257,7 +246,6 @@ function rysuj(){
       else if(pole==='z3'){ wyb=o.z3===i; wlasciwa=KLUCZ.z3===i; }
       else { wyb=o.z5[+n]===i; wlasciwa=KLUCZ.z5[+n]===i; }
       op.className='opc'+(wyb?' pod':'');
-      if(nauka()&&wyb) op.className+=' ok';
       if(ocena){
         if(wyb&&wlasciwa) op.className+=' ok';
         if(wyb&&!wlasciwa) op.className+=' blad';
@@ -273,30 +261,27 @@ function rysuj(){
     oc.textContent=ocena?ocena.p[z]:(z==='3'?'….':'…');
     oc.classList.toggle('oc',!!ocena);
   });
-  // wyjasnienia: w nauce wszystkie, po sprawdzeniu tylko przy bledach
+  // wyjasnienia tylko po sprawdzeniu, przy bledach
   $$('[data-wyj]').forEach(function(el){
     var z=el.getAttribute('data-wyj');
-    el.style.display=(nauka()||(ocena&&ocena.p[z]<MAX[z]))?'':'none';
+    el.style.display=(ocena&&ocena.p[z]<MAX[z])?'':'none';
   });
   // seria
   var kropki=''; for(var k=0;k<3;k++) kropki+=k<Math.min(stan.seria,3)?'●':'○';
   document.getElementById('seria').innerHTML='10/10 na czystej kartce: <b>'+kropki+'</b>'+(stan.seria>3?' ×'+stan.seria:'')+'<br><span style="font-size:14px;font-weight:400">cel: 3 razy z rzędu</span>';
   // dol
   var dol=document.getElementById('dol'), h='';
-  if(nauka()) h='<button onclick="tryb(\'test\')">✍️ Umiem — rozwiązuję jak na sprawdzianie</button>';
-  else if(!stan.spr) h='<button onclick="sprawdz()">✅ Oddaję kartkę — sprawdź</button>';
+  if(!stan.spr) h='<button onclick="sprawdz()">✅ Oddaję kartkę — sprawdź</button>';
   else {
     var s=ocena.suma, kom=s===10?(stan.czysta?'🎉 Bezbłędnie!':'🎉 Wszystko poprawione!'):(s>=8?'Prawie! Popraw błędy i zrób jeszcze raz od nowa.':'Zajrzyj do wyjaśnień 💡 przy błędach, potem popraw.');
     if(s===10&&stan.czysta&&stan.seria>=3) kom='🏆 Trzy razy z rzędu 10/10 — umiesz ten sprawdzian!';
     h='<div class="wynik"><div class="duzy">'+s+' / 10 pkt</div><div class="kom2">'+kom+'</div></div>';
     if(s<10) h+='<button onclick="poprawBledy()">✏️ Popraw tylko błędy</button>';
     h+='<button class="'+(s<10?'drugi':'')+'" onclick="odNowa()">🔄 Od nowa — czysta kartka</button>';
-    h+='<button class="drugi" onclick="tryb(\'nauka\')">📖 Wróć do kartki z odpowiedziami</button>';
   }
   dol.innerHTML=h;
 }
 
-function tryb(t){ stan.tryb=t; zapamietaj(); rysuj(); window.scrollTo(0,0); }
 
 function sprawdz(){
   var o=stan.odp, puste=o.z1.filter(function(v){return !v;}).length+o.z6.filter(function(v){return !v;}).length+(o.z4.trim()?0:1)
@@ -322,7 +307,7 @@ function poprawBledy(){
   stan.spr=false; stan.czysta=false; zapamietaj(); rysuj(); window.scrollTo(0,0);
 }
 
-function odNowa(){ stan.odp=pusty(); stan.spr=false; stan.czysta=true; stan.tryb='test'; zapamietaj(); rysuj(); window.scrollTo(0,0); }
+function odNowa(){ stan.odp=pusty(); stan.spr=false; stan.czysta=true; zapamietaj(); rysuj(); window.scrollTo(0,0); }
 
 // wpisywanie w kratki
 $$('input[data-pole]').forEach(function(inp,idx,wszystkie){
