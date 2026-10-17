@@ -8,254 +8,369 @@
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0fa;color:#222;padding:14px 14px 40px;max-width:760px;margin:0 auto;font-size:19px;line-height:1.5}
-h1{font-size:24px;color:#283593;margin-bottom:4px}
-.subject-tag{display:inline-block;background:#dde1f5;color:#283593;font-size:13px;padding:3px 10px;border-radius:10px;margin-bottom:8px}
-.karta{background:#fff;border-radius:18px;padding:16px 18px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-top:10px}
-.licznik{color:#5c6bc0;font-weight:700;font-size:16px}
-.pkt{float:right;color:#777;font-weight:600}
-.polecenie{font-weight:700;margin:4px 0 6px}
-.podpol{font-weight:600;margin:14px 0 4px}
-.wskazowka{font-size:15px;color:#5c6bc0}
-.cytat{font-style:italic;background:#f5f6ff;border-left:4px solid #9fa8da;padding:8px 12px;margin:8px 0;border-radius:6px}
-.ilustr{max-width:100%;margin:10px 0;border:1px solid #e3e6f3;border-radius:8px;background:#fff}
-.opisy{margin:6px 0 4px;font-size:17px}
-.opisy div{padding:4px 0}
-.katex{font-size:1.2em}
-.mapa{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:6px}
-.mapa button{min-height:50px;font-size:18px;font-weight:700;border:3px solid #c5cae9;border-radius:12px;background:#fff;color:#283593;cursor:pointer;font-family:inherit}
-.mapa button.dobrze{background:#e8f5e9;border-color:#66bb6a;color:#1b5e20}
-.mapa button.zle{background:#ffebee;border-color:#ef9a9a;color:#b71c1c}
-.mapa button.czesc{background:#fff8e1;border-color:#ffb300}
-.mapa button.tu{outline:4px solid #283593;outline-offset:1px}
-.btn{display:block;width:100%;min-height:68px;font-size:20px;font-weight:700;border:3px solid #c5cae9;border-radius:16px;margin-top:10px;cursor:pointer;font-family:inherit;background:#fff;color:#283593;text-align:left;padding:8px 16px}
-.btn .lit{display:inline-block;min-width:34px}
-.btn.wybrana{background:#283593;color:#fff;border-color:#283593}
-.btn.dobrze{background:#e8f5e9;border-color:#2e7d32;color:#1b5e20}
-.btn.zle{background:#ffebee;border-color:#c62828;color:#b71c1c}
-.btn.brakowalo{border-color:#2e7d32;border-style:dashed;color:#1b5e20}
-.btn.glowny{background:#283593;color:#fff;border-color:#283593;text-align:center}
-.btn.drugi{text-align:center}
-.btn:disabled{cursor:default}
-.nawigacja{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.wiersz{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #e3e6f3;flex-wrap:wrap}
-.wiersz .tekst{flex:1 1 240px}
-.wiersz .para{display:flex;gap:8px;flex-wrap:wrap}
-.wiersz .btn{width:auto;min-width:64px;min-height:60px;margin-top:0;text-align:center;padding:6px 12px}
-.pole{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px}
-.pole input,textarea{font-size:22px;padding:10px 12px;border:3px solid #c5cae9;border-radius:12px;font-family:inherit;min-width:0}
-.pole input{flex:1 1 160px;max-width:100%}
-.pole input.waski{flex:0 0 120px;text-align:center}
-textarea{width:100%;min-height:150px;margin-top:10px;line-height:1.4}
-.pole input:focus,textarea:focus{border-color:#283593;outline:none}
-.pole input.dobrze{border-color:#2e7d32;background:#e8f5e9}
-.pole input.zle{border-color:#c62828;background:#ffebee}
-.popr{font-size:16px;font-weight:700;color:#1b5e20}
-.uwaga{font-size:15px;color:#e65100;font-weight:600}
-.wyj{background:#fff8e1;border-radius:10px;padding:8px 12px;font-size:16px;margin-top:10px}
-.wzorzec{background:#e8f5e9;border-radius:10px;padding:10px 12px;margin-top:10px;font-size:17px}
-.wynik-pyt{text-align:center;font-weight:800;font-size:22px;margin-top:12px}
-.wynik-pyt.dobrze{color:#2e7d32}.wynik-pyt.zle{color:#c62828}
-.duzy{font-size:56px;font-weight:800;color:#283593;text-align:center}
-.lista-wynikow div{padding:6px 0;border-bottom:1px solid #e3e6f3}
+body{background:#e7e4dc;color:#111;padding:12px 12px 60px;font-family:'Segoe UI',Arial,sans-serif}
+.pasek{max-width:900px;margin:0 auto 12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.seria{font-size:17px;color:#3e2f1c;font-weight:600;margin-left:auto}
+.seria b{font-size:22px;letter-spacing:2px}
+.info{max-width:900px;margin:0 auto 12px;background:#fff8e1;border-radius:12px;padding:10px 14px;font-size:17px;color:#5d4037}
+
+.kartka{max-width:900px;margin:0 auto;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.18);padding:40px 48px 48px;
+  font-family:'Times New Roman',Times,serif;font-size:22px;line-height:1.45}
+.zad{margin-bottom:34px}
+.zad:last-child{margin-bottom:0}
+.nag{font-weight:700;display:flex;gap:16px;align-items:baseline}
+.nag .tr{flex:1}
+.nag .pk{white-space:nowrap}
+.pk .ocena{color:#c62828;font-family:'Segoe Print','Comic Sans MS',cursive;font-size:22px}
+u{text-decoration-thickness:1px;text-underline-offset:3px}
+.kurs{font-style:italic}
+.b{font-weight:700}
+.sans{font-family:Arial,Helvetica,sans-serif;font-size:20px}
+.opis{display:flex;gap:14px;padding-left:22px;margin:4px 0}
+.opis .l{font-weight:700;min-width:26px}
+.czesc{font-size:20px;margin:0 0 10px}
+.katex{font-size:1.08em}
+
+table.tab{border-collapse:collapse}
+table.tab td,table.tab th{border:1.5px solid #222;position:relative;vertical-align:middle}
+td .popr{position:absolute;right:4px;bottom:1px;padding:0}
+td.pole{padding:0;text-align:center}
+
+/* pola do wpisywania */
+input,textarea{font-family:'Segoe Print','Comic Sans MS',cursive;color:#0d2a8a;background:#fffde7}
+input.kom{width:100%;height:100%;min-height:58px;border:none;text-align:center;font-size:28px}
+input.kom:focus,textarea:focus{outline:3px solid #1565c0;outline-offset:-3px;background:#e3f2fd}
+input.linia,input.luka{border:none;border-bottom:2px dotted #444;font-size:22px;padding:2px 6px;min-width:0}
+input.linia{flex:1;max-width:420px}
+input.luka{width:230px;max-width:100%}
+input.linia:focus,input.luka:focus,input.wyk:focus{outline:none;border-bottom:3px solid #1565c0;background:#e3f2fd}
+input.wyk{width:58px;height:38px;font-size:20px;text-align:center;border:2px dashed #8d8d8d;border-radius:6px;vertical-align:super;margin:0 2px}
+input.wyk:focus{border:2px solid #1565c0}
+input.duzy{width:110px}
+textarea{width:100%;min-height:170px;border:none;border-bottom:2px dotted #444;font-size:21px;line-height:1.5;padding:8px;margin-top:8px;resize:vertical}
+.odp{display:flex;align-items:baseline;gap:12px;margin-top:12px;flex-wrap:wrap}
+.dobrze{background:#e8f5e9 !important;color:#1b5e20 !important}
+.zle{background:#ffebee !important;color:#b71c1c !important;text-decoration:line-through}
+textarea.zle{text-decoration:none}
+input[readonly],textarea[readonly]{cursor:default}
+.popr{font-family:'Segoe UI',Arial,sans-serif;font-size:15px;font-weight:700;color:#1b5e20;line-height:1.2;padding:2px 4px;font-style:normal}
+.popr:empty{display:none}
+.popr.pis{color:#e65100}
+.blok{display:block}
+.odp .blok{flex-basis:100%}
+.wzorzec{display:block;font-family:'Segoe UI',Arial,sans-serif;font-size:16px;font-weight:400;background:#e8f5e9;border-radius:8px;padding:8px 12px;margin-top:8px;color:#1b5e20}
+.uznaj{font-family:'Segoe UI',Arial,sans-serif;font-size:15px;margin-top:8px;min-height:44px;padding:4px 14px;border:2px solid #2e7d32;border-radius:10px;background:#fff;color:#1b5e20;cursor:pointer;font-weight:700}
+
+/* zaznaczanie klikiem (podkresl / zakresl) */
+.opc{display:flex;gap:14px;padding:6px 8px 6px 22px;margin:2px 0;border-radius:8px;cursor:pointer;min-height:44px;align-items:center}
+.opc:hover{background:#f3f0e6}
+.opc:focus{outline:3px solid #1565c0}
+.opc .l{font-weight:700;min-width:26px}
+.opc .t{border:3px solid transparent;border-radius:50%;padding:4px 14px}
+.opc.pod .t{border-color:#0d2a8a}
+.opc.ok .t{border-color:#2e7d32}
+.opc.blad .t{border-color:#c62828}
+.opc.blad{background:#ffebee}
+.opc.brak .t{border-color:#2e7d32;border-style:dashed}
+.opc.brak{background:#f1f8e9}
+.zablok .opc{cursor:default}
+.zablok .opc:hover{background:none}
+.zablok .opc.blad:hover{background:#ffebee}
+.zablok .opc.brak:hover{background:#f1f8e9}
+
+.wyj{font-family:'Segoe UI',Arial,sans-serif;font-size:16px;line-height:1.4;background:#fff8e1;border-left:4px solid #ffb300;border-radius:6px;padding:8px 12px;margin-top:10px;color:#4e342e}
+.wyj .katex{font-size:1em}
+
+.dol{max-width:900px;margin:16px auto 0}
+.dol button{display:block;width:100%;min-height:70px;font-size:22px;font-weight:700;border:3px solid #3e2f1c;border-radius:16px;background:#3e2f1c;color:#fff;cursor:pointer;margin-top:10px;font-family:inherit}
+.dol button.drugi{background:#fff;color:#3e2f1c}
+.wynik{background:#fff;border-radius:16px;padding:18px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.wynik .duzy{font-size:54px;font-weight:800;color:#3e2f1c}
+.wynik .kom2{font-size:19px;margin-top:6px}
+@media (max-width:640px){.kartka{padding:22px 16px;font-size:19px}}
+
+.t5 td{padding:4px 10px}
+.t5 td.lit{width:70px;text-align:center}
+.t5 td.sym{height:52px}
+.t5 input.luka{width:calc(100% - 50px);max-width:520px}
+.opc .t .katex{font-size:1.15em}
+
 </style>
 </head>
 <body>
-<div class="subject-tag" id="tag"></div>
-<h1 id="tytul"></h1>
-<div class="karta"><div class="mapa" id="mapa"></div></div>
-<div id="ekran"></div>
+
+<div class="pasek"><div class="seria" id="seria"></div></div>
+<div class="info" id="info"></div>
+
+<div class="kartka" id="kartka">
+<div class="zad">
+  <div class="nag"><span class="tr">Zad. 1 <u>Wypisz</u> trzy sposoby elektryzowania ciał.</span><span class="pk" data-z="1"></span></div>
+  <div class="opis"><span class="l">A.</span><span>elektryzowanie przez potarcie</span></div>
+  <div class="opis"><span class="l">B.</span><span>elektryzowanie przez podgrzewanie</span></div>
+  <div class="opis"><span class="l">C.</span><span>elektryzowanie przez dotyk</span></div>
+  <div class="opis"><span class="l">D.</span><span>elektryzowanie przez zamrażanie</span></div>
+  <div class="opis"><span class="l">E.</span><span>elektryzowanie przez indukcję</span></div>
+  <div class="odp"><b>Odpowiedź:</b><input class="linia" data-k="z1" aria-label="Zadanie 1, odpowiedź"></div>
+  <div class="wyj" data-wyj="1">💡 Trzy sposoby: przez <b>potarcie</b>, przez <b>dotyk</b> i przez <b>indukcję</b> → <b>A, C, E</b>. Podgrzewanie i zamrażanie nie elektryzują.</div>
+</div>
+
+<div class="zad">
+  <div class="nag"><span class="tr">Zad. 2 <u>Wykonaj</u> polecenia.</span><span class="pk" data-z="2"></span></div>
+  <div class="b" style="margin-top:6px"><u>Uzupełnij</u> zdanie.</div>
+  <div>Izolatory to materiały, które <input class="luka" data-k="iz" aria-label="Uzupełnij zdanie o izolatorach"> przewodzą prąd elektryczny.</div>
+  <div class="b" style="margin-top:14px"><u>Wybierz trzy</u> przykłady izolatorów.</div>
+  <div class="opis"><span class="l">A.</span><span>plastik</span></div>
+  <div class="opis"><span class="l">B.</span><span>miedź</span></div>
+  <div class="opis"><span class="l">C.</span><span>drewno</span></div>
+  <div class="opis"><span class="l">D.</span><span>guma</span></div>
+  <div class="odp"><b>Odpowiedź:</b><input class="linia" data-k="z2" aria-label="Zadanie 2, odpowiedź"></div>
+  <div class="wyj" data-wyj="2">💡 Izolatory <b>nie</b> przewodzą prądu (albo bardzo słabo). Izolatory: plastik, drewno, guma → <b>A, C, D</b>. Miedź to metal — przewodnik.</div>
+</div>
+
+<div class="zad">
+  <div class="nag"><span class="tr">Zad. 3 <u>Dokończ</u> zdanie.</span><span class="pk" data-z="3"></span></div>
+  <div>Jednostką ładunku elektrycznego jest <input class="luka" data-k="z3" aria-label="Jednostka ładunku"></div>
+  <div class="wyj" data-wyj="3">💡 Ładunek mierzymy w <b>kulombach (C)</b>.</div>
+</div>
+
+<div class="zad">
+  <div class="nag"><span class="tr">Zad. 4 Napisz jaka jest różnica między baterią a akumulatorem?</span><span class="pk" data-z="4"></span></div>
+  <textarea data-k="z4" aria-label="Zadanie 4, odpowiedź"></textarea>
+</div>
+
+<div class="zad">
+  <div class="nag"><span class="tr">Zad. 5 <u>Rozwiąż</u> dwa zadania.</span><span class="pk" data-z="5"></span></div>
+  <div style="padding-left:22px;margin-top:6px">1. <u>Wybierz wzór na natężenie prądu</u> i opisz jego symbole.</div>
+  <div class="grupa" data-k="wz" style="margin-top:6px">
+    <div class="opc" data-i="0" tabindex="0" role="button"><span class="l">A.</span><span class="t"><span class="m">I=\dfrac{q}{t}</span></span></div>
+    <div class="opc" data-i="1" tabindex="0" role="button"><span class="l">B.</span><span class="t"><span class="m">U=\dfrac{E}{q}</span></span></div>
+  </div>
+  <table class="tab t5" style="width:100%;margin-top:8px">
+    <tr><td class="b lit" rowspan="3">A</td><td class="sym"><b>I -</b> <input class="luka" data-k="aI" aria-label="A, I"></td></tr>
+    <tr><td class="sym"><b>q -</b> <input class="luka" data-k="aq" aria-label="A, q"></td></tr>
+    <tr><td class="sym"><b>t -</b> <input class="luka" data-k="at" aria-label="A, t"></td></tr>
+    <tr><td class="b lit" rowspan="3">B</td><td class="sym"><b>U -</b> <input class="luka" data-k="bU" aria-label="B, U"></td></tr>
+    <tr><td class="sym"><b>E -</b> <input class="luka" data-k="bE" aria-label="B, E"></td></tr>
+    <tr><td class="sym"><b>q -</b> <input class="luka" data-k="bq" aria-label="B, q"></td></tr>
+  </table>
+  <div style="margin-top:18px">2. Jednostką natężenia prądu jest</div>
+  <div class="opis"><span class="l">A.</span><span>Volt (V)</span></div>
+  <div class="opis"><span class="l">B.</span><span>Amper (A)</span></div>
+  <div class="odp"><b>Odpowiedź:</b><input class="linia" data-k="z5" aria-label="Zadanie 5.2, odpowiedź"></div>
+  <div class="wyj" data-wyj="5">💡 Natężenie to <b>I</b>, więc wzór <b>A</b>: I – natężenie prądu, q – ładunek elektryczny, t – czas. (B to napięcie: U – napięcie, E – energia/praca, q – ładunek.) Jednostka natężenia: <b>Amper (A)</b> → odpowiedź <b>B</b>.</div>
+</div>
+
+</div>
+
+<div class="dol" id="dol"></div>
 
 <script>
 var RESULTS_URL="https://julia-hub-161045418771.europe-west1.run.app/results",RESULTS_TOKEN="XW09DH2_fs8SdHh7B9pGMoCZuDVwAHSQ";
-var R=String.raw;
-function ch(s){ return String(s).replace(/([A-Za-z)])(\d+)/g,'$1<sub>$2</sub>'); }   // wzory chemiczne: indeksy dolne
-var KARTA={przedmiot:'Fizyka',tytul:'Kartkówka — elektryczność',pamiec:'kl_fizyka_elektrycznosc_v1',pytania:[
- {nr:'Zad. 1',p:'<u>Wypisz</u> trzy sposoby elektryzowania ciał.',
-  cz:[{t:'wybor',o:['elektryzowanie przez potarcie','elektryzowanie przez podgrzewanie','elektryzowanie przez dotyk','elektryzowanie przez zamrażanie','elektryzowanie przez indukcję'],ok:[0,2,4],
-   wyj:'Trzy sposoby: przez potarcie, przez dotyk i przez indukcję (zbliżenie naelektryzowanego ciała).'}]},
- {nr:'Zad. 2',p:'<u>Wykonaj</u> polecenia.',
-  cz:[{t:'wpisz',p:'<u>Uzupełnij</u> zdanie.',w:[{przed:'Izolatory to materiały, które',po:'przewodzą prąd elektryczny.',ok:['nie','słabo'],zaw:true,pokaz:'nie (bardzo słabo)'}]},
-      {t:'wybor',p:'<u>Wybierz trzy</u> przykłady izolatorów.',o:['plastik','miedź','drewno','guma'],ok:[0,2,3],
-       wyj:'Izolatory: plastik, drewno (suche), guma. Miedź to metal — dobry przewodnik.'}]},
- {nr:'Zad. 3',p:'<u>Dokończ</u> zdanie.',
-  cz:[{t:'wpisz',w:[{przed:'Jednostką ładunku elektrycznego jest',ok:['kulomb','kulomb (C)','kulomb C','C','1 C','1 kulomb','coulomb'],pokaz:'kulomb (C)'}]}]},
- {nr:'Zad. 4',p:'Napisz jaka jest różnica między baterią a akumulatorem?',
-  cz:[{t:'otwarta',wzor:'Bateria jest jednorazowa — po rozładowaniu nie da się jej naładować i trzeba ją wymienić. Akumulator można ładować wiele razy.'}]},
- {nr:'Zad. 5',p:'<u>Rozwiąż</u> dwa zadania.',
-  cz:[{t:'wybor',p:'1. <u>Wybierz wzór na natężenie prądu</u> i opisz jego symbole.',o:['$I = \\dfrac{q}{t}$','$U = \\dfrac{E}{q}$'],ok:[0],
-       wyj:'Natężenie to <b>I</b>. Drugi wzór (U) to napięcie elektryczne: U – napięcie, E – energia (praca), q – ładunek.'},
-      {t:'wpisz',p:'Opisz symbole wybranego wzoru:',w:[
-        {przed:'<b>I</b> –',ok:['natężeni'],zaw:true,pokaz:'natężenie prądu'},
-        {przed:'<b>q</b> –',ok:['ładunek'],zaw:true,pokaz:'ładunek elektryczny'},
-        {przed:'<b>t</b> –',ok:['czas'],zaw:true,pokaz:'czas'}]},
-      {t:'wybor',p:'2. Jednostką natężenia prądu jest',o:['Volt (V)','Amper (A)'],ok:[1],
-       wyj:'Amper (A) — natężenie. Volt (V) — napięcie.'}]}
-]};
+function $$(s,el){ return Array.prototype.slice.call((el||document).querySelectorAll(s)); }
 
-var Q=KARTA.pytania;
+// ---- sprawdzanie: kazda funkcja zwraca 2 = dobrze, 1 = dobrze ale bez polskich liter, 0 = zle ----
+var PL={'ą':'a','ć':'c','ę':'e','ł':'l','ń':'n','ó':'o','ś':'s','ź':'z','ż':'z'};
+function norm(s){ return String(s||'').toLowerCase().replace(/\s+/g,' ').trim(); }
+function bezpl(s){ return norm(s).replace(/[ąćęłńóśźż]/g,function(c){ return PL[c]; }); }
+// jedna z dopuszczalnych odpowiedzi (cala tresc)
+function jedno(lista){ return function(v){ var n=norm(v).replace(/[.]$/,''), b=bezpl(n);
+  if(lista.some(function(x){ return norm(x)===n; })) return 2;
+  return lista.some(function(x){ return bezpl(x)===b; })?1:0; }; }
+// tresc zawiera ktores ze slow
+function zawiera(lista,zle){ return function(v){ var n=norm(v), b=bezpl(v);
+  if(!n||(zle&&zle.some(function(x){ return b.indexOf(bezpl(x))>=0; }))) return 0;
+  if(lista.some(function(x){ return n.indexOf(norm(x))>=0; })) return 2;
+  return lista.some(function(x){ return b.indexOf(bezpl(x))>=0; })?1:0; }; }
+// odpowiedz literami (np. "A, C, E" albo "ace"); opcjonalnie slowami: slowa = wszystkie musza byc, zle = zadne nie moze
+function litery(ok,o){ o=o||{}; var cel=ok.toUpperCase().split('').sort().join('');
+  return function(v){
+    var b=bezpl(v);
+    if(o.slowa&&o.slowa.every(function(r){ return r.test(b); })&&!(o.zle||[]).some(function(r){ return r.test(b); })) return 2;
+    var s=String(v||'').toUpperCase().replace(/ODPOWIED[ŹZ]|ODP/g,' '), lit=[];
+    s.split(/[^A-ZĄĆĘŁŃÓŚŹŻ]+/).forEach(function(t){ if(/^[A-H]+$/.test(t)&&t.length<=5) lit=lit.concat(t.split('')); });
+    lit=lit.filter(function(x,i){ return lit.indexOf(x)===i; }).sort().join('');
+    return lit===cel?2:0; }; }
+// liczba (przecinek albo kropka, bez spacji)
+function liczba(ok){ return function(v){ return String(v||'').replace(/\s/g,'').replace('.',',')===ok?2:0; }; }
+// symbol pierwiastka: wielkosc liter ma znaczenie
+function symbol(ok){ return function(v){ return String(v||'').trim()===ok?2:0; }; }
+// zaznaczenie klikiem: lista indeksow
+function wybor(ok){ var cel=ok.slice().sort().join(','); return function(v){ return (v||[]).slice().sort().join(',')===cel?2:0; }; }
 
-/* ===== pamięć ===== */
-var stan; try{ stan=JSON.parse(localStorage.getItem(KARTA.pamiec)||'{}'); }catch(e){ stan={}; }
-stan.a=stan.a||{}; stan.spr=stan.spr||{}; stan.sam=stan.sam||{};
+
+function roznicaBateria(v){
+  var b=bezpl(v), k=b.lastIndexOf('akumulator'), po=k>=0?b.slice(k):b;
+  var bat=/jednoraz|nie (da sie|mozna|moze|wolno)[a-z ]{0,25}(lad|nalad|doladow)|nie (nalad|ladow|doladow)|bateri\w*( \w+){0,2} nie\b/.test(b);
+  var aku=/wielokrot|wiele razy|kilka razy|ponownie|ladowaln|(mozna|da sie|moze)( \w+){0,3} (nalad|ladow|doladow|lad)|(nalad|ladow|laduje)/.test(po)&&!/nie (da sie|mozna|moze)( \w+){0,3} (nalad|ladow)/.test(po);
+  return bat&&aku?2:0;
+}
+var KARTA={przedmiot:'Fizyka',tytul:'Kartkówka — elektryczność',pamiec:'kk_fizyka_elektrycznosc_v1',
+ instrukcja:'Przy „Odpowiedź” wpisz litery (np. A, B). Luki w zdaniach i w tabeli uzupełnij słowami (<b>Tab</b> = następne pole). Wzór w zad. 5 <b>zakreśl</b> kliknięciem.',
+ pola:{
+  z1:{f:litery('ACE',{slowa:[/potarc/,/dotyk/,/indukc/],zle:[/podgrz/,/zamraz/]}),pokaz:'A, C, E'},
+  iz:{f:zawiera(['nie','słabo'],['dobrze']),pokaz:'nie (lub: bardzo słabo)'},
+  z2:{f:litery('ACD',{slowa:[/plastik/,/drewn/,/gum/],zle:[/miedz/]}),pokaz:'A, C, D'},
+  z3:{f:zawiera(['kulomb','coulomb']),pokaz:'kulomb (C)'},
+  z4:{f:roznicaBateria,uznaj:true,wzor:'Baterii nie można naładować — jest jednorazowa. Akumulator można ładować wiele razy.'},
+  wz:{f:wybor([0]),ok:[0]},
+  aI:{f:zawiera(['natężeni']),pokaz:'natężenie prądu'},aq:{f:zawiera(['ładun']),pokaz:'ładunek elektryczny'},at:{f:zawiera(['czas']),pokaz:'czas'},
+  bU:{f:zawiera(['napięci']),pokaz:'napięcie'},bE:{f:zawiera(['energi','prac']),pokaz:'energia (praca)'},bq:{f:zawiera(['ładun']),pokaz:'ładunek elektryczny'},
+  z5:{f:litery('B',{slowa:[/amper/],zle:[/volt|wolt/]}),pokaz:'B'}},
+ opcj:['bU','bE','bq'],
+ zadania:[{z:'1',grupy:[['z1']]},{z:'2',grupy:[['iz'],['z2']]},{z:'3',grupy:[['z3']]},{z:'4',grupy:[['z4']]},
+  {z:'5',grupy:[['wz'],['aI'],['aq'],['at'],['z5']]}]};
+
+
+var stan;
+try{ stan=JSON.parse(localStorage.getItem(KARTA.pamiec)||'null'); }catch(e){ stan=null; }
+if(!stan||!stan.odp) stan={odp:{},uznane:{},spr:false,czysta:true,seria:0,proby:0};
+if(!stan.uznane) stan.uznane={};
 function zapamietaj(){ try{ localStorage.setItem(KARTA.pamiec,JSON.stringify(stan)); }catch(e){} }
 
-/* ===== pomocnicze ===== */
-function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
-function km(l){ return katex.renderToString(l,{throwOnError:false}); }
-function tm(s){ return String(s||'').split('$').map(function(c,i){ return i%2?km(c):c; }).join(''); }   // treść pisana przeze mnie, nie przez użytkownika
-function odp(qi){ if(!stan.a[qi]) stan.a[qi]=Q[qi].cz.map(function(c){ return c.t==='wybor'?[]:(c.t==='otwarta'?'':(c.w||[]).map(function(){return null;})); }); return stan.a[qi]; }
-function bezPl(s){ return s.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ł/g,'l').replace(/Ł/g,'L'); }
-function norm(s,wielk){ s=String(s==null?'':s).trim().replace(/\s+/g,' ').replace(/\./g,','); return wielk?s:s.toLowerCase(); }
-function pasuje(v,f){ // 2 = dobrze, 1 = dobrze, ale bez polskich liter, 0 = źle
-  var a=norm(v,f.wielk); if(!a) return 0; var i,b;
-  for(i=0;i<f.ok.length;i++){ b=norm(f.ok[i],f.wielk); if(f.zaw?a.indexOf(b)>=0:a===b) return 2; }
-  for(i=0;i<f.ok.length;i++){ b=norm(f.ok[i],f.wielk); if(f.zaw?bezPl(a).indexOf(bezPl(b))>=0:bezPl(a)===bezPl(b)) return 1; }
-  return 0;
-}
-function maks(c){ return (c.t==='pf'||c.t==='dopasuj'||c.t==='wpisz')?c.w.length:1; }
+var GRUPY={}; $$('.grupa[data-k]').forEach(function(g){ GRUPY[g.getAttribute('data-k')]=g; });
+var OPCJ=KARTA.opcj||[];
+function wart(id){ var v=stan.odp[id]; return GRUPY[id]?(v||[]):(v||''); }
+function pusta(id){ var v=wart(id); return GRUPY[id]?!v.length:!String(v).trim(); }
+var MAXSUMA=KARTA.zadania.reduce(function(a,z){ return a+z.grupy.length; },0);
 
-/* ===== ocena ===== */
-function ocenCzesc(qi,pi){
-  var c=Q[qi].cz[pi],a=odp(qi)[pi];
-  if(c.t==='wybor'){ var s=a.slice().sort().join(),k=c.ok.slice().sort().join(); return s===k?1:0; }
-  if(c.t==='pf'||c.t==='dopasuj') return c.w.reduce(function(n,_,r){ return n+(a[r]===c.ok[r]?1:0); },0);
-  if(c.t==='kolej') return c.w.every(function(_,r){ return a[r]===c.ok[r]; })?1:0;
-  if(c.t==='wpisz') return c.w.reduce(function(n,f,r){ return n+(pasuje(a[r],f)?1:0); },0);
-  if(c.t==='otwarta'){ var s2=(stan.sam[qi]||{})[pi]; return s2===1?1:0; }
-  return 0;
-}
-function ocenPytanie(qi){ var z=0,m=0; Q[qi].cz.forEach(function(c,pi){ if(c.t==='info') return; z+=ocenCzesc(qi,pi); m+=maks(c); }); return {z:z,m:m}; }
-function czekaNaSamoocene(qi){ return Q[qi].cz.some(function(c,pi){ return c.t==='otwarta'&&(stan.sam[qi]||{})[pi]==null; }); }
-function cosZaznaczone(qi){ var A=odp(qi); return Q[qi].cz.some(function(c,pi){ var a=A[pi];
-  if(c.t==='info') return false; if(c.t==='otwarta') return String(a).trim()!==''; if(c.t==='wybor') return a.length>0;
-  return a.some(function(x){ return x!=null&&String(x).trim()!==''; }); }); }
-
-/* ===== mapa ===== */
-var biez=0,naWyniku=false;
-function odswiezMape(){
-  var h=''; Q.forEach(function(q,i){ var kl='';
-    if(stan.spr[i]){ var o=ocenPytanie(i); kl=czekaNaSamoocene(i)?'czesc':(o.z===o.m?'dobrze':'zle'); } else if(stan.a[i]&&cosZaznaczone(i)) kl='czesc';
-    h+='<button class="'+kl+(i===biez&&!naWyniku?' tu':'')+'" onclick="idz('+i+')">'+(i+1)+'</button>'; });
-  h+='<button class="'+(naWyniku?'tu':'')+'" onclick="pokazWynik()" title="Wynik">🏁</button>';
-  document.getElementById('mapa').innerHTML=h;
+function ocen(){
+  var w={},p={},suma=0;
+  for(var id in KARTA.pola){
+    if(OPCJ.indexOf(id)>=0&&pusta(id)) continue;
+    w[id]=stan.uznane[id]?2:KARTA.pola[id].f(wart(id));
+  }
+  KARTA.zadania.forEach(function(z){
+    p[z.z]=z.grupy.filter(function(g){ return g.every(function(id){ return w[id]>0; }); }).length; suma+=p[z.z];
+  });
+  return {w:w,p:p,suma:suma};
 }
 
-/* ===== rysowanie pytania ===== */
-function przyc(qi,pi,r,v,html,stanKlasy){ return '<button class="btn wyb '+stanKlasy+'" data-q="'+qi+'" data-p="'+pi+'" data-r="'+r+'" data-v="'+v+'"'+(stan.spr[qi]?' disabled':'')+'>'+html+'</button>'; }
-function klasaWiersza(c,a,r,v,spr){ // przyciski w wierszu (pf / dopasuj / kolej)
-  var wyb=a[r]===v; if(!spr) return wyb?'wybrana':'';
-  if(v===c.ok[r]) return wyb?'dobrze':'brakowalo'; return wyb?'zle':'';
+// pola: podpisy poprawek dokladamy za kazdym polem
+$$('input[data-k],textarea[data-k]').forEach(function(el){
+  if(document.querySelector('[data-popr="'+el.getAttribute('data-k')+'"]')) return;
+  var s=document.createElement('span'); s.className='popr'+(el.tagName==='TEXTAREA'||el.classList.contains('linia')?' blok':''); s.setAttribute('data-popr',el.getAttribute('data-k'));
+  el.parentNode.insertBefore(s,el.nextSibling);
+});
+$$('.pk').forEach(function(el){ if(!el.hasAttribute('data-pusty')) el.setAttribute('data-pusty',el.innerHTML); });
+
+function rysuj(){
+  var oc=stan.spr?ocen():null, blok=stan.spr;
+  document.getElementById('info').innerHTML=stan.spr
+    ? '✍️ Kartka sprawdzona. Zielone = dobrze, czerwone = źle (obok poprawna odpowiedź)'+(GRUPY&&Object.keys(GRUPY).length?', zielona przerywana ramka = to trzeba było zaznaczyć':'')+'.'
+    : '✍️ '+KARTA.instrukcja+' Na końcu kliknij <b>„Oddaję kartkę”</b>.';
+  $$('input[data-k],textarea[data-k]').forEach(function(el){
+    var id=el.getAttribute('data-k'), v=wart(id);
+    if(el!==document.activeElement||blok) el.value=v;
+    el.readOnly=blok;
+    el.classList.remove('dobrze','zle');
+    if(oc&&id in oc.w) el.classList.add(oc.w[id]?'dobrze':'zle');
+  });
+  $$('[data-popr]').forEach(function(el){
+    var id=el.getAttribute('data-popr'), pole=KARTA.pola[id], t='', pis=false;
+    if(oc&&pole&&id in oc.w){
+      if(oc.w[id]===0) t='✔ '+(pole.pokaz||'');
+      if(oc.w[id]===1){ t='pisownia: '+pole.pokaz; pis=true; }
+    }
+    el.className=el.className.replace(/ ?pis/,'')+(pis?' pis':'');
+    el.innerHTML=t;
+    if(oc&&pole&&pole.wzor&&id in oc.w){
+      el.innerHTML=(oc.w[id]?'':'✘ ')+'<span class="wzorzec">Wzorcowa odpowiedź: '+pole.wzor+'</span>';
+      if(oc.w[id]===0&&pole.uznaj) el.innerHTML+='<button class="uznaj" onclick="uznaj(\''+id+'\')">✓ Moja odpowiedź znaczy to samo — uznaj</button>';
+    }
+  });
+  for(var id in GRUPY){
+    var g=GRUPY[id], v=wart(id), dob=oc&&id in oc.w&&oc.w[id]>0, spr=oc&&id in oc.w;
+    var klucz=KARTA.pola[id].ok||[];
+    g.classList.toggle('zablok',blok);
+    $$('.opc',g).forEach(function(op){
+      var i=+op.getAttribute('data-i'), wyb=v.indexOf(i)>=0, wl=klucz.indexOf(i)>=0;
+      op.className='opc'+(wyb?' pod':'');
+      if(spr){ if(wyb&&wl) op.className+=' ok'; if(wyb&&!wl) op.className+=' blad'; if(!wyb&&wl&&!dob) op.className+=' brak'; }
+      op.setAttribute('aria-pressed',wyb?'true':'false');
+      op.tabIndex=blok?-1:0;
+    });
+  }
+  KARTA.zadania.forEach(function(z){
+    var el=document.querySelector('.pk[data-z="'+z.z+'"]'); if(!el) return;
+    el.innerHTML=oc?'(<span class="ocena">'+oc.p[z.z]+'</span>/'+z.grupy.length+' p.)':el.getAttribute('data-pusty');
+  });
+  $$('[data-wyj]').forEach(function(el){
+    var z=el.getAttribute('data-wyj'), zad=KARTA.zadania.filter(function(x){ return x.z===z; })[0];
+    el.style.display=(oc&&zad&&oc.p[z]<zad.grupy.length)?'':'none';
+  });
+  var kropki=''; for(var k=0;k<3;k++) kropki+=k<Math.min(stan.seria,3)?'●':'○';
+  document.getElementById('seria').innerHTML=MAXSUMA+'/'+MAXSUMA+' na czystej kartce: <b>'+kropki+'</b>'+(stan.seria>3?' ×'+stan.seria:'')+'<br><span style="font-size:14px;font-weight:400">cel: 3 razy z rzędu</span>';
+  var dol=document.getElementById('dol'), h='';
+  if(!stan.spr) h='<button onclick="sprawdz()">✅ Oddaję kartkę — sprawdź</button>';
+  else {
+    var s=oc.suma, M=MAXSUMA, kom=s===M?(stan.czysta?'🎉 Bezbłędnie!':'🎉 Wszystko poprawione!'):(s>=M-2?'Prawie! Popraw błędy i zrób jeszcze raz od nowa.':'Zajrzyj do wyjaśnień 💡 przy błędach, potem popraw.');
+    if(s===M&&stan.czysta&&stan.seria>=3) kom='🏆 Trzy razy z rzędu bezbłędnie — umiesz tę kartkówkę!';
+    h='<div class="wynik"><div class="duzy">'+s+' / '+M+' pkt</div><div class="kom2">'+kom+'</div></div>';
+    if(s<M) h+='<button onclick="poprawBledy()">✏️ Popraw tylko błędy</button>';
+    h+='<button class="'+(s<M?'drugi':'')+'" onclick="odNowa()">🔄 Od nowa — czysta kartka</button>';
+  }
+  dol.innerHTML=h;
 }
-function czescHTML(qi,pi,spr){
-  var c=Q[qi].cz[pi],a=odp(qi)[pi],h='',lit=c.lit||'ABCDE';
-  if(c.p) h+='<div class="podpol">'+tm(c.p)+'</div>';
-  if(c.opisy) h+='<div class="opisy">'+c.opisy.map(function(o,j){ return '<div><b>'+lit[j]+'.</b> '+tm(o)+'</div>'; }).join('')+'</div>';
-  if(c.t==='wybor'){
-    var ile=c.ok.length; if(ile>1&&!spr) h+='<div class="wskazowka">Zaznacz '+ile+' odpowiedzi.</div>';
-    c.o.forEach(function(o,j){ var wyb=a.indexOf(j)>=0,kl='';
-      if(!spr) kl=wyb?'wybrana':''; else if(c.ok.indexOf(j)>=0) kl=wyb?'dobrze':'brakowalo'; else kl=wyb?'zle':'';
-      h+=przyc(qi,pi,-1,j,'<span class="lit">'+lit[j]+(c.kropka===false?'':'.')+'</span> '+tm(o),kl); });
-  }
-  if(c.t==='pf'||c.t==='dopasuj'||c.t==='kolej'){
-    var et=c.t==='pf'?c.et:(c.t==='dopasuj'?lit.slice(0,c.opisy.length).split(''):c.w.map(function(_,j){ return String(j+1); }));
-    c.w.forEach(function(w,r){
-      h+='<div class="wiersz"><div class="tekst">'+tm(w)+'</div><div class="para">';
-      et.forEach(function(e,v){ var val=c.t==='kolej'?v+1:v; h+=przyc(qi,pi,r,val,esc(e),klasaWiersza(c,a,r,val,spr)); });
-      h+='</div></div>'; });
-  }
-  if(c.t==='wpisz'){
-    c.w.forEach(function(f,r){ var kl='',dop='';
-      if(spr){ var p=pasuje(a[r],f); kl=p?'dobrze':'zle';
-        if(!p) dop='<span class="popr">✓ '+esc(f.pokaz||f.ok[0])+'</span>';
-        else if(p===1) dop='<span class="uwaga">pisz z polskimi literami: '+esc(f.pokaz||f.ok[0])+'</span>'; }
-      h+='<div class="pole">'+(f.przed?'<span>'+tm(f.przed)+'</span>':'')
-        +'<input class="'+(f.waski?'waski ':'')+kl+'" data-q="'+qi+'" data-p="'+pi+'" data-r="'+r+'" autocomplete="off" spellcheck="false" value="'+esc(a[r]||'')+'"'+(spr?' disabled':'')+'>'
-        +(f.po?'<span>'+tm(f.po)+'</span>':'')+dop+'</div>'; });
-  }
-  if(c.t==='otwarta'){
-    h+='<textarea data-q="'+qi+'" data-p="'+pi+'" placeholder="Napisz odpowiedź…"'+(spr?' disabled':'')+'>'+esc(a)+'</textarea>';
-    if(spr){ var s=(stan.sam[qi]||{})[pi];
-      h+='<div class="wzorzec"><b>Wzorcowa odpowiedź:</b><br>'+tm(c.wzor)+'</div>';
-      h+='<div class="podpol">Porównaj ze wzorem. Twoja odpowiedź jest:</div><div class="nawigacja">'
-        +'<button class="btn drugi '+(s===1?'dobrze':'')+'" onclick="samoocena('+qi+','+pi+',1)">✓ dobra</button>'
-        +'<button class="btn drugi '+(s===0?'zle':'')+'" onclick="samoocena('+qi+','+pi+',0)">✗ do poprawy</button></div>'; }
-  }
-  if(spr&&c.wyj) h+='<div class="wyj">💡 '+tm(c.wyj)+'</div>';
-  return h;
-}
-function idz(i){
-  if(i<0||i>=Q.length) return;
-  biez=i; naWyniku=false;
-  var q=Q[i],spr=!!stan.spr[i],h='<div class="karta"><div class="licznik">'+esc(q.nr)+' · pytanie '+(i+1)+' z '+Q.length
-    +(q.pkt?'<span class="pkt">'+esc(q.pkt)+'</span>':'')+'</div><div class="polecenie">'+tm(q.p)+'</div>';
-  if(q.cyt) h+='<div class="cytat">'+tm(q.cyt)+'</div>';
-  if(q.img) h+='<img class="ilustr" src="'+q.img+'" alt="">';
-  q.cz.forEach(function(_,pi){ h+=czescHTML(i,pi,spr); });
-  h+='</div>';
-  if(!spr){
-    h+='<button class="btn glowny" onclick="sprawdz()">Sprawdź</button>';
-    h+='<div class="nawigacja"><button class="btn drugi" onclick="idz(biez-1)"'+(i?'':' disabled')+'>‹ Poprzednie</button>'
-      +'<button class="btn drugi" onclick="dalej()">Pomiń ›</button></div>';
-  } else {
-    var o=ocenPytanie(i);
-    if(czekaNaSamoocene(i)) h+='<div class="wynik-pyt">Oceń swoją odpowiedź powyżej 👆</div>';
-    else h+='<div class="wynik-pyt '+(o.z===o.m?'dobrze':'zle')+'">'+(o.z===o.m?'Dobrze! ':'')+o.z+' / '+o.m+' pkt</div>'
-      +(o.z<o.m?'<div class="wskazowka" style="text-align:center">Zielona przerywana ramka = poprawna odpowiedź.</div>':'');
-    h+='<div class="nawigacja"><button class="btn drugi" onclick="ponow()">↺ Jeszcze raz</button>'
-      +'<button class="btn glowny" onclick="dalej()">'+(i<Q.length-1?'Dalej ›':'🏁 Wynik')+'</button></div>';
-  }
-  document.getElementById('ekran').innerHTML=h;
-  odswiezMape(); window.scrollTo(0,0);
-}
-function dalej(){ if(biez<Q.length-1) idz(biez+1); else pokazWynik(); }
+
 function sprawdz(){
-  if(!cosZaznaczone(biez)&&!confirm('Nic nie zaznaczono. Sprawdzić mimo to?')) return;
-  stan.spr[biez]=true; zapamietaj(); idz(biez);
+  var puste=0; for(var id in KARTA.pola) if(OPCJ.indexOf(id)<0&&pusta(id)) puste++;
+  if(puste&&!confirm('Nie wszystko jest uzupełnione (puste miejsca: '+puste+'). Oddać kartkę mimo to?')) return;
+  stan.spr=true; stan.proby++;
+  var w=ocen();
+  if(stan.czysta){ if(w.suma===MAXSUMA) stan.seria++; else stan.seria=0; }
+  zapamietaj(); rysuj();
+  document.getElementById('dol').scrollIntoView({behavior:'smooth',block:'start'});
+  try{ fetch(RESULTS_URL,{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({token:RESULTS_TOKEN,subject:KARTA.przedmiot,title:KARTA.tytul+' — jak na kartce'+(stan.czysta?'':' (poprawa błędów)'),score:w.suma,total:MAXSUMA})}); }catch(e){}
 }
-function ponow(){ delete stan.a[biez]; delete stan.spr[biez]; delete stan.sam[biez]; zapamietaj(); idz(biez); }
-function samoocena(qi,pi,v){ stan.sam[qi]=stan.sam[qi]||{}; stan.sam[qi][pi]=v; zapamietaj(); idz(qi); }
 
-document.addEventListener('click',function(e){
-  var b=e.target.closest('.wyb'); if(!b||b.disabled) return;
-  var qi=+b.dataset.q,pi=+b.dataset.p,r=+b.dataset.r,v=+b.dataset.v,c=Q[qi].cz[pi],a=odp(qi)[pi];
-  if(c.t==='wybor'){ var ile=c.ok.length,k=a.indexOf(v);
-    if(k>=0) a.splice(k,1); else { if(ile===1) a.length=0; else if(a.length>=ile) a.shift(); a.push(v); } }
-  else a[r]=(a[r]===v)?null:v;
-  zapamietaj(); idz(qi);
-});
-document.addEventListener('input',function(e){
-  var t=e.target; if(!t.dataset||t.dataset.q==null) return;
-  var A=odp(+t.dataset.q); if(t.tagName==='TEXTAREA') A[+t.dataset.p]=t.value; else A[+t.dataset.p][+t.dataset.r]=t.value;
-  zapamietaj(); odswiezMape();
-});
+function uznaj(id){ stan.uznane[id]=true; zapamietaj(); rysuj(); }
 
-/* ===== wynik ===== */
-function pokazWynik(){
-  naWyniku=true; var z=0,m=0,brak=[],zle=[],h='';
-  Q.forEach(function(q,i){ var o=ocenPytanie(i); m+=o.m; if(!stan.spr[i]){ brak.push(i); return; } z+=o.z; if(o.z<o.m) zle.push(i); });
-  h+='<div class="karta"><div class="polecenie">Wynik</div><div class="duzy">'+z+' / '+m+' pkt</div>';
-  if(brak.length) h+='<div style="text-align:center;color:#e65100;font-weight:700">Niesprawdzone pytania: '+brak.map(function(i){return i+1;}).join(', ')+'</div>';
-  h+='<div class="lista-wynikow" style="margin-top:10px">'+Q.map(function(q,i){ var o=ocenPytanie(i);
-    return '<div>'+(stan.spr[i]?(o.z===o.m?'✅':'❌'):'⬜')+' '+esc(q.nr)+' — '+(stan.spr[i]?o.z+' / '+o.m+' pkt':'nie sprawdzone')+'</div>'; }).join('')+'</div></div>';
-  if(zle.length) h+='<button class="btn glowny" onclick="powtorzBledne()">↺ Powtórz tylko błędne ('+zle.length+')</button>';
-  if(brak.length) h+='<button class="btn drugi" onclick="idz('+brak[0]+')">Przejdź do niesprawdzonych</button>';
-  h+='<button class="btn drugi" onclick="odNowa()">Od nowa — cała klasówka</button>';
-  document.getElementById('ekran').innerHTML=h;
-  odswiezMape(); window.scrollTo(0,0);
-  if(!brak.length&&!stan.wyslano){ stan.wyslano=true; zapamietaj();
-    try{ fetch(RESULTS_URL,{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({token:RESULTS_TOKEN,subject:KARTA.przedmiot,title:KARTA.tytul,score:z,total:m})}); }catch(e){} }
+function poprawBledy(){
+  var w=ocen().w;
+  for(var id in w) if(!w[id]) stan.odp[id]=GRUPY[id]?[]:'';
+  stan.spr=false; stan.czysta=false; zapamietaj(); rysuj(); window.scrollTo(0,0);
 }
-function powtorzBledne(){ var pierwsze=-1;
-  Q.forEach(function(q,i){ var o=ocenPytanie(i); if(stan.spr[i]&&o.z<o.m){ delete stan.a[i]; delete stan.spr[i]; delete stan.sam[i]; if(pierwsze<0) pierwsze=i; } });
-  stan.wyslano=false; zapamietaj(); idz(pierwsze<0?0:pierwsze); }
-function odNowa(){ if(!confirm('Wyczyścić wszystkie odpowiedzi i zacząć od nowa?')) return;
-  stan={a:{},spr:{},sam:{}}; zapamietaj(); idz(0); }
 
-document.getElementById('tag').textContent=KARTA.przedmiot;
-document.getElementById('tytul').textContent=KARTA.tytul;
-idz(0);
+function odNowa(){ stan.odp={}; stan.uznane={}; stan.spr=false; stan.czysta=true; zapamietaj(); rysuj(); window.scrollTo(0,0); }
+
+// wpisywanie
+var POLA=$$('input[data-k],textarea[data-k]');
+POLA.forEach(function(el,idx){
+  el.setAttribute('autocomplete','off'); el.setAttribute('spellcheck','false');
+  el.addEventListener('input',function(){
+    if(stan.spr) return;
+    var id=el.getAttribute('data-k'), f=el.getAttribute('data-filtr');
+    if(f){
+      var v=(el.value.toUpperCase().match(new RegExp('['+f+']','g'))||['']).pop();
+      el.value=v; stan.odp[id]=v; zapamietaj();
+      if(v&&POLA[idx+1]) POLA[idx+1].focus();
+      return;
+    }
+    stan.odp[id]=el.value; zapamietaj();
+  });
+  if(el.tagName!=='TEXTAREA') el.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){ e.preventDefault(); if(POLA[idx+1]) POLA[idx+1].focus(); }
+  });
+});
+
+// zaznaczanie klikiem (lub Enter / spacja)
+function zaznacz(op){
+  if(stan.spr) return;
+  var g=op.parentNode, id=g.getAttribute('data-k'), i=+op.getAttribute('data-i'), v=wart(id).slice(), j=v.indexOf(i);
+  if(g.hasAttribute('data-wiele')){ if(j>=0) v.splice(j,1); else v.push(i); }
+  else v=j>=0?[]:[i];
+  stan.odp[id]=v; zapamietaj(); rysuj();
+}
+$$('.opc').forEach(function(op){
+  op.addEventListener('click',function(){ zaznacz(op); });
+  op.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); zaznacz(op); } });
+});
+
+// wzory matematyczne
+$$('.m').forEach(function(el){ try{ katex.render(el.textContent,el,{throwOnError:false}); }catch(e){} });
+
+rysuj();
 </script>
 </body>
 </html>
