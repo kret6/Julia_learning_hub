@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kartkówka — potęgi i pierwiastki</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0fa;color:#222;padding:14px 14px 40px;max-width:760px;margin:0 auto;font-size:19px;line-height:1.5}
+h1{font-size:24px;color:#283593;margin-bottom:4px}
+.subject-tag{display:inline-block;background:#dde1f5;color:#283593;font-size:13px;padding:3px 10px;border-radius:10px;margin-bottom:8px}
+.karta{background:#fff;border-radius:18px;padding:16px 18px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-top:10px}
+.licznik{color:#5c6bc0;font-weight:700;font-size:16px}
+.pkt{float:right;color:#777;font-weight:600}
+.polecenie{font-weight:700;margin:4px 0 6px}
+.podpol{font-weight:600;margin:14px 0 4px}
+.wskazowka{font-size:15px;color:#5c6bc0}
+.cytat{font-style:italic;background:#f5f6ff;border-left:4px solid #9fa8da;padding:8px 12px;margin:8px 0;border-radius:6px}
+.ilustr{max-width:100%;margin:10px 0;border:1px solid #e3e6f3;border-radius:8px;background:#fff}
+.opisy{margin:6px 0 4px;font-size:17px}
+.opisy div{padding:4px 0}
+.katex{font-size:1.2em}
+.mapa{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:6px}
+.mapa button{min-height:50px;font-size:18px;font-weight:700;border:3px solid #c5cae9;border-radius:12px;background:#fff;color:#283593;cursor:pointer;font-family:inherit}
+.mapa button.dobrze{background:#e8f5e9;border-color:#66bb6a;color:#1b5e20}
+.mapa button.zle{background:#ffebee;border-color:#ef9a9a;color:#b71c1c}
+.mapa button.czesc{background:#fff8e1;border-color:#ffb300}
+.mapa button.tu{outline:4px solid #283593;outline-offset:1px}
+.btn{display:block;width:100%;min-height:68px;font-size:20px;font-weight:700;border:3px solid #c5cae9;border-radius:16px;margin-top:10px;cursor:pointer;font-family:inherit;background:#fff;color:#283593;text-align:left;padding:8px 16px}
+.btn .lit{display:inline-block;min-width:34px}
+.btn.wybrana{background:#283593;color:#fff;border-color:#283593}
+.btn.dobrze{background:#e8f5e9;border-color:#2e7d32;color:#1b5e20}
+.btn.zle{background:#ffebee;border-color:#c62828;color:#b71c1c}
+.btn.brakowalo{border-color:#2e7d32;border-style:dashed;color:#1b5e20}
+.btn.glowny{background:#283593;color:#fff;border-color:#283593;text-align:center}
+.btn.drugi{text-align:center}
+.btn:disabled{cursor:default}
+.nawigacja{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.wiersz{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #e3e6f3;flex-wrap:wrap}
+.wiersz .tekst{flex:1 1 240px}
+.wiersz .para{display:flex;gap:8px;flex-wrap:wrap}
+.wiersz .btn{width:auto;min-width:64px;min-height:60px;margin-top:0;text-align:center;padding:6px 12px}
+.pole{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px}
+.pole input,textarea{font-size:22px;padding:10px 12px;border:3px solid #c5cae9;border-radius:12px;font-family:inherit;min-width:0}
+.pole input{flex:1 1 160px;max-width:100%}
+.pole input.waski{flex:0 0 120px;text-align:center}
+textarea{width:100%;min-height:150px;margin-top:10px;line-height:1.4}
+.pole input:focus,textarea:focus{border-color:#283593;outline:none}
+.pole input.dobrze{border-color:#2e7d32;background:#e8f5e9}
+.pole input.zle{border-color:#c62828;background:#ffebee}
+.popr{font-size:16px;font-weight:700;color:#1b5e20}
+.uwaga{font-size:15px;color:#e65100;font-weight:600}
+.wyj{background:#fff8e1;border-radius:10px;padding:8px 12px;font-size:16px;margin-top:10px}
+.wzorzec{background:#e8f5e9;border-radius:10px;padding:10px 12px;margin-top:10px;font-size:17px}
+.wynik-pyt{text-align:center;font-weight:800;font-size:22px;margin-top:12px}
+.wynik-pyt.dobrze{color:#2e7d32}.wynik-pyt.zle{color:#c62828}
+.duzy{font-size:56px;font-weight:800;color:#283593;text-align:center}
+.lista-wynikow div{padding:6px 0;border-bottom:1px solid #e3e6f3}
+</style>
+</head>
+<body>
+<div class="subject-tag" id="tag"></div>
+<h1 id="tytul"></h1>
+<div class="karta"><div class="mapa" id="mapa"></div></div>
+<div id="ekran"></div>
+
+<script>
+var RESULTS_URL="https://julia-hub-161045418771.europe-west1.run.app/results",RESULTS_TOKEN="XW09DH2_fs8SdHh7B9pGMoCZuDVwAHSQ";
+var R=String.raw;
+function ch(s){ return String(s).replace(/([A-Za-z)])(\d+)/g,'$1<sub>$2</sub>'); }   // wzory chemiczne: indeksy dolne
+var KARTA={przedmiot:'Matematyka',tytul:'Kartkówka — potęgi i pierwiastki',pamiec:'kl_matematyka_potegi_v1',pytania:[
+ {nr:'Zad. 1a',p:'<u>Zapisz</u> w postaci jednej potęgi.',
+  cz:[{t:'wpisz',p:R`$(4^{4})^{5}\cdot(4^{5})^{6}=4^{\boxed{1}}\cdot 4^{\boxed{2}}=4^{\boxed{3}}$`,w:[
+     {przed:'okienko 1:',ok:['20'],waski:true},{przed:'okienko 2:',ok:['30'],waski:true},{przed:'okienko 3:',ok:['50'],waski:true}],
+   wyj:'Potęga potęgi → <b>mnożę</b> wykładniki (4·5=20, 5·6=30). Mnożenie potęg → <b>dodaję</b> (20+30=50).'}]},
+ {nr:'Zad. 1b',p:'<u>Zapisz</u> w postaci jednej potęgi.',
+  cz:[{t:'wpisz',p:R`$(6^{9})^{3}:(6^{8})^{2}=6^{\boxed{1}}:6^{\boxed{2}}=6^{\boxed{3}}$`,w:[
+     {przed:'okienko 1:',ok:['27'],waski:true},{przed:'okienko 2:',ok:['16'],waski:true},{przed:'okienko 3:',ok:['11'],waski:true}],
+   wyj:'Potęga potęgi → mnożę (9·3=27, 8·2=16). Dzielenie potęg → <b>odejmuję</b> (27−16=11).'}]},
+ {nr:'Zad. 2',p:R`Wartość wyrażenia $\dfrac{(4^{2})^{5}\cdot 4}{4^{10}}$ ma wartość:`,
+  cz:[{t:'wybor',lit:'abc',kropka:false,o:[R`) $4^{21}$`,') 4',') 1'],ok:[1],
+   wyj:R`$(4^{2})^{5}=4^{10}$, razy $4$ daje $4^{11}$, podzielone przez $4^{10}$ daje $4^{1}=4$.`}]},
+ {nr:'Zad. 3',p:'<u>Oblicz</u>:',
+  cz:[{t:'wpisz',p:R`$(1{,}1)^{5}:(1{,}1)^{3}=(1{,}1)^{\boxed{1}}=\boxed{2}$`,w:[
+     {przed:'okienko 1:',ok:['2'],waski:true},{przed:'okienko 2 (wynik):',ok:['1,21'],waski:true}],
+   wyj:R`Odejmuję wykładniki: 5−3=2. Potem $1{,}1\cdot 1{,}1=1{,}21$.`}]},
+ {nr:'Zad. 4',p:R`Iloczyn $\sqrt{15}\cdot\sqrt{3}$ jest równy:`,
+  cz:[{t:'wybor',lit:'abc',kropka:false,o:[R`) $\sqrt{5}$`,R`) $\sqrt{45}$`,R`) $\sqrt{18}$`],ok:[1],
+   wyj:R`Mnożę liczby pod pierwiastkami: $\sqrt{15\cdot 3}=\sqrt{45}$.`}]},
+ {nr:'Zad. 5',p:R`Wartością wyrażenia $\dfrac{\sqrt{6}\cdot\sqrt{2}}{\sqrt{3}}$ jest liczba:`,
+  cz:[{t:'wybor',lit:'abc',kropka:false,o:[') 2',') 5',') 4'],ok:[0],
+   wyj:R`$\sqrt{6}\cdot\sqrt{2}=\sqrt{12}$, a $\sqrt{12}:\sqrt{3}=\sqrt{4}=2$.`}]},
+ {nr:'Zad. 6',p:R`Liczbę $\sqrt{28}$ można zapisać jako:`,
+  cz:[{t:'wybor',lit:'abc',kropka:false,o:[R`) $4\sqrt{7}$`,R`) $7\sqrt{4}$`,R`) $2\sqrt{7}$`],ok:[2],
+   wyj:R`$\sqrt{28}=\sqrt{4\cdot 7}=\sqrt{4}\cdot\sqrt{7}=2\sqrt{7}$.`}]}
+]};
+
+var Q=KARTA.pytania;
+
+/* ===== pamięć ===== */
+var stan; try{ stan=JSON.parse(localStorage.getItem(KARTA.pamiec)||'{}'); }catch(e){ stan={}; }
+stan.a=stan.a||{}; stan.spr=stan.spr||{}; stan.sam=stan.sam||{};
+function zapamietaj(){ try{ localStorage.setItem(KARTA.pamiec,JSON.stringify(stan)); }catch(e){} }
+
+/* ===== pomocnicze ===== */
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function km(l){ return katex.renderToString(l,{throwOnError:false}); }
+function tm(s){ return String(s||'').split('$').map(function(c,i){ return i%2?km(c):c; }).join(''); }   // treść pisana przeze mnie, nie przez użytkownika
+function odp(qi){ if(!stan.a[qi]) stan.a[qi]=Q[qi].cz.map(function(c){ return c.t==='wybor'?[]:(c.t==='otwarta'?'':(c.w||[]).map(function(){return null;})); }); return stan.a[qi]; }
+function bezPl(s){ return s.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ł/g,'l').replace(/Ł/g,'L'); }
+function norm(s,wielk){ s=String(s==null?'':s).trim().replace(/\s+/g,' ').replace(/\./g,','); return wielk?s:s.toLowerCase(); }
+function pasuje(v,f){ // 2 = dobrze, 1 = dobrze, ale bez polskich liter, 0 = źle
+  var a=norm(v,f.wielk); if(!a) return 0; var i,b;
+  for(i=0;i<f.ok.length;i++){ b=norm(f.ok[i],f.wielk); if(f.zaw?a.indexOf(b)>=0:a===b) return 2; }
+  for(i=0;i<f.ok.length;i++){ b=norm(f.ok[i],f.wielk); if(f.zaw?bezPl(a).indexOf(bezPl(b))>=0:bezPl(a)===bezPl(b)) return 1; }
+  return 0;
+}
+function maks(c){ return (c.t==='pf'||c.t==='dopasuj'||c.t==='wpisz')?c.w.length:1; }
+
+/* ===== ocena ===== */
+function ocenCzesc(qi,pi){
+  var c=Q[qi].cz[pi],a=odp(qi)[pi];
+  if(c.t==='wybor'){ var s=a.slice().sort().join(),k=c.ok.slice().sort().join(); return s===k?1:0; }
+  if(c.t==='pf'||c.t==='dopasuj') return c.w.reduce(function(n,_,r){ return n+(a[r]===c.ok[r]?1:0); },0);
+  if(c.t==='kolej') return c.w.every(function(_,r){ return a[r]===c.ok[r]; })?1:0;
+  if(c.t==='wpisz') return c.w.reduce(function(n,f,r){ return n+(pasuje(a[r],f)?1:0); },0);
+  if(c.t==='otwarta'){ var s2=(stan.sam[qi]||{})[pi]; return s2===1?1:0; }
+  return 0;
+}
+function ocenPytanie(qi){ var z=0,m=0; Q[qi].cz.forEach(function(c,pi){ if(c.t==='info') return; z+=ocenCzesc(qi,pi); m+=maks(c); }); return {z:z,m:m}; }
+function czekaNaSamoocene(qi){ return Q[qi].cz.some(function(c,pi){ return c.t==='otwarta'&&(stan.sam[qi]||{})[pi]==null; }); }
+function cosZaznaczone(qi){ var A=odp(qi); return Q[qi].cz.some(function(c,pi){ var a=A[pi];
+  if(c.t==='info') return false; if(c.t==='otwarta') return String(a).trim()!==''; if(c.t==='wybor') return a.length>0;
+  return a.some(function(x){ return x!=null&&String(x).trim()!==''; }); }); }
+
+/* ===== mapa ===== */
+var biez=0,naWyniku=false;
+function odswiezMape(){
+  var h=''; Q.forEach(function(q,i){ var kl='';
+    if(stan.spr[i]){ var o=ocenPytanie(i); kl=czekaNaSamoocene(i)?'czesc':(o.z===o.m?'dobrze':'zle'); } else if(stan.a[i]&&cosZaznaczone(i)) kl='czesc';
+    h+='<button class="'+kl+(i===biez&&!naWyniku?' tu':'')+'" onclick="idz('+i+')">'+(i+1)+'</button>'; });
+  h+='<button class="'+(naWyniku?'tu':'')+'" onclick="pokazWynik()" title="Wynik">🏁</button>';
+  document.getElementById('mapa').innerHTML=h;
+}
+
+/* ===== rysowanie pytania ===== */
+function przyc(qi,pi,r,v,html,stanKlasy){ return '<button class="btn wyb '+stanKlasy+'" data-q="'+qi+'" data-p="'+pi+'" data-r="'+r+'" data-v="'+v+'"'+(stan.spr[qi]?' disabled':'')+'>'+html+'</button>'; }
+function klasaWiersza(c,a,r,v,spr){ // przyciski w wierszu (pf / dopasuj / kolej)
+  var wyb=a[r]===v; if(!spr) return wyb?'wybrana':'';
+  if(v===c.ok[r]) return wyb?'dobrze':'brakowalo'; return wyb?'zle':'';
+}
+function czescHTML(qi,pi,spr){
+  var c=Q[qi].cz[pi],a=odp(qi)[pi],h='',lit=c.lit||'ABCDE';
+  if(c.p) h+='<div class="podpol">'+tm(c.p)+'</div>';
+  if(c.opisy) h+='<div class="opisy">'+c.opisy.map(function(o,j){ return '<div><b>'+lit[j]+'.</b> '+tm(o)+'</div>'; }).join('')+'</div>';
+  if(c.t==='wybor'){
+    var ile=c.ok.length; if(ile>1&&!spr) h+='<div class="wskazowka">Zaznacz '+ile+' odpowiedzi.</div>';
+    c.o.forEach(function(o,j){ var wyb=a.indexOf(j)>=0,kl='';
+      if(!spr) kl=wyb?'wybrana':''; else if(c.ok.indexOf(j)>=0) kl=wyb?'dobrze':'brakowalo'; else kl=wyb?'zle':'';
+      h+=przyc(qi,pi,-1,j,'<span class="lit">'+lit[j]+(c.kropka===false?'':'.')+'</span> '+tm(o),kl); });
+  }
+  if(c.t==='pf'||c.t==='dopasuj'||c.t==='kolej'){
+    var et=c.t==='pf'?c.et:(c.t==='dopasuj'?lit.slice(0,c.opisy.length).split(''):c.w.map(function(_,j){ return String(j+1); }));
+    c.w.forEach(function(w,r){
+      h+='<div class="wiersz"><div class="tekst">'+tm(w)+'</div><div class="para">';
+      et.forEach(function(e,v){ var val=c.t==='kolej'?v+1:v; h+=przyc(qi,pi,r,val,esc(e),klasaWiersza(c,a,r,val,spr)); });
+      h+='</div></div>'; });
+  }
+  if(c.t==='wpisz'){
+    c.w.forEach(function(f,r){ var kl='',dop='';
+      if(spr){ var p=pasuje(a[r],f); kl=p?'dobrze':'zle';
+        if(!p) dop='<span class="popr">✓ '+esc(f.pokaz||f.ok[0])+'</span>';
+        else if(p===1) dop='<span class="uwaga">pisz z polskimi literami: '+esc(f.pokaz||f.ok[0])+'</span>'; }
+      h+='<div class="pole">'+(f.przed?'<span>'+tm(f.przed)+'</span>':'')
+        +'<input class="'+(f.waski?'waski ':'')+kl+'" data-q="'+qi+'" data-p="'+pi+'" data-r="'+r+'" autocomplete="off" spellcheck="false" value="'+esc(a[r]||'')+'"'+(spr?' disabled':'')+'>'
+        +(f.po?'<span>'+tm(f.po)+'</span>':'')+dop+'</div>'; });
+  }
+  if(c.t==='otwarta'){
+    h+='<textarea data-q="'+qi+'" data-p="'+pi+'" placeholder="Napisz odpowiedź…"'+(spr?' disabled':'')+'>'+esc(a)+'</textarea>';
+    if(spr){ var s=(stan.sam[qi]||{})[pi];
+      h+='<div class="wzorzec"><b>Wzorcowa odpowiedź:</b><br>'+tm(c.wzor)+'</div>';
+      h+='<div class="podpol">Porównaj ze wzorem. Twoja odpowiedź jest:</div><div class="nawigacja">'
+        +'<button class="btn drugi '+(s===1?'dobrze':'')+'" onclick="samoocena('+qi+','+pi+',1)">✓ dobra</button>'
+        +'<button class="btn drugi '+(s===0?'zle':'')+'" onclick="samoocena('+qi+','+pi+',0)">✗ do poprawy</button></div>'; }
+  }
+  if(spr&&c.wyj) h+='<div class="wyj">💡 '+tm(c.wyj)+'</div>';
+  return h;
+}
+function idz(i){
+  if(i<0||i>=Q.length) return;
+  biez=i; naWyniku=false;
+  var q=Q[i],spr=!!stan.spr[i],h='<div class="karta"><div class="licznik">'+esc(q.nr)+' · pytanie '+(i+1)+' z '+Q.length
+    +(q.pkt?'<span class="pkt">'+esc(q.pkt)+'</span>':'')+'</div><div class="polecenie">'+tm(q.p)+'</div>';
+  if(q.cyt) h+='<div class="cytat">'+tm(q.cyt)+'</div>';
+  if(q.img) h+='<img class="ilustr" src="'+q.img+'" alt="">';
+  q.cz.forEach(function(_,pi){ h+=czescHTML(i,pi,spr); });
+  h+='</div>';
+  if(!spr){
+    h+='<button class="btn glowny" onclick="sprawdz()">Sprawdź</button>';
+    h+='<div class="nawigacja"><button class="btn drugi" onclick="idz(biez-1)"'+(i?'':' disabled')+'>‹ Poprzednie</button>'
+      +'<button class="btn drugi" onclick="dalej()">Pomiń ›</button></div>';
+  } else {
+    var o=ocenPytanie(i);
+    if(czekaNaSamoocene(i)) h+='<div class="wynik-pyt">Oceń swoją odpowiedź powyżej 👆</div>';
+    else h+='<div class="wynik-pyt '+(o.z===o.m?'dobrze':'zle')+'">'+(o.z===o.m?'Dobrze! ':'')+o.z+' / '+o.m+' pkt</div>'
+      +(o.z<o.m?'<div class="wskazowka" style="text-align:center">Zielona przerywana ramka = poprawna odpowiedź.</div>':'');
+    h+='<div class="nawigacja"><button class="btn drugi" onclick="ponow()">↺ Jeszcze raz</button>'
+      +'<button class="btn glowny" onclick="dalej()">'+(i<Q.length-1?'Dalej ›':'🏁 Wynik')+'</button></div>';
+  }
+  document.getElementById('ekran').innerHTML=h;
+  odswiezMape(); window.scrollTo(0,0);
+}
+function dalej(){ if(biez<Q.length-1) idz(biez+1); else pokazWynik(); }
+function sprawdz(){
+  if(!cosZaznaczone(biez)&&!confirm('Nic nie zaznaczono. Sprawdzić mimo to?')) return;
+  stan.spr[biez]=true; zapamietaj(); idz(biez);
+}
+function ponow(){ delete stan.a[biez]; delete stan.spr[biez]; delete stan.sam[biez]; zapamietaj(); idz(biez); }
+function samoocena(qi,pi,v){ stan.sam[qi]=stan.sam[qi]||{}; stan.sam[qi][pi]=v; zapamietaj(); idz(qi); }
+
+document.addEventListener('click',function(e){
+  var b=e.target.closest('.wyb'); if(!b||b.disabled) return;
+  var qi=+b.dataset.q,pi=+b.dataset.p,r=+b.dataset.r,v=+b.dataset.v,c=Q[qi].cz[pi],a=odp(qi)[pi];
+  if(c.t==='wybor'){ var ile=c.ok.length,k=a.indexOf(v);
+    if(k>=0) a.splice(k,1); else { if(ile===1) a.length=0; else if(a.length>=ile) a.shift(); a.push(v); } }
+  else a[r]=(a[r]===v)?null:v;
+  zapamietaj(); idz(qi);
+});
+document.addEventListener('input',function(e){
+  var t=e.target; if(!t.dataset||t.dataset.q==null) return;
+  var A=odp(+t.dataset.q); if(t.tagName==='TEXTAREA') A[+t.dataset.p]=t.value; else A[+t.dataset.p][+t.dataset.r]=t.value;
+  zapamietaj(); odswiezMape();
+});
+
+/* ===== wynik ===== */
+function pokazWynik(){
+  naWyniku=true; var z=0,m=0,brak=[],zle=[],h='';
+  Q.forEach(function(q,i){ var o=ocenPytanie(i); m+=o.m; if(!stan.spr[i]){ brak.push(i); return; } z+=o.z; if(o.z<o.m) zle.push(i); });
+  h+='<div class="karta"><div class="polecenie">Wynik</div><div class="duzy">'+z+' / '+m+' pkt</div>';
+  if(brak.length) h+='<div style="text-align:center;color:#e65100;font-weight:700">Niesprawdzone pytania: '+brak.map(function(i){return i+1;}).join(', ')+'</div>';
+  h+='<div class="lista-wynikow" style="margin-top:10px">'+Q.map(function(q,i){ var o=ocenPytanie(i);
+    return '<div>'+(stan.spr[i]?(o.z===o.m?'✅':'❌'):'⬜')+' '+esc(q.nr)+' — '+(stan.spr[i]?o.z+' / '+o.m+' pkt':'nie sprawdzone')+'</div>'; }).join('')+'</div></div>';
+  if(zle.length) h+='<button class="btn glowny" onclick="powtorzBledne()">↺ Powtórz tylko błędne ('+zle.length+')</button>';
+  if(brak.length) h+='<button class="btn drugi" onclick="idz('+brak[0]+')">Przejdź do niesprawdzonych</button>';
+  h+='<button class="btn drugi" onclick="odNowa()">Od nowa — cała klasówka</button>';
+  document.getElementById('ekran').innerHTML=h;
+  odswiezMape(); window.scrollTo(0,0);
+  if(!brak.length&&!stan.wyslano){ stan.wyslano=true; zapamietaj();
+    try{ fetch(RESULTS_URL,{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({token:RESULTS_TOKEN,subject:KARTA.przedmiot,title:KARTA.tytul,score:z,total:m})}); }catch(e){} }
+}
+function powtorzBledne(){ var pierwsze=-1;
+  Q.forEach(function(q,i){ var o=ocenPytanie(i); if(stan.spr[i]&&o.z<o.m){ delete stan.a[i]; delete stan.spr[i]; delete stan.sam[i]; if(pierwsze<0) pierwsze=i; } });
+  stan.wyslano=false; zapamietaj(); idz(pierwsze<0?0:pierwsze); }
+function odNowa(){ if(!confirm('Wyczyścić wszystkie odpowiedzi i zacząć od nowa?')) return;
+  stan={a:{},spr:{},sam:{}}; zapamietaj(); idz(0); }
+
+document.getElementById('tag').textContent=KARTA.przedmiot;
+document.getElementById('tytul').textContent=KARTA.tytul;
+idz(0);
+</script>
+</body>
+</html>
