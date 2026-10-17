@@ -4,263 +4,357 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sprawdzian — II wojna światowa</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0fa;color:#222;padding:14px 14px 40px;max-width:760px;margin:0 auto;font-size:19px;line-height:1.5}
-h1{font-size:24px;color:#283593;margin-bottom:4px}
-.subject-tag{display:inline-block;background:#dde1f5;color:#283593;font-size:13px;padding:3px 10px;border-radius:10px;margin-bottom:8px}
-.karta{background:#fff;border-radius:18px;padding:16px 18px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-top:10px}
-.licznik{color:#5c6bc0;font-weight:700;font-size:16px}
-.pkt{float:right;color:#777;font-weight:600}
-.polecenie{font-weight:700;margin:4px 0 6px}
-.podpol{font-weight:600;margin:14px 0 4px}
-.wskazowka{font-size:15px;color:#5c6bc0}
-.cytat{font-style:italic;background:#f5f6ff;border-left:4px solid #9fa8da;padding:8px 12px;margin:8px 0;border-radius:6px}
-.ilustr{max-width:100%;margin:10px 0;border:1px solid #e3e6f3;border-radius:8px;background:#fff}
-.opisy{margin:6px 0 4px;font-size:17px}
-.opisy div{padding:4px 0}
-.katex{font-size:1.2em}
-.mapa{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:6px}
-.mapa button{min-height:50px;font-size:18px;font-weight:700;border:3px solid #c5cae9;border-radius:12px;background:#fff;color:#283593;cursor:pointer;font-family:inherit}
-.mapa button.dobrze{background:#e8f5e9;border-color:#66bb6a;color:#1b5e20}
-.mapa button.zle{background:#ffebee;border-color:#ef9a9a;color:#b71c1c}
-.mapa button.czesc{background:#fff8e1;border-color:#ffb300}
-.mapa button.tu{outline:4px solid #283593;outline-offset:1px}
-.btn{display:block;width:100%;min-height:68px;font-size:20px;font-weight:700;border:3px solid #c5cae9;border-radius:16px;margin-top:10px;cursor:pointer;font-family:inherit;background:#fff;color:#283593;text-align:left;padding:8px 16px}
-.btn .lit{display:inline-block;min-width:34px}
-.btn.wybrana{background:#283593;color:#fff;border-color:#283593}
-.btn.dobrze{background:#e8f5e9;border-color:#2e7d32;color:#1b5e20}
-.btn.zle{background:#ffebee;border-color:#c62828;color:#b71c1c}
-.btn.brakowalo{border-color:#2e7d32;border-style:dashed;color:#1b5e20}
-.btn.glowny{background:#283593;color:#fff;border-color:#283593;text-align:center}
-.btn.drugi{text-align:center}
-.btn:disabled{cursor:default}
-.nawigacja{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.wiersz{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #e3e6f3;flex-wrap:wrap}
-.wiersz .tekst{flex:1 1 240px}
-.wiersz .para{display:flex;gap:8px;flex-wrap:wrap}
-.wiersz .btn{width:auto;min-width:64px;min-height:60px;margin-top:0;text-align:center;padding:6px 12px}
-.pole{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px}
-.pole input,textarea{font-size:22px;padding:10px 12px;border:3px solid #c5cae9;border-radius:12px;font-family:inherit;min-width:0}
-.pole input{flex:1 1 160px;max-width:100%}
-.pole input.waski{flex:0 0 120px;text-align:center}
-textarea{width:100%;min-height:150px;margin-top:10px;line-height:1.4}
-.pole input:focus,textarea:focus{border-color:#283593;outline:none}
-.pole input.dobrze{border-color:#2e7d32;background:#e8f5e9}
-.pole input.zle{border-color:#c62828;background:#ffebee}
-.popr{font-size:16px;font-weight:700;color:#1b5e20}
-.uwaga{font-size:15px;color:#e65100;font-weight:600}
-.wyj{background:#fff8e1;border-radius:10px;padding:8px 12px;font-size:16px;margin-top:10px}
-.wzorzec{background:#e8f5e9;border-radius:10px;padding:10px 12px;margin-top:10px;font-size:17px}
-.wynik-pyt{text-align:center;font-weight:800;font-size:22px;margin-top:12px}
-.wynik-pyt.dobrze{color:#2e7d32}.wynik-pyt.zle{color:#c62828}
-.duzy{font-size:56px;font-weight:800;color:#283593;text-align:center}
-.lista-wynikow div{padding:6px 0;border-bottom:1px solid #e3e6f3}
+body{background:#e7e4dc;color:#111;padding:12px 12px 60px;font-family:'Segoe UI',Arial,sans-serif}
+.pasek{max-width:900px;margin:0 auto 12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pasek button{min-height:60px;font-size:19px;font-weight:700;border:3px solid #b0a990;border-radius:14px;background:#fff;color:#3e2f1c;padding:6px 18px;cursor:pointer;font-family:inherit}
+.pasek button.wl{background:#3e2f1c;color:#fff;border-color:#3e2f1c}
+.seria{font-size:17px;color:#3e2f1c;font-weight:600;margin-left:auto}
+.seria b{font-size:22px;letter-spacing:2px}
+.info{max-width:900px;margin:0 auto 12px;background:#fff8e1;border-radius:12px;padding:10px 14px;font-size:17px;color:#5d4037}
+
+.kartka{max-width:900px;margin:0 auto;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.18);padding:40px 48px 48px;
+  font-family:'Times New Roman',Times,serif;font-size:22px;line-height:1.45}
+.zad{margin-bottom:34px}
+.nag{font-weight:700;display:flex;gap:16px;align-items:baseline}
+.nag .tr{flex:1}
+.nag .pk{white-space:nowrap}
+.pk .ocena.oc{color:#c62828;font-family:'Segoe Print','Comic Sans MS',cursive;font-size:24px}
+u{text-decoration-thickness:1px;text-underline-offset:3px}
+.kurs{font-style:italic}
+.b{font-weight:700}
+.wcięcie{padding-left:22px}
+
+/* zad 1 */
+.z1{display:flex;gap:40px;align-items:center;flex-wrap:wrap;margin:6px 0 10px}
+.z1 .lista{padding-left:22px}
+table.tab{border-collapse:collapse}
+table.tab td,table.tab th{border:1.5px solid #222;text-align:center;position:relative}
+td .popr{position:absolute;right:4px;bottom:1px;padding:0}
+.t1 th{width:78px;height:44px;font-weight:700}
+.t1 td{height:62px;padding:0}
+.t6{width:100%;max-width:760px;margin-top:10px}
+.t6 th{font-weight:700;height:44px}
+table.t6 td{height:58px;text-align:left;padding:0 10px}
+table.t6 td.cyf{width:130px;padding:0;text-align:center}
+.opis{display:flex;gap:14px;padding-left:22px}
+.opis .l{font-weight:700;min-width:26px}
+
+/* pola do wpisywania */
+input.kom{width:100%;height:100%;min-height:58px;border:none;text-align:center;font-family:'Segoe Print','Comic Sans MS',cursive;font-size:30px;color:#0d2a8a;background:#fffde7;text-transform:uppercase}
+input.kom:focus{outline:3px solid #1565c0;outline-offset:-3px;background:#e3f2fd}
+.odp{display:flex;align-items:baseline;gap:12px;margin-top:10px}
+input.linia{flex:1;border:none;border-bottom:2px dotted #444;font-family:'Segoe Print','Comic Sans MS',cursive;font-size:24px;color:#0d2a8a;padding:4px 6px;background:#fffde7;min-width:0}
+input.linia:focus{outline:none;border-bottom:3px solid #1565c0;background:#e3f2fd}
+input.dobrze{background:#e8f5e9 !important;color:#1b5e20}
+input.zle{background:#ffebee !important;color:#b71c1c;text-decoration:line-through}
+input[readonly]{cursor:default}
+.popr{display:block;font-family:'Segoe UI',Arial,sans-serif;font-size:15px;font-weight:700;color:#1b5e20;line-height:1.2;padding:2px 0}
+
+/* podkreslanie */
+.opc{display:flex;gap:14px;padding:6px 8px 6px 22px;margin:2px 0;border-radius:8px;cursor:pointer;min-height:44px;align-items:baseline}
+.opc:hover{background:#f3f0e6}
+.opc:focus{outline:3px solid #1565c0}
+.opc .l{font-weight:700;min-width:26px}
+.opc .t{text-decoration-line:none}
+.opc.pod .t{text-decoration-line:underline;text-decoration-thickness:3px;text-underline-offset:5px;text-decoration-color:#0d2a8a}
+.opc.ok .t{text-decoration-color:#2e7d32}
+.opc.blad .t{text-decoration-color:#c62828}
+.opc.blad{background:#ffebee}
+.opc.brak .t{text-decoration-line:underline;text-decoration-style:dashed;text-decoration-thickness:3px;text-underline-offset:5px;text-decoration-color:#2e7d32}
+.opc.brak{background:#f1f8e9}
+.zablok .opc{cursor:default}
+.zablok .opc:hover{background:none}
+.zablok .opc.blad:hover{background:#ffebee}
+.zablok .opc.brak:hover{background:#f1f8e9}
+.podp{margin-top:4px}
+.cyt{font-style:italic;margin:6px 0}
+
+.wyj{font-family:'Segoe UI',Arial,sans-serif;font-size:16px;line-height:1.4;background:#fff8e1;border-left:4px solid #ffb300;border-radius:6px;padding:8px 12px;margin-top:10px;color:#4e342e}
+
+.dol{max-width:900px;margin:16px auto 0}
+.dol button{display:block;width:100%;min-height:70px;font-size:22px;font-weight:700;border:3px solid #3e2f1c;border-radius:16px;background:#3e2f1c;color:#fff;cursor:pointer;margin-top:10px;font-family:inherit}
+.dol button.drugi{background:#fff;color:#3e2f1c}
+.wynik{background:#fff;border-radius:16px;padding:18px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.wynik .duzy{font-size:54px;font-weight:800;color:#3e2f1c}
+.wynik .kom2{font-size:19px;margin-top:6px}
+@media (max-width:640px){.kartka{padding:22px 16px;font-size:19px}.z1{gap:16px}.t1 th{width:58px}}
 </style>
 </head>
 <body>
-<div class="subject-tag" id="tag"></div>
-<h1 id="tytul"></h1>
-<div class="karta"><div class="mapa" id="mapa"></div></div>
-<div id="ekran"></div>
+
+<div class="pasek">
+  <button id="bNauka" onclick="tryb('nauka')">📖 Ucz się — z odpowiedziami</button>
+  <button id="bTest" onclick="tryb('test')">✍️ Rozwiąż jak na sprawdzianie</button>
+  <div class="seria" id="seria"></div>
+</div>
+<div class="info" id="info"></div>
+
+<div class="kartka" id="kartka">
+
+<div class="zad" id="zad1">
+  <div class="nag"><span class="tr">Zad. 1 <u>Dopasuj</u> miejsca bitew (1, 2, 3) do opisów (A, B, C).</span><span class="pk" data-z="1">(<span class="ocena">…</span>/4p.)</span></div>
+  <div class="kurs">Wpisz odpowiedzi w puste miejsca w tabelce.</div>
+  <div class="b" style="margin-top:14px">Miejsca bitew</div>
+  <div class="z1">
+    <div class="lista"><div>1.Kock</div><div>2.Pearl Harbor</div><div>3. Wizna</div><div>4. Westerplatte</div></div>
+    <table class="tab t1"><tr><th>1.</th><th>2.</th><th>3.</th><th>4.</th></tr>
+      <tr><td><input class="kom" data-pole="z1" data-i="0" maxlength="1" autocomplete="off" aria-label="Zadanie 1, miejsce 1"><span class="popr" data-popr="z1-0"></span></td>
+          <td><input class="kom" data-pole="z1" data-i="1" maxlength="1" autocomplete="off" aria-label="Zadanie 1, miejsce 2"><span class="popr" data-popr="z1-1"></span></td>
+          <td><input class="kom" data-pole="z1" data-i="2" maxlength="1" autocomplete="off" aria-label="Zadanie 1, miejsce 3"><span class="popr" data-popr="z1-2"></span></td>
+          <td><input class="kom" data-pole="z1" data-i="3" maxlength="1" autocomplete="off" aria-label="Zadanie 1, miejsce 4"><span class="popr" data-popr="z1-3"></span></td></tr>
+    </table>
+  </div>
+  <div class="b">Opisy do wyboru:</div>
+  <div class="opis"><span class="l">A.</span><span>Miejscowość, w pobliżu której rozegrała się bitwa nazywana „polskimi Termopilami”.</span></div>
+  <div class="opis"><span class="l">B.</span><span>Polska placówka wojskowa broniona przez Polaków w pierwszych dniach wojny.</span></div>
+  <div class="opis"><span class="l">C.</span><span>Amerykańska baza wojskowa zaatakowana przez Japończyków w 1941 roku.</span></div>
+  <div class="opis"><span class="l">D.</span><span>Miejscowość, w której okolicy doszło do kapitulacji ostatniej regularnej jednostki polskiej.</span></div>
+  <div class="wyj" data-wyj="1">💡 Kock — gen. Kleeberg, październik 1939, ostatnia bitwa → <b>D</b>. Pearl Harbor — baza USA, Japończycy, 7 XII 1941 → <b>C</b>. Wizna — kpt. Raginis, „polskie Termopile” → <b>A</b>. Westerplatte — mjr Sucharski, 1–7 IX 1939 → <b>B</b>.<br>Do zapamiętania kolejno: <b>D C A B</b>.</div>
+</div>
+
+<div class="zad" id="zad2">
+  <div class="nag"><span class="tr">Zad. 2 <u>Podkreśl 2 decyzje</u> podjęte podczas konferencji Wielkiej Trójki w Jałcie.</span><span class="pk" data-z="2">(<span class="ocena">…</span>/1p.)</span></div>
+  <div class="grupa" data-pole="z2" data-wiele="1" style="margin-top:10px">
+    <div class="opc" data-i="0" tabindex="0" role="button"><span class="l">A.</span><span class="t">Okupacja Niemiec po zakończeniu działań wojennych.</span></div>
+    <div class="opc" data-i="1" tabindex="0" role="button"><span class="l">B.</span><span class="t">Użycie bomby atomowej przeciwko Japonii.</span></div>
+    <div class="opc" data-i="2" tabindex="0" role="button"><span class="l">C.</span><span class="t">Ustalenie nowych granic Polski po wojnie.</span></div>
+  </div>
+  <div class="wyj" data-wyj="2">💡 Jałta, luty 1945: podział Niemiec na strefy okupacyjne i nowe granice Polski → <b>A i C</b>. O bombie atomowej w Jałcie nie decydowano.</div>
+</div>
+
+<div class="zad" id="zad3">
+  <div class="nag"><span class="tr">Zad. 3 <u>Podkreśl</u> jedno PRAWDZIWE zdanie.</span><span class="pk" data-z="3">(<span class="ocena">….</span>/1p.)</span></div>
+  <div class="grupa" data-pole="z3" style="margin-top:10px">
+    <div class="opc" data-i="0" tabindex="0" role="button"><span class="l">A.</span><span class="t">Atak Niemiec na ZSRS nastąpił 21 czerwca 1941 roku.</span></div>
+    <div class="opc" data-i="1" tabindex="0" role="button"><span class="l">B.</span><span class="t">Bitwa na Łuku Kurskim była największą bitwą pancerną II wojny światowej.</span></div>
+    <div class="opc" data-i="2" tabindex="0" role="button"><span class="l">C.</span><span class="t">Pogoda nie miała wpływu na sytuację wojsk niemieckich na terenie ZSRS.</span></div>
+  </div>
+  <div class="wyj" data-wyj="3">💡 Prawdziwe jest <b>B</b> (Łuk Kurski, lipiec 1943). A jest fałszywe — atak był <b>22</b> czerwca 1941, nie 21. C jest fałszywe — mroźna zima bardzo przeszkodziła Niemcom.</div>
+</div>
+
+<div class="zad" id="zad4">
+  <div class="nag"><span class="tr">Zad. 4 Przeczytaj krótki tekst i <u>odpowiedz na pytanie</u>.</span><span class="pk" data-z="4">(<span class="ocena">…</span>/1p.)</span></div>
+  <div class="cyt">„Rząd francuski zarządza przerwanie działań przeciwko Niemcom i złożenie broni przez wojska francuskie.”</div>
+  <div class="b">Kiedy doszło do kapitulacji Francji?</div>
+  <div class="opis"><span class="l">A.</span><span>22 czerwca 1940 r.</span></div>
+  <div class="opis"><span class="l">B.</span><span>1 września 1940 r.</span></div>
+  <div class="odp"><span class="b">Odpowiedź:</span><input class="linia" data-pole="z4" autocomplete="off" aria-label="Zadanie 4, odpowiedź"></div>
+  <span class="popr" data-popr="z4"></span>
+  <div class="wyj" data-wyj="4">💡 Odpowiedź <b>A. 22 czerwca 1940 r.</b> (rozejm w Compiègne). Uwaga na pułapkę: 1 września to data wybuchu wojny, ale w 1939 roku.</div>
+</div>
+
+<div class="zad" id="zad5">
+  <div class="nag"><span class="tr">Zad. 5 <u>Podkreśl</u> właściwe odpowiedzi.</span><span class="pk" data-z="5">(<span class="ocena">…</span>/2p.)</span></div>
+  <div class="podp" style="padding-left:22px">1. Obóz zagłady to</div>
+  <div class="grupa" data-pole="z5" data-n="0">
+    <div class="opc" data-i="0" tabindex="0" role="button"><span class="l">A.</span><span class="t">obóz dla jeńców wojennych.</span></div>
+    <div class="opc" data-i="1" tabindex="0" role="button"><span class="l">B.</span><span class="t">miejsce masowej i planowej zagłady więźniów, głównie Żydów.</span></div>
+  </div>
+  <div class="podp" style="padding-left:22px;margin-top:12px">2. Getto to</div>
+  <div class="grupa" data-pole="z5" data-n="1">
+    <div class="opc" data-i="0" tabindex="0" role="button"><span class="l">A.</span><span class="t">wydzielona, zamknięta dzielnica miasta, w której Niemcy osiedlali ludność żydowską.</span></div>
+    <div class="opc" data-i="1" tabindex="0" role="button"><span class="l">B.</span><span class="t">ośrodek pracy dla ludności niemieckiej.</span></div>
+  </div>
+  <div class="wyj" data-wyj="5">💡 Obóz zagłady → <b>B</b> (miejsce zagłady). Getto → <b>A</b> (zamknięta dzielnica). Kolejno: <b>B, A</b>.</div>
+</div>
+
+<div class="zad" id="zad6" style="margin-bottom:0">
+  <div class="nag"><span class="tr">Zad. 6 <u>Uporządkuj</u> wydarzenia z 1939 roku.</span><span class="pk" data-z="6">(<span class="ocena">…</span>/1p.)</span></div>
+  <div class="kurs">Wpisz w puste miejsca cyfry 1 (co było najpierw) i 2, 3 (co było potem).</div>
+  <table class="tab t6">
+    <tr><th>WYDARZENIA</th><th>CYFRY</th></tr>
+    <tr><td>Prowokacja gliwicka</td><td class="cyf"><input class="kom" data-pole="z6" data-i="0" maxlength="1" inputmode="numeric" autocomplete="off" aria-label="Prowokacja gliwicka"><span class="popr" data-popr="z6-0"></span></td></tr>
+    <tr><td>Kapitulacja Warszawy</td><td class="cyf"><input class="kom" data-pole="z6" data-i="1" maxlength="1" inputmode="numeric" autocomplete="off" aria-label="Kapitulacja Warszawy"><span class="popr" data-popr="z6-1"></span></td></tr>
+    <tr><td>Przekroczenie granic Polski przez wojska ZSRS</td><td class="cyf"><input class="kom" data-pole="z6" data-i="2" maxlength="1" inputmode="numeric" autocomplete="off" aria-label="Przekroczenie granic Polski przez wojska ZSRS"><span class="popr" data-popr="z6-2"></span></td></tr>
+  </table>
+  <div class="wyj" data-wyj="6">💡 Prowokacja gliwicka — 31 sierpnia → <b>1</b>. Wojska ZSRS — 17 września → <b>2</b>. Kapitulacja Warszawy — 28 września → <b>3</b>.<br>W tabelce od góry: <b>1, 3, 2</b>.</div>
+</div>
+
+</div>
+
+<div class="dol" id="dol"></div>
 
 <script>
 var RESULTS_URL="https://julia-hub-161045418771.europe-west1.run.app/results",RESULTS_TOKEN="XW09DH2_fs8SdHh7B9pGMoCZuDVwAHSQ";
-var R=String.raw;
-function ch(s){ return String(s).replace(/([A-Za-z)])(\d+)/g,'$1<sub>$2</sub>'); }   // wzory chemiczne: indeksy dolne
-var KARTA={przedmiot:'Historia',tytul:'Sprawdzian — II wojna światowa',pamiec:'kl_historia_IIwojna_v1',pytania:[
- {nr:'Zad. 1',pkt:'(…/4p.)',p:'Dopasuj miejsca bitew (1, 2, 3) do opisów (A, B, C).',
-  cz:[{t:'dopasuj',p:'Opisy do wyboru:',opisy:[
-     'Miejscowość, w pobliżu której rozegrała się bitwa nazywana „polskimi Termopilami”.',
-     'Polska placówka wojskowa broniona przez Polaków w pierwszych dniach wojny.',
-     'Amerykańska baza wojskowa zaatakowana przez Japończyków w 1941 roku.',
-     'Miejscowość, w której okolicy doszło do kapitulacji ostatniej regularnej jednostki polskiej.'],
-   w:['1. Kock','2. Pearl Harbor','3. Wizna','4. Westerplatte'],ok:[3,2,0,1],
-   wyj:'Kock — październik 1939, gen. Kleeberg, ostatnia bitwa kampanii wrześniowej. Pearl Harbor — 7 grudnia 1941. Wizna — kpt. Raginis, „polskie Termopile”. Westerplatte — mjr Sucharski, bronione 1–7 września 1939.'}]},
- {nr:'Zad. 2',pkt:'(…/1p.)',p:'Podkreśl 2 decyzje podjęte podczas konferencji Wielkiej Trójki w Jałcie.',
-  cz:[{t:'wybor',o:['Okupacja Niemiec po zakończeniu działań wojennych.','Użycie bomby atomowej przeciwko Japonii.','Ustalenie nowych granic Polski po wojnie.'],ok:[0,2],
-   wyj:'Jałta, luty 1945: podział Niemiec na strefy okupacyjne i nowe granice Polski. O bombie atomowej nie decydowano w Jałcie.'}]},
- {nr:'Zad. 3',pkt:'(…/1p.)',p:'Podkreśl jedno PRAWDZIWE zdanie.',
-  cz:[{t:'wybor',o:['Atak Niemiec na ZSRS nastąpił 21 czerwca 1941 roku.','Bitwa na Łuku Kurskim była największą bitwą pancerną II wojny światowej.','Pogoda nie miała wpływu na sytuację wojsk niemieckich na terenie ZSRS.'],ok:[1],
-   wyj:'Atak na ZSRS: 22 czerwca 1941 (nie 21). Mroźna zima bardzo utrudniła Niemcom walkę pod Moskwą. Łuk Kurski (lipiec 1943) — największa bitwa pancerna.'}]},
- {nr:'Zad. 4',pkt:'(…/1p.)',p:'Przeczytaj krótki tekst i odpowiedz na pytanie.',
-  cyt:'„Rząd francuski zarządza przerwanie działań przeciwko Niemcom i złożenie broni przez wojska francuskie.”',
-  cz:[{t:'wybor',p:'Kiedy doszło do kapitulacji Francji?',o:['22 czerwca 1940 r.','1 września 1940 r.'],ok:[0],
-   wyj:'22 czerwca 1940 r. Francja podpisała rozejm z Niemcami w Compiègne.'}]},
- {nr:'Zad. 5',pkt:'(…/2p.)',p:'Podkreśl właściwe odpowiedzi.',
-  cz:[{t:'wybor',p:'1. Obóz zagłady to',o:['obóz dla jeńców wojennych.','miejsce masowej i planowej zagłady więźniów, głównie Żydów.'],ok:[1]},
-      {t:'wybor',p:'2. Getto to',o:['wydzielona, zamknięta dzielnica miasta, w której Niemcy osiedlali ludność żydowską.','ośrodek pracy dla ludności niemieckiej.'],ok:[0]}]},
- {nr:'Zad. 6',pkt:'(…/1p.)',p:'Uporządkuj wydarzenia z 1939 roku.',
-  cz:[{t:'kolej',p:'Wpisz w puste miejsca cyfry 1 (co było najpierw) i 2, 3 (co było potem).',
-   w:['Prowokacja gliwicka','Kapitulacja Warszawy','Przekroczenie granic Polski przez wojska ZSRS'],ok:[1,3,2],
-   wyj:'Prowokacja gliwicka — 31 sierpnia, wkroczenie ZSRS — 17 września, kapitulacja Warszawy — 28 września 1939.'}]}
-]};
+var PAMIEC='hist_kartka_IIwojna_v1';
+var KLUCZ={z1:['D','C','A','B'],z2:[true,false,true],z3:1,z5:[1,0],z6:['1','3','2'],z4:'A. 22 czerwca 1940 r.'};
+var MAX={1:4,2:1,3:1,4:1,5:2,6:1};
 
-var Q=KARTA.pytania;
+function pusty(){ return {z1:['','','',''],z2:[false,false,false],z3:-1,z4:'',z5:[-1,-1],z6:['','','']}; }
+var stan;
+try{ stan=JSON.parse(localStorage.getItem(PAMIEC)||'null'); }catch(e){ stan=null; }
+if(!stan||!stan.odp) stan={tryb:'nauka',odp:pusty(),spr:false,czysta:true,seria:0,proby:0,dziesiatki:0};
+function zapamietaj(){ try{ localStorage.setItem(PAMIEC,JSON.stringify(stan)); }catch(e){} }
 
-/* ===== pamięć ===== */
-var stan; try{ stan=JSON.parse(localStorage.getItem(KARTA.pamiec)||'{}'); }catch(e){ stan={}; }
-stan.a=stan.a||{}; stan.spr=stan.spr||{}; stan.sam=stan.sam||{};
-function zapamietaj(){ try{ localStorage.setItem(KARTA.pamiec,JSON.stringify(stan)); }catch(e){} }
+function $$(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); }
 
-/* ===== pomocnicze ===== */
-function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
-function km(l){ return katex.renderToString(l,{throwOnError:false}); }
-function tm(s){ return String(s||'').split('$').map(function(c,i){ return i%2?km(c):c; }).join(''); }   // treść pisana przeze mnie, nie przez użytkownika
-function odp(qi){ if(!stan.a[qi]) stan.a[qi]=Q[qi].cz.map(function(c){ return c.t==='wybor'?[]:(c.t==='otwarta'?'':(c.w||[]).map(function(){return null;})); }); return stan.a[qi]; }
-function bezPl(s){ return s.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ł/g,'l').replace(/Ł/g,'L'); }
-function norm(s,wielk){ s=String(s==null?'':s).trim().replace(/\s+/g,' ').replace(/\./g,','); return wielk?s:s.toLowerCase(); }
-function pasuje(v,f){ // 2 = dobrze, 1 = dobrze, ale bez polskich liter, 0 = źle
-  var a=norm(v,f.wielk); if(!a) return 0; var i,b;
-  for(i=0;i<f.ok.length;i++){ b=norm(f.ok[i],f.wielk); if(f.zaw?a.indexOf(b)>=0:a===b) return 2; }
-  for(i=0;i<f.ok.length;i++){ b=norm(f.ok[i],f.wielk); if(f.zaw?bezPl(a).indexOf(bezPl(b))>=0:bezPl(a)===bezPl(b)) return 1; }
-  return 0;
-}
-function maks(c){ return (c.t==='pf'||c.t==='dopasuj'||c.t==='wpisz')?c.w.length:1; }
-
-/* ===== ocena ===== */
-function ocenCzesc(qi,pi){
-  var c=Q[qi].cz[pi],a=odp(qi)[pi];
-  if(c.t==='wybor'){ var s=a.slice().sort().join(),k=c.ok.slice().sort().join(); return s===k?1:0; }
-  if(c.t==='pf'||c.t==='dopasuj') return c.w.reduce(function(n,_,r){ return n+(a[r]===c.ok[r]?1:0); },0);
-  if(c.t==='kolej') return c.w.every(function(_,r){ return a[r]===c.ok[r]; })?1:0;
-  if(c.t==='wpisz') return c.w.reduce(function(n,f,r){ return n+(pasuje(a[r],f)?1:0); },0);
-  if(c.t==='otwarta'){ var s2=(stan.sam[qi]||{})[pi]; return s2===1?1:0; }
-  return 0;
-}
-function ocenPytanie(qi){ var z=0,m=0; Q[qi].cz.forEach(function(c,pi){ if(c.t==='info') return; z+=ocenCzesc(qi,pi); m+=maks(c); }); return {z:z,m:m}; }
-function czekaNaSamoocene(qi){ return Q[qi].cz.some(function(c,pi){ return c.t==='otwarta'&&(stan.sam[qi]||{})[pi]==null; }); }
-function cosZaznaczone(qi){ var A=odp(qi); return Q[qi].cz.some(function(c,pi){ var a=A[pi];
-  if(c.t==='info') return false; if(c.t==='otwarta') return String(a).trim()!==''; if(c.t==='wybor') return a.length>0;
-  return a.some(function(x){ return x!=null&&String(x).trim()!==''; }); }); }
-
-/* ===== mapa ===== */
-var biez=0,naWyniku=false;
-function odswiezMape(){
-  var h=''; Q.forEach(function(q,i){ var kl='';
-    if(stan.spr[i]){ var o=ocenPytanie(i); kl=czekaNaSamoocene(i)?'czesc':(o.z===o.m?'dobrze':'zle'); } else if(stan.a[i]&&cosZaznaczone(i)) kl='czesc';
-    h+='<button class="'+kl+(i===biez&&!naWyniku?' tu':'')+'" onclick="idz('+i+')">'+(i+1)+'</button>'; });
-  h+='<button class="'+(naWyniku?'tu':'')+'" onclick="pokazWynik()" title="Wynik">🏁</button>';
-  document.getElementById('mapa').innerHTML=h;
+function ok4(s){
+  s=(s||'').toLowerCase().replace(/[.,;:()\/\-]/g,' ').replace(/\s+/g,' ').trim();
+  if(!s) return false;
+  if(/wrze|\bix\b|\b09\b|\bb\b/.test(s)) return false;
+  if(/^(odp |odpowiedź |odpowiedz )?a( |$)/.test(s)) return true;
+  return /\b22\b/.test(s)&&/1940/.test(s)&&/czerw|\bvi\b|\b06\b|\b6\b/.test(s);
 }
 
-/* ===== rysowanie pytania ===== */
-function przyc(qi,pi,r,v,html,stanKlasy){ return '<button class="btn wyb '+stanKlasy+'" data-q="'+qi+'" data-p="'+pi+'" data-r="'+r+'" data-v="'+v+'"'+(stan.spr[qi]?' disabled':'')+'>'+html+'</button>'; }
-function klasaWiersza(c,a,r,v,spr){ // przyciski w wierszu (pf / dopasuj / kolej)
-  var wyb=a[r]===v; if(!spr) return wyb?'wybrana':'';
-  if(v===c.ok[r]) return wyb?'dobrze':'brakowalo'; return wyb?'zle':'';
+// punkty: {zadanie: liczba}, plus dobrze/zle dla kazdego pola
+function ocen(o){
+  var p={1:0,2:0,3:0,4:0,5:0,6:0},pola={};
+  o.z1.forEach(function(v,i){ var d=v===KLUCZ.z1[i]; pola['z1-'+i]=d; if(d) p[1]++; });
+  var d2=o.z2.every(function(v,i){ return v===KLUCZ.z2[i]; }); pola.z2=d2; if(d2) p[2]=1;
+  pola.z3=o.z3===KLUCZ.z3; if(pola.z3) p[3]=1;
+  pola.z4=ok4(o.z4); if(pola.z4) p[4]=1;
+  o.z5.forEach(function(v,i){ var d=v===KLUCZ.z5[i]; pola['z5-'+i]=d; if(d) p[5]++; });
+  var d6=o.z6.every(function(v,i){ return v===KLUCZ.z6[i]; }); o.z6.forEach(function(v,i){ pola['z6-'+i]=v===KLUCZ.z6[i]; });
+  pola.z6=d6; if(d6) p[6]=1;
+  var suma=0; for(var k in p) suma+=p[k];
+  return {p:p,pola:pola,suma:suma};
 }
-function czescHTML(qi,pi,spr){
-  var c=Q[qi].cz[pi],a=odp(qi)[pi],h='',lit=c.lit||'ABCDE';
-  if(c.p) h+='<div class="podpol">'+tm(c.p)+'</div>';
-  if(c.opisy) h+='<div class="opisy">'+c.opisy.map(function(o,j){ return '<div><b>'+lit[j]+'.</b> '+tm(o)+'</div>'; }).join('')+'</div>';
-  if(c.t==='wybor'){
-    var ile=c.ok.length; if(ile>1&&!spr) h+='<div class="wskazowka">Zaznacz '+ile+' odpowiedzi.</div>';
-    c.o.forEach(function(o,j){ var wyb=a.indexOf(j)>=0,kl='';
-      if(!spr) kl=wyb?'wybrana':''; else if(c.ok.indexOf(j)>=0) kl=wyb?'dobrze':'brakowalo'; else kl=wyb?'zle':'';
-      h+=przyc(qi,pi,-1,j,'<span class="lit">'+lit[j]+(c.kropka===false?'':'.')+'</span> '+tm(o),kl); });
+
+function nauka(){ return stan.tryb==='nauka'; }
+function zablokowane(){ return nauka()||stan.spr; }
+function wartosci(){
+  if(!nauka()) return stan.odp;
+  return {z1:KLUCZ.z1.slice(),z2:KLUCZ.z2.slice(),z3:KLUCZ.z3,z4:KLUCZ.z4,z5:KLUCZ.z5.slice(),z6:KLUCZ.z6.slice()};
+}
+
+function rysuj(){
+  var o=wartosci(), ocena=(!nauka()&&stan.spr)?ocen(o):null, blok=zablokowane();
+  document.getElementById('bNauka').className=nauka()?'wl':'';
+  document.getElementById('bTest').className=nauka()?'':'wl';
+  document.getElementById('info').innerHTML=nauka()
+    ? '📖 <b>Tryb nauki:</b> kartka z poprawnymi odpowiedziami. Przeczytaj każde zadanie razem z odpowiedzią i wyjaśnieniem 💡. Kiedy będziesz gotowa, kliknij <b>„Rozwiąż jak na sprawdzianie”</b>.'
+    : (stan.spr ? '✍️ Kartka sprawdzona. Zielone = dobrze, czerwone = źle, zielona przerywana kreska = to trzeba było podkreślić.'
+               : '✍️ <b>Sprawdzian:</b> litery i cyfry wpisz w kratki z klawiatury (<b>Tab</b> = następne pole). Żeby <b>podkreślić</b> zdanie, kliknij je. Ponowne kliknięcie zmazuje kreskę.');
+  // pola tekstowe
+  $$('input[data-pole]').forEach(function(inp){
+    var pole=inp.getAttribute('data-pole'), i=inp.getAttribute('data-i');
+    var v=i===null?o[pole]:o[pole][+i];
+    if(inp!==document.activeElement||blok) inp.value=v;
+    inp.readOnly=blok;
+    var klucz=i===null?pole:pole+'-'+i;
+    inp.classList.remove('dobrze','zle');
+    if(nauka()) inp.classList.add('dobrze');
+    if(ocena) inp.classList.add(ocena.pola[klucz]?'dobrze':'zle');
+  });
+  // poprawki pod blednymi polami
+  $$('[data-popr]').forEach(function(el){
+    var k=el.getAttribute('data-popr'), t='';
+    if(ocena&&!ocena.pola[k]){
+      if(k==='z4') t='✔ poprawnie: A. 22 czerwca 1940 r.';
+      else { var c=k.split('-'); t='✔ '+KLUCZ[c[0]][+c[1]]; }
+    }
+    el.textContent=t;
+  });
+  // podkreslenia
+  $$('.grupa').forEach(function(g){
+    var pole=g.getAttribute('data-pole'), n=g.getAttribute('data-n');
+    g.classList.toggle('zablok',blok);
+    Array.prototype.slice.call(g.querySelectorAll('.opc')).forEach(function(op){
+      var i=+op.getAttribute('data-i'), wyb, wlasciwa;
+      if(pole==='z2'){ wyb=o.z2[i]; wlasciwa=KLUCZ.z2[i]; }
+      else if(pole==='z3'){ wyb=o.z3===i; wlasciwa=KLUCZ.z3===i; }
+      else { wyb=o.z5[+n]===i; wlasciwa=KLUCZ.z5[+n]===i; }
+      op.className='opc'+(wyb?' pod':'');
+      if(nauka()&&wyb) op.className+=' ok';
+      if(ocena){
+        if(wyb&&wlasciwa) op.className+=' ok';
+        if(wyb&&!wlasciwa) op.className+=' blad';
+        if(!wyb&&wlasciwa) op.className+=' brak';
+      }
+      op.setAttribute('aria-pressed',wyb?'true':'false');
+      op.tabIndex=blok?-1:0;
+    });
+  });
+  // punkty w naglowkach
+  $$('.pk').forEach(function(el){
+    var z=el.getAttribute('data-z'), oc=el.querySelector('.ocena');
+    oc.textContent=ocena?ocena.p[z]:(z==='3'?'….':'…');
+    oc.classList.toggle('oc',!!ocena);
+  });
+  // wyjasnienia: w nauce wszystkie, po sprawdzeniu tylko przy bledach
+  $$('[data-wyj]').forEach(function(el){
+    var z=el.getAttribute('data-wyj');
+    el.style.display=(nauka()||(ocena&&ocena.p[z]<MAX[z]))?'':'none';
+  });
+  // seria
+  var kropki=''; for(var k=0;k<3;k++) kropki+=k<Math.min(stan.seria,3)?'●':'○';
+  document.getElementById('seria').innerHTML='10/10 na czystej kartce: <b>'+kropki+'</b>'+(stan.seria>3?' ×'+stan.seria:'')+'<br><span style="font-size:14px;font-weight:400">cel: 3 razy z rzędu</span>';
+  // dol
+  var dol=document.getElementById('dol'), h='';
+  if(nauka()) h='<button onclick="tryb(\'test\')">✍️ Umiem — rozwiązuję jak na sprawdzianie</button>';
+  else if(!stan.spr) h='<button onclick="sprawdz()">✅ Oddaję kartkę — sprawdź</button>';
+  else {
+    var s=ocena.suma, kom=s===10?(stan.czysta?'🎉 Bezbłędnie!':'🎉 Wszystko poprawione!'):(s>=8?'Prawie! Popraw błędy i zrób jeszcze raz od nowa.':'Zajrzyj do wyjaśnień 💡 przy błędach, potem popraw.');
+    if(s===10&&stan.czysta&&stan.seria>=3) kom='🏆 Trzy razy z rzędu 10/10 — umiesz ten sprawdzian!';
+    h='<div class="wynik"><div class="duzy">'+s+' / 10 pkt</div><div class="kom2">'+kom+'</div></div>';
+    if(s<10) h+='<button onclick="poprawBledy()">✏️ Popraw tylko błędy</button>';
+    h+='<button class="'+(s<10?'drugi':'')+'" onclick="odNowa()">🔄 Od nowa — czysta kartka</button>';
+    h+='<button class="drugi" onclick="tryb(\'nauka\')">📖 Wróć do kartki z odpowiedziami</button>';
   }
-  if(c.t==='pf'||c.t==='dopasuj'||c.t==='kolej'){
-    var et=c.t==='pf'?c.et:(c.t==='dopasuj'?lit.slice(0,c.opisy.length).split(''):c.w.map(function(_,j){ return String(j+1); }));
-    c.w.forEach(function(w,r){
-      h+='<div class="wiersz"><div class="tekst">'+tm(w)+'</div><div class="para">';
-      et.forEach(function(e,v){ var val=c.t==='kolej'?v+1:v; h+=przyc(qi,pi,r,val,esc(e),klasaWiersza(c,a,r,val,spr)); });
-      h+='</div></div>'; });
-  }
-  if(c.t==='wpisz'){
-    c.w.forEach(function(f,r){ var kl='',dop='';
-      if(spr){ var p=pasuje(a[r],f); kl=p?'dobrze':'zle';
-        if(!p) dop='<span class="popr">✓ '+esc(f.pokaz||f.ok[0])+'</span>';
-        else if(p===1) dop='<span class="uwaga">pisz z polskimi literami: '+esc(f.pokaz||f.ok[0])+'</span>'; }
-      h+='<div class="pole">'+(f.przed?'<span>'+tm(f.przed)+'</span>':'')
-        +'<input class="'+(f.waski?'waski ':'')+kl+'" data-q="'+qi+'" data-p="'+pi+'" data-r="'+r+'" autocomplete="off" spellcheck="false" value="'+esc(a[r]||'')+'"'+(spr?' disabled':'')+'>'
-        +(f.po?'<span>'+tm(f.po)+'</span>':'')+dop+'</div>'; });
-  }
-  if(c.t==='otwarta'){
-    h+='<textarea data-q="'+qi+'" data-p="'+pi+'" placeholder="Napisz odpowiedź…"'+(spr?' disabled':'')+'>'+esc(a)+'</textarea>';
-    if(spr){ var s=(stan.sam[qi]||{})[pi];
-      h+='<div class="wzorzec"><b>Wzorcowa odpowiedź:</b><br>'+tm(c.wzor)+'</div>';
-      h+='<div class="podpol">Porównaj ze wzorem. Twoja odpowiedź jest:</div><div class="nawigacja">'
-        +'<button class="btn drugi '+(s===1?'dobrze':'')+'" onclick="samoocena('+qi+','+pi+',1)">✓ dobra</button>'
-        +'<button class="btn drugi '+(s===0?'zle':'')+'" onclick="samoocena('+qi+','+pi+',0)">✗ do poprawy</button></div>'; }
-  }
-  if(spr&&c.wyj) h+='<div class="wyj">💡 '+tm(c.wyj)+'</div>';
-  return h;
+  dol.innerHTML=h;
 }
-function idz(i){
-  if(i<0||i>=Q.length) return;
-  biez=i; naWyniku=false;
-  var q=Q[i],spr=!!stan.spr[i],h='<div class="karta"><div class="licznik">'+esc(q.nr)+' · pytanie '+(i+1)+' z '+Q.length
-    +(q.pkt?'<span class="pkt">'+esc(q.pkt)+'</span>':'')+'</div><div class="polecenie">'+tm(q.p)+'</div>';
-  if(q.cyt) h+='<div class="cytat">'+tm(q.cyt)+'</div>';
-  if(q.img) h+='<img class="ilustr" src="'+q.img+'" alt="">';
-  q.cz.forEach(function(_,pi){ h+=czescHTML(i,pi,spr); });
-  h+='</div>';
-  if(!spr){
-    h+='<button class="btn glowny" onclick="sprawdz()">Sprawdź</button>';
-    h+='<div class="nawigacja"><button class="btn drugi" onclick="idz(biez-1)"'+(i?'':' disabled')+'>‹ Poprzednie</button>'
-      +'<button class="btn drugi" onclick="dalej()">Pomiń ›</button></div>';
-  } else {
-    var o=ocenPytanie(i);
-    if(czekaNaSamoocene(i)) h+='<div class="wynik-pyt">Oceń swoją odpowiedź powyżej 👆</div>';
-    else h+='<div class="wynik-pyt '+(o.z===o.m?'dobrze':'zle')+'">'+(o.z===o.m?'Dobrze! ':'')+o.z+' / '+o.m+' pkt</div>'
-      +(o.z<o.m?'<div class="wskazowka" style="text-align:center">Zielona przerywana ramka = poprawna odpowiedź.</div>':'');
-    h+='<div class="nawigacja"><button class="btn drugi" onclick="ponow()">↺ Jeszcze raz</button>'
-      +'<button class="btn glowny" onclick="dalej()">'+(i<Q.length-1?'Dalej ›':'🏁 Wynik')+'</button></div>';
-  }
-  document.getElementById('ekran').innerHTML=h;
-  odswiezMape(); window.scrollTo(0,0);
-}
-function dalej(){ if(biez<Q.length-1) idz(biez+1); else pokazWynik(); }
+
+function tryb(t){ stan.tryb=t; zapamietaj(); rysuj(); window.scrollTo(0,0); }
+
 function sprawdz(){
-  if(!cosZaznaczone(biez)&&!confirm('Nic nie zaznaczono. Sprawdzić mimo to?')) return;
-  stan.spr[biez]=true; zapamietaj(); idz(biez);
+  var o=stan.odp, puste=o.z1.filter(function(v){return !v;}).length+o.z6.filter(function(v){return !v;}).length+(o.z4.trim()?0:1)
+    +(o.z2.indexOf(true)<0?1:0)+(o.z3<0?1:0)+o.z5.filter(function(v){return v<0;}).length;
+  if(puste&&!confirm('Nie wszystko jest uzupełnione (puste miejsca: '+puste+'). Oddać kartkę mimo to?')) return;
+  var w=ocen(o);
+  stan.spr=true; stan.proby++;
+  if(stan.czysta){ if(w.suma===10){ stan.seria++; stan.dziesiatki++; } else stan.seria=0; }
+  zapamietaj(); rysuj();
+  document.getElementById('dol').scrollIntoView({behavior:'smooth',block:'start'});
+  try{ fetch(RESULTS_URL,{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({token:RESULTS_TOKEN,subject:'Historia',title:'Sprawdzian II wojna — jak na kartce'+(stan.czysta?'':' (poprawa błędów)'),score:w.suma,total:10})}); }catch(e){}
 }
-function ponow(){ delete stan.a[biez]; delete stan.spr[biez]; delete stan.sam[biez]; zapamietaj(); idz(biez); }
-function samoocena(qi,pi,v){ stan.sam[qi]=stan.sam[qi]||{}; stan.sam[qi][pi]=v; zapamietaj(); idz(qi); }
 
-document.addEventListener('click',function(e){
-  var b=e.target.closest('.wyb'); if(!b||b.disabled) return;
-  var qi=+b.dataset.q,pi=+b.dataset.p,r=+b.dataset.r,v=+b.dataset.v,c=Q[qi].cz[pi],a=odp(qi)[pi];
-  if(c.t==='wybor'){ var ile=c.ok.length,k=a.indexOf(v);
-    if(k>=0) a.splice(k,1); else { if(ile===1) a.length=0; else if(a.length>=ile) a.shift(); a.push(v); } }
-  else a[r]=(a[r]===v)?null:v;
-  zapamietaj(); idz(qi);
-});
-document.addEventListener('input',function(e){
-  var t=e.target; if(!t.dataset||t.dataset.q==null) return;
-  var A=odp(+t.dataset.q); if(t.tagName==='TEXTAREA') A[+t.dataset.p]=t.value; else A[+t.dataset.p][+t.dataset.r]=t.value;
-  zapamietaj(); odswiezMape();
-});
-
-/* ===== wynik ===== */
-function pokazWynik(){
-  naWyniku=true; var z=0,m=0,brak=[],zle=[],h='';
-  Q.forEach(function(q,i){ var o=ocenPytanie(i); m+=o.m; if(!stan.spr[i]){ brak.push(i); return; } z+=o.z; if(o.z<o.m) zle.push(i); });
-  h+='<div class="karta"><div class="polecenie">Wynik</div><div class="duzy">'+z+' / '+m+' pkt</div>';
-  if(brak.length) h+='<div style="text-align:center;color:#e65100;font-weight:700">Niesprawdzone pytania: '+brak.map(function(i){return i+1;}).join(', ')+'</div>';
-  h+='<div class="lista-wynikow" style="margin-top:10px">'+Q.map(function(q,i){ var o=ocenPytanie(i);
-    return '<div>'+(stan.spr[i]?(o.z===o.m?'✅':'❌'):'⬜')+' '+esc(q.nr)+' — '+(stan.spr[i]?o.z+' / '+o.m+' pkt':'nie sprawdzone')+'</div>'; }).join('')+'</div></div>';
-  if(zle.length) h+='<button class="btn glowny" onclick="powtorzBledne()">↺ Powtórz tylko błędne ('+zle.length+')</button>';
-  if(brak.length) h+='<button class="btn drugi" onclick="idz('+brak[0]+')">Przejdź do niesprawdzonych</button>';
-  h+='<button class="btn drugi" onclick="odNowa()">Od nowa — cała klasówka</button>';
-  document.getElementById('ekran').innerHTML=h;
-  odswiezMape(); window.scrollTo(0,0);
-  if(!brak.length&&!stan.wyslano){ stan.wyslano=true; zapamietaj();
-    try{ fetch(RESULTS_URL,{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({token:RESULTS_TOKEN,subject:KARTA.przedmiot,title:KARTA.tytul,score:z,total:m})}); }catch(e){} }
+function poprawBledy(){
+  var o=stan.odp, w=ocen(o);
+  o.z1=o.z1.map(function(v,i){ return w.pola['z1-'+i]?v:''; });
+  if(!w.pola.z2) o.z2=[false,false,false];
+  if(!w.pola.z3) o.z3=-1;
+  if(!w.pola.z4) o.z4='';
+  o.z5=o.z5.map(function(v,i){ return w.pola['z5-'+i]?v:-1; });
+  if(!w.pola.z6) o.z6=o.z6.map(function(v,i){ return w.pola['z6-'+i]?v:''; });
+  stan.spr=false; stan.czysta=false; zapamietaj(); rysuj(); window.scrollTo(0,0);
 }
-function powtorzBledne(){ var pierwsze=-1;
-  Q.forEach(function(q,i){ var o=ocenPytanie(i); if(stan.spr[i]&&o.z<o.m){ delete stan.a[i]; delete stan.spr[i]; delete stan.sam[i]; if(pierwsze<0) pierwsze=i; } });
-  stan.wyslano=false; zapamietaj(); idz(pierwsze<0?0:pierwsze); }
-function odNowa(){ if(!confirm('Wyczyścić wszystkie odpowiedzi i zacząć od nowa?')) return;
-  stan={a:{},spr:{},sam:{}}; zapamietaj(); idz(0); }
 
-document.getElementById('tag').textContent=KARTA.przedmiot;
-document.getElementById('tytul').textContent=KARTA.tytul;
-idz(0);
+function odNowa(){ stan.odp=pusty(); stan.spr=false; stan.czysta=true; stan.tryb='test'; zapamietaj(); rysuj(); window.scrollTo(0,0); }
+
+// wpisywanie w kratki
+$$('input[data-pole]').forEach(function(inp,idx,wszystkie){
+  inp.addEventListener('input',function(){
+    if(zablokowane()) return;
+    var pole=inp.getAttribute('data-pole'), i=inp.getAttribute('data-i');
+    if(i===null){ stan.odp[pole]=inp.value; zapamietaj(); return; }
+    var dozw=pole==='z1'?/[A-D]/g:/[1-3]/g;
+    var v=(inp.value.toUpperCase().match(dozw)||['']).pop();
+    inp.value=v; stan.odp[pole][+i]=v; zapamietaj();
+    if(v){ var nast=wszystkie[idx+1]; if(nast&&nast.getAttribute('data-pole')===pole) nast.focus(); }
+  });
+  inp.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){ e.preventDefault(); var nast=wszystkie[idx+1]; if(nast) nast.focus(); }
+  });
+});
+
+// podkreslanie klikiem (lub Enter / spacja)
+function podkresl(op){
+  if(zablokowane()) return;
+  var g=op.parentNode, pole=g.getAttribute('data-pole'), n=g.getAttribute('data-n'), i=+op.getAttribute('data-i'), o=stan.odp;
+  if(pole==='z2') o.z2[i]=!o.z2[i];
+  else if(pole==='z3') o.z3=o.z3===i?-1:i;
+  else o.z5[+n]=o.z5[+n]===i?-1:i;
+  zapamietaj(); rysuj();
+}
+$$('.opc').forEach(function(op){
+  op.addEventListener('click',function(){ podkresl(op); });
+  op.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); podkresl(op); } });
+});
+
+rysuj();
 </script>
 </body>
 </html>
